@@ -1,60 +1,119 @@
+/* ضبط الخط والتنسيق العام */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #f8f9fa;
     text-align: center;
-    direction: rtl;
+    direction: rtl; /* جعل النص من اليمين لليسار */
+    padding: 20px;
 }
 
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
+/* تنسيق الحاوية الأساسية للأيام */
+#days {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* تنسيق كل يوم */
+.day {
+    background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: 250px;
+    text-align: center;
 }
 
-h1 {
+.day h3 {
+    margin-bottom: 10px;
     color: #333;
 }
 
-.day {
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    display: inline-block;
+/* تنسيق المهام */
+.tasks-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .task {
-    margin: 5px;
-    padding: 5px;
+    padding: 8px;
     border: 1px solid #ddd;
-    border-radius: 3px;
+    border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    font-size: 16px;
+    background-color: #f1f1f1;
 }
 
+/* عند إكمال المهمة */
 .task.completed {
     background-color: #4CAF50;
     color: white;
+    transform: scale(1.1);
 }
 
+/* تأثير عند تمرير الماوس */
+.task:hover {
+    background-color: #ddd;
+}
+
+/* قسم عرض النتيجة */
+#result {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* تنسيق الإحصائيات */
+#stats {
+    margin-top: 30px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: right;
+}
+
+#stats h2 {
+    color: #333;
+    border-bottom: 2px solid #28a745;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+#stats p {
+    font-size: 16px;
+    margin: 5px 0;
+    padding: 8px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+/* زر إعادة تعيين البيانات */
 button {
     margin-top: 20px;
     padding: 10px 20px;
+    font-size: 16px;
     background-color: #28a745;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 button:hover {
     background-color: #218838;
 }
 
-#result {
-    margin-top: 20px;
-    font-size: 1.2em;
-    color: #333;
+/* زر إعادة التعيين الأحمر */
+button.reset {
+    background-color: #dc3545;
+}
+
+button.reset:hover {
+    background-color: #c82333;
 }
