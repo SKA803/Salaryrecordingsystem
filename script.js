@@ -4,7 +4,7 @@ const tasks = [
 ];
 
 const daysContainer = document.getElementById('days');
-let daysData = Array(27).fill().map(() => Array(tasks.length).fill(false));
+let daysData = JSON.parse(localStorage.getItem('daysData')) || Array(27).fill().map(() => Array(tasks.length).fill(false));
 
 function createDay(dayIndex) {
     const dayDiv = document.createElement('div');
@@ -15,6 +15,9 @@ function createDay(dayIndex) {
         const taskDiv = document.createElement('div');
         taskDiv.className = 'task';
         taskDiv.textContent = task;
+        if (daysData[dayIndex][taskIndex]) {
+            taskDiv.classList.add('completed');
+        }
         taskDiv.addEventListener('click', () => toggleTask(dayIndex, taskIndex, taskDiv));
         dayDiv.appendChild(taskDiv);
     });
@@ -25,6 +28,11 @@ function createDay(dayIndex) {
 function toggleTask(dayIndex, taskIndex, taskDiv) {
     daysData[dayIndex][taskIndex] = !daysData[dayIndex][taskIndex];
     taskDiv.classList.toggle('completed', daysData[dayIndex][taskIndex]);
+    saveData();
+}
+
+function saveData() {
+    localStorage.setItem('daysData', JSON.stringify(daysData));
 }
 
 function calculateResult() {
@@ -59,3 +67,8 @@ function calculateResult() {
 for (let i = 0; i < 27; i++) {
     createDay(i);
 }
+
+// تحميل البيانات المحفوظة عند فتح الصفحة
+window.addEventListener('load', () => {
+    daysData = JSON.parse(localStorage.getItem('daysData')) || Array(27).fill().map(() => Array(tasks.length).fill(false));
+});
