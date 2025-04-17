@@ -1,407 +1,650 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>شركة الرحال - نظام الطلبات</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نظام الطلبات - شركة الرحال</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap');
+    
     :root {
-      --primary-color: #2c3e50;
-      --secondary-color: #3498db;
+      --primary: #2c3e50;
+      --secondary: #3498db;
+      --accent: #e74c3c;
+      --light: #ecf0f1;
+      --dark: #2c3e50;
+      --success: #27ae60;
+      --warning: #f39c12;
+      --border-radius: 10px;
+      --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
     }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #f5f5f5;
-      margin: 0; padding: 20px;
-      color: #333;
-    }
-    .header {
-      text-align: center;
-      margin-bottom: 30px;
-      background-color: var(--primary-color);
-      color: white;
-      padding: 15px;
-      border-radius: 10px;
-    }
-    .header h1 {
-      margin: 0;
-      font-size: 28px;
-    }
-    .header img {
-      height: 60px;
-      margin-bottom: 10px;
-    }
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .form-box {
-      background: #fff;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      width: 100%;
-      max-width: 500px;
-    }
-    .form-box h2 {
-      margin-bottom: 20px;
-      color: var(--primary-color);
-      text-align: center;
-      border-bottom: 2px solid var(--secondary-color);
-      padding-bottom: 10px;
-    }
-    .form-group {
-      margin-bottom: 15px;
-      text-align: right;
-    }
-    .form-group label {
-      display: block; margin-bottom: 5px;
-      color: #555;
-      font-weight: bold;
-    }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%; padding: 12px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 1rem;
-      box-sizing: border-box;
-      font-family: 'Tajawal', sans-serif;
-    }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: var(--secondary-color);
-      outline: none;
-      box-shadow: 0 0 8px rgba(52,152,219,0.3);
-    }
-    .form-box button {
-      width: 100%; padding: 14px;
-      background: var(--primary-color); color: #fff;
-      border: none; border-radius: 8px;
-      font-size: 1.1rem; cursor: pointer;
-      margin-top: 10px;
-      font-weight: bold;
-      transition: all 0.3s;
-    }
-    .form-box button:hover {
-      background: var(--secondary-color);
-      transform: translateY(-2px);
-    }
-    .hidden { display: none; }
-    .success-message {
-      background-color: #27ae60;
-      color: white;
-      text-align: center;
-      padding: 15px;
-      border-radius: 8px;
-      margin-top: 20px;
-      font-weight: bold;
-    }
-    .copy-btn {
-      background: #7f8c8d;
-    }
-    .copy-btn:hover {
-      background: #95a5a6;
-    }
-    .order-info {
-      background: #f8f9fa;
-      padding: 20px;
-      border-radius: 10px;
-      margin-top: 20px;
-      border-right: 5px solid var(--secondary-color);
-    }
-    .order-info h3 {
-      color: var(--primary-color);
-      margin-top: 0;
-      text-align: center;
-    }
-    .order-info p {
-      margin: 10px 0;
+      background-color: #f5f7fa;
+      color: var(--dark);
       line-height: 1.6;
     }
-    .required-field::after {
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 20px 0;
+      border-radius: var(--border-radius);
+      margin-bottom: 30px;
+      text-align: center;
+      box-shadow: var(--box-shadow);
+      animation: fadeInDown 0.8s;
+    }
+    
+    header h1 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+    
+    header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+    
+    .app-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+    
+    @media (max-width: 768px) {
+      .app-container {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 25px;
+      transition: var(--transition);
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .card-title {
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--secondary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .card-title i {
+      color: var(--secondary);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--dark);
+    }
+    
+    .form-group label.required::after {
       content: " *";
-      color: red;
+      color: var(--accent);
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+    
+    .form-control:focus {
+      border-color: var(--secondary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    }
+    
+    .form-control[readonly] {
+      background-color: #f9f9f9;
+      cursor: not-allowed;
+    }
+    
+    textarea.form-control {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 12px 25px;
+      background-color: var(--secondary);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+    }
+    
+    .btn:hover {
+      background-color: #2980b9;
+      transform: translateY(-2px);
+    }
+    
+    .btn-block {
+      display: block;
+      width: 100%;
+    }
+    
+    .btn-success {
+      background-color: var(--success);
+    }
+    
+    .btn-success:hover {
+      background-color: #219955;
+    }
+    
+    .btn-warning {
+      background-color: var(--warning);
+    }
+    
+    .btn-warning:hover {
+      background-color: #e67e22;
+    }
+    
+    .btn-danger {
+      background-color: var(--accent);
+    }
+    
+    .btn-danger:hover {
+      background-color: #c0392b;
+    }
+    
+    .alert {
+      padding: 15px;
+      border-radius: var(--border-radius);
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+    
+    .alert-success {
+      background-color: rgba(39, 174, 96, 0.2);
+      color: var(--success);
+      border-left: 4px solid var(--success);
+    }
+    
+    .search-box {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    
+    .search-box input {
+      padding-left: 40px;
+    }
+    
+    .search-box i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #7f8c8d;
+    }
+    
+    .orders-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    
+    .orders-table th,
+    .orders-table td {
+      padding: 12px 15px;
+      text-align: right;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .orders-table th {
+      background-color: var(--light);
+      color: var(--dark);
+      font-weight: 700;
+    }
+    
+    .orders-table tr:hover {
+      background-color: #f8f9fa;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    
+    .badge-primary {
+      background-color: rgba(52, 152, 219, 0.2);
+      color: var(--secondary);
+    }
+    
+    .badge-success {
+      background-color: rgba(39, 174, 96, 0.2);
+      color: var(--success);
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.5s;
+    }
+    
+    .fade-in-down {
+      animation: fadeInDown 0.5s;
+    }
+    
+    .fade-in-up {
+      animation: fadeInUp 0.5s;
+    }
+    
+    /* Validation styles */
+    .is-invalid {
+      border-color: var(--accent) !important;
+    }
+    
+    .invalid-feedback {
+      color: var(--accent);
+      font-size: 0.85rem;
+      margin-top: 5px;
+      display: none;
+    }
+    
+    /* Order details modal */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+    
+    .modal.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .modal-content {
+      background-color: white;
+      border-radius: var(--border-radius);
+      width: 90%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: translateY(-20px);
+      transition: var(--transition);
+    }
+    
+    .modal.show .modal-content {
+      transform: translateY(0);
+    }
+    
+    .modal-header {
+      padding: 20px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .modal-header h3 {
+      margin: 0;
+      color: var(--primary);
+    }
+    
+    .modal-body {
+      padding: 20px;
+    }
+    
+    .modal-footer {
+      padding: 20px;
+      border-top: 1px solid #eee;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #7f8c8d;
+    }
+    
+    /* Responsive table */
+    @media (max-width: 768px) {
+      .orders-table {
+        display: block;
+        overflow-x: auto;
+      }
     }
   </style>
 </head>
 <body>
-
-  <div class="header">
-    <h1>شركة الرحال للنقل السريع</h1>
-    <p>نظام إدارة الطلبات</p>
-  </div>
-
   <div class="container">
-
-    <!-- نموذج الطلب -->
-    <div class="form-box">
-      <h2>تسجيل طلب جديد</h2>
-      <form id="orderFormWA">
-        <div class="form-group">
-          <label for="orderNumber" class="required-field">رقم الأوردر</label>
-          <input type="text" id="orderNumber" readonly/>
-        </div>
-        <div class="form-group">
-          <label for="customerName" class="required-field">اسم العميل</label>
-          <input type="text" id="customerName" required/>
-        </div>
-        <div class="form-group">
-          <label for="phone1" class="required-field">رقم التليفون</label>
-          <input type="tel" id="phone1" required minlength="11" maxlength="11" pattern="01[0-9]{9}" placeholder="مثال: 01012345678"/>
-        </div>
-        <div class="form-group">
-          <label for="governorate" class="required-field">المحافظة</label>
-          <select id="governorate" required>
-            <option value="" disabled selected>اختر المحافظة</option>
-            <option value="cairo" data-price="100">القاهرة</option>
-            <option value="giza" data-price="100">الجيزة</option>
-            <option value="alexandria" data-price="110">الإسكندرية</option>
-            <option value="dakahlia" data-price="110">الدقهلية</option>
-            <option value="sharqia" data-price="110">الشرقية</option>
-            <option value="gharbia" data-price="110">الغربية</option>
-            <option value="monufia" data-price="110">المنوفية</option>
-            <option value="qalyubia" data-price="110">القليوبية</option>
-            <option value="beheira" data-price="100">البحيرة</option>
-            <option value="kafr_el_sheikh" data-price="110">كفر الشيخ</option>
-            <option value="damietta" data-price="110">دمياط</option>
-            <option value="port_said" data-price="110">بورسعيد</option>
-            <option value="suez" data-price="110">السويس</option>
-            <option value="ismailia" data-price="110">الإسماعيلية</option>
-            <option value="faiyum" data-price="120">الفيوم</option>
-            <option value="minya" data-price="125">المنيا</option>
-            <option value="asyut" data-price="125">أسيوط</option>
-            <option value="sohag" data-price="120">سوهاج</option>
-            <option value="qena" data-price="130">قنا</option>
-            <option value="luxor" data-price="140">الأقصر</option>
-            <option value="aswan" data-price="140">أسوان</option>
-            <option value="beni_suef" data-price="125">بني سويف</option>
-            <option value="matruh" data-price="140">مرسى مطروح</option>
-            <option value="north_sinai" data-price="150">شمال سيناء</option>
-            <option value="south_sinai" data-price="150">جنوب سيناء</option>
-            <option value="red_sea" data-price="140">البحر الأحمر</option>
-            <option value="new_valley" data-price="150">الوادي الجديد</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="shippingPrice" class="required-field">سعر الشحن</label>
-          <input type="text" id="shippingPrice" readonly/>
-        </div>
-        <div class="form-group">
-          <label for="city" class="required-field">المدينة/المركز</label>
-          <input type="text" id="city" required/>
-        </div>
-        <div class="form-group">
-          <label for="address" class="required-field">العنوان بالتفصيل</label>
-          <textarea id="address" rows="3" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="productDetails" class="required-field">تفاصيل المنتج</label>
-          <textarea id="productDetails" rows="3" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="productPrice" class="required-field">سعر المنتج (ج.م)</label>
-          <input type="number" id="productPrice" required min="0" step="0.01"/>
-        </div>
-        <div class="form-group">
-          <label for="notes">ملاحظات إضافية</label>
-          <textarea id="notes" rows="2"></textarea>
-        </div>
-        <button type="submit">تسجيل الطلب وإرساله</button>
-        <button type="button" id="copyBtn" class="copy-btn hidden">
-          <i class="fas fa-copy"></i> نسخ تفاصيل الطلب
-        </button>
-        <div id="orderSummary" class="order-info hidden"></div>
-        <div id="successMessage" class="success-message hidden">
-          <i class="fas fa-check-circle"></i> تم إرسال الطلب بنجاح إلى شركة الرحال
-        </div>
-      </form>
-    </div>
-
-    <!-- لوحة التحكم -->
-    <div class="form-box">
-      <h2>لوحة التحكم</h2>
-      <div class="order-info">
-        <h3>إحصائيات سريعة</h3>
-        <p><strong>آخر رقم طلب:</strong> <span id="lastOrderNumber">ORD-1000</span></p>
-        <p><strong>عدد الطلبات اليوم:</strong> 5</p>
-        <p><strong>إجمالي المبيعات:</strong> 3,250 ج.م</p>
-      </div>
-      <div class="order-info" style="margin-top:20px;">
-        <h3>تعليمات سريعة</h3>
-        <p>1. تأكد من صحة بيانات العميل</p>
-        <p>2. حدد المحافظة لمعرفة سعر الشحن</p>
-        <p>3. اكتب العنوان بالتفصيل</p>
-        <p>4. اضغط "تسجيل الطلب" للإرسال التلقائي</p>
-      </div>
-      <button type="button" id="reloadBtn" style="margin-top:20px;">
-        <i class="fas fa-sync-alt"></i> تحديث الصفحة
-      </button>
-    </div>
-
-  </div>
-
-  <script>
-    // رقم الواتساب الخاص بالشركة
-    const whatsappNumber = "201044886153";
-    let currentOrderNumber = 1000;
+    <header class="fade-in-down">
+      <h1><i class="fas fa-truck"></i> نظام الطلبات - شركة الرحال</h1>
+      <p>إدارة وتتبع طلبات الشحن بسهولة وكفاءة</p>
+    </header>
     
-    // أسعار الشحن لكل محافظة
-    const shippingPrices = {
-      cairo: 100, giza: 100, alexandria: 110, dakahlia: 110,
-      sharqia: 110, gharbia: 110, monufia: 110, qalyubia: 110,
-      beheira: 100, kafr_el_sheikh: 110, damietta: 110,
-      port_said: 110, suez: 110, ismailia: 110, faiyum: 120,
-      minya: 125, asyut: 125, sohag: 120, qena: 130,
-      luxor: 140, aswan: 140, beni_suef: 125, matruh: 140,
-      north_sinai: 150, south_sinai: 150, red_sea: 140,
-      new_valley: 150
-    };
-
-    document.addEventListener("DOMContentLoaded", function() {
-      // توليد رقم أوردر تلقائي عند تحميل الصفحة
-      generateOrderNumber();
+    <div class="app-container">
+      <!-- Order Form Section -->
+      <div class="card fade-in">
+        <h2 class="card-title"><i class="fas fa-plus-circle"></i> تسجيل طلب جديد</h2>
+        
+        <form id="orderForm">
+          <div class="form-group">
+            <label for="orderNumber" class="required">رقم الطلب</label>
+            <input type="text" id="orderNumber" class="form-control" readonly>
+          </div>
+          
+          <div class="form-group">
+            <label for="customerName" class="required">اسم العميل</label>
+            <input type="text" id="customerName" class="form-control" placeholder="الاسم كامل (اسمين على الأقل)" minlength="2" pattern="^[\u0600-\u06FF\s]{2,} [\u0600-\u06FF\s]{2,}">
+            <div class="invalid-feedback">يجب إدخال اسمين على الأقل</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="customerPhone" class="required">رقم الهاتف</label>
+            <input type="tel" id="customerPhone" class="form-control" placeholder="مثال: 01012345678" pattern="01[0-9]{9}" minlength="11" maxlength="11">
+            <div class="invalid-feedback">يجب إدخال رقم هاتف صحيح (11 رقم)</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="governorate" class="required">المحافظة</label>
+            <select id="governorate" class="form-control" required>
+              <option value="" disabled selected>اختر المحافظة</option>
+              <option value="القاهرة" data-price="100">القاهرة</option>
+              <option value="الجيزة" data-price="100">الجيزة</option>
+              <option value="الإسكندرية" data-price="110">الإسكندرية</option>
+              <option value="الدقهلية" data-price="110">الدقهلية</option>
+              <option value="الشرقية" data-price="110">الشرقية</option>
+              <option value="الغربية" data-price="110">الغربية</option>
+              <option value="المنوفية" data-price="110">المنوفية</option>
+              <option value="القليوبية" data-price="110">القليوبية</option>
+              <option value="البحيرة" data-price="100">البحيرة</option>
+              <option value="كفر الشيخ" data-price="110">كفر الشيخ</option>
+              <option value="دمياط" data-price="110">دمياط</option>
+              <option value="بورسعيد" data-price="110">بورسعيد</option>
+              <option value="السويس" data-price="110">السويس</option>
+              <option value="الإسماعيلية" data-price="110">الإسماعيلية</option>
+              <option value="الفيوم" data-price="120">الفيوم</option>
+              <option value="المنيا" data-price="125">المنيا</option>
+              <option value="أسيوط" data-price="125">أسيوط</option>
+              <option value="سوهاج" data-price="120">سوهاج</option>
+              <option value="قنا" data-price="130">قنا</option>
+              <option value="الأقصر" data-price="140">الأقصر</option>
+              <option value="أسوان" data-price="140">أسوان</option>
+              <option value="بني سويف" data-price="125">بني سويف</option>
+              <option value="مرسى مطروح" data-price="140">مرسى مطروح</option>
+              <option value="شمال سيناء" data-price="150">شمال سيناء</option>
+              <option value="جنوب سيناء" data-price="150">جنوب سيناء</option>
+              <option value="البحر الأحمر" data-price="140">البحر الأحمر</option>
+              <option value="الوادي الجديد" data-price="150">الوادي الجديد</option>
+            </select>
+            <div class="invalid-feedback">يجب اختيار المحافظة</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="shippingPrice" class="required">سعر الشحن</label>
+            <input type="text" id="shippingPrice" class="form-control" readonly>
+          </div>
+          
+          <div class="form-group">
+            <label for="city" class="required">المدينة/المركز</label>
+            <input type="text" id="city" class="form-control" required>
+            <div class="invalid-feedback">يجب إدخال المدينة/المركز</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="address" class="required">العنوان بالتفصيل</label>
+            <textarea id="address" class="form-control" required></textarea>
+            <div class="invalid-feedback">يجب إدخال العنوان بالتفصيل</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="productDetails" class="required">تفاصيل المنتج</label>
+            <textarea id="productDetails" class="form-control" required></textarea>
+            <div class="invalid-feedback">يجب إدخال تفاصيل المنتج</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="productPrice" class="required">سعر المنتج (ج.م)</label>
+            <input type="number" id="productPrice" class="form-control" min="0" step="0.01" required>
+            <div class="invalid-feedback">يجب إدخال سعر المنتج</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="notes">ملاحظات إضافية</label>
+            <textarea id="notes" class="form-control"></textarea>
+          </div>
+          
+          <button type="submit" class="btn btn-success btn-block">
+            <i class="fas fa-save"></i> حفظ الطلب
+          </button>
+        </form>
+      </div>
       
-      // تحديث سعر الشحن عند اختيار المحافظة
-      document.getElementById("governorate").addEventListener("change", function() {
-        const selectedGov = this.value;
-        const price = shippingPrices[selectedGov] || 0;
-        document.getElementById("shippingPrice").value = price + " ج.م";
-      });
+      <!-- Orders List Section -->
+      <div class="card fade-in" style="animation-delay: 0.2s;">
+        <h2 class="card-title"><i class="fas fa-list"></i> سجل الطلبات</h2>
+        
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" id="searchOrders" class="form-control" placeholder="ابحث عن طلب...">
+        </div>
+        
+        <div id="ordersContainer">
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th>رقم الطلب</th>
+                <th>اسم العميل</th>
+                <th>المحافظة</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="ordersList">
+              <!-- Orders will be added here dynamically -->
+              <tr>
+                <td colspan="4" style="text-align: center;">لا توجد طلبات مسجلة بعد</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Order Details Modal -->
+  <div class="modal" id="orderModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>تفاصيل الطلب</h3>
+        <button class="close-btn" id="closeModal">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Order details will be shown here -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-warning" id="sendWhatsApp">
+          <i class="fab fa-whatsapp"></i> إرسال عبر واتساب
+        </button>
+        <button class="btn btn-danger" id="deleteOrder">
+          <i class="fas fa-trash"></i> حذف الطلب
+        </button>
+        <button class="btn" id="closeModalBtn">
+          <i class="fas fa-times"></i> إغلاق
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize variables
+      let orders = JSON.parse(localStorage.getItem('rahhal_orders')) || [];
+      let currentOrderId = localStorage.getItem('rahhal_lastOrderId') || 1000;
+      let selectedOrder = null;
       
-      // زر تحديث الصفحة
-      document.getElementById("reloadBtn").addEventListener("click", function() {
-        location.reload();
-      });
+      // DOM Elements
+      const orderForm = document.getElementById('orderForm');
+      const orderNumberInput = document.getElementById('orderNumber');
+      const customerNameInput = document.getElementById('customerName');
+      const customerPhoneInput = document.getElementById('customerPhone');
+      const governorateSelect = document.getElementById('governorate');
+      const shippingPriceInput = document.getElementById('shippingPrice');
+      const cityInput = document.getElementById('city');
+      const addressInput = document.getElementById('address');
+      const productDetailsInput = document.getElementById('productDetails');
+      const productPriceInput = document.getElementById('productPrice');
+      const notesInput = document.getElementById('notes');
+      const ordersList = document.getElementById('ordersList');
+      const searchInput = document.getElementById('searchOrders');
+      const orderModal = document.getElementById('orderModal');
+      const modalBody = document.getElementById('modalBody');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      const closeModalX = document.getElementById('closeModal');
+      const sendWhatsAppBtn = document.getElementById('sendWhatsApp');
+      const deleteOrderBtn = document.getElementById('deleteOrder');
       
-      // إرسال الطلب
-      document.getElementById("orderFormWA").addEventListener("submit", function(e) {
-        e.preventDefault();
-        sendOrderData();
-      });
-    });
-
-    function generateOrderNumber() {
-      const now = new Date();
-      const datePart = now.getFullYear().toString().substr(-2) + 
-                      (now.getMonth() + 1).toString().padStart(2, '0') + 
-                      now.getDate().toString().padStart(2, '0');
-      const orderNum = `RHL-${datePart}-${currentOrderNumber++}`;
-      document.getElementById("orderNumber").value = orderNum;
-      document.getElementById("lastOrderNumber").textContent = orderNum;
-      return orderNum;
-    }
-
-    function sendOrderData() {
-      const orderData = {
-        orderNumber: document.getElementById("orderNumber").value,
-        customerName: document.getElementById("customerName").value.trim(),
-        phone: document.getElementById("phone1").value.trim(),
-        governorate: document.getElementById("governorate").options[
-          document.getElementById("governorate").selectedIndex
-        ].text,
-        shippingPrice: document.getElementById("shippingPrice").value,
-        city: document.getElementById("city").value.trim(),
-        address: document.getElementById("address").value.trim(),
-        productDetails: document.getElementById("productDetails").value.trim(),
-        productPrice: document.getElementById("productPrice").value,
-        notes: document.getElementById("notes").value.trim()
-      };
-      
-      // التحقق من البيانات المطلوبة
-      if (!orderData.customerName || !orderData.phone || !orderData.governorate || 
-          !orderData.city || !orderData.address || !orderData.productDetails || 
-          !orderData.productPrice) {
-        alert("الرجاء填写所有必填字段");
-        return;
+      // Generate new order number
+      function generateOrderNumber() {
+        currentOrderId++;
+        localStorage.setItem('rahhal_lastOrderId', currentOrderId);
+        const now = new Date();
+        const datePart = now.getFullYear().toString().substr(-2) + 
+                       (now.getMonth() + 1).toString().padStart(2, '0') + 
+                       now.getDate().toString().padStart(2, '0');
+        return `RHL-${datePart}-${currentOrderId}`;
       }
       
-      // بناء رسالة الطلب
-      const whatsappMessage = buildWhatsAppMessage(orderData);
+      // Update order number on page load
+      orderNumberInput.value = generateOrderNumber();
       
-      // عرض ملخص الطلب
-      showOrderSummary(orderData, whatsappMessage);
+      // Update shipping price when governorate changes
+      governorateSelect.addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        const price = selectedOption.getAttribute('data-price');
+        shippingPriceInput.value = price ? `${price} ج.م` : 'غير متاح';
+      });
       
-      // إرسال الطلب (محاكاة الإرسال التلقائي)
-      simulateAutoSend(whatsappMessage);
-    }
-
-    function buildWhatsAppMessage(orderData) {
-      return `
-*طلب جديد - شركة الرحال*
-━━━━━━━━━━━━━━━━
-📌 *رقم الأوردر*: ${orderData.orderNumber}
-👤 *اسم العميل*: ${orderData.customerName}
-📞 *رقم الهاتف*: ${orderData.phone}
-━━━━━━━━━━━━━━━━
-📍 *المحافظة*: ${orderData.governorate}
-🏙️ *المدينة*: ${orderData.city}
-📦 *العنوان*: ${orderData.address}
-━━━━━━━━━━━━━━━━
-🛒 *تفاصيل المنتج*: 
-${orderData.productDetails}
-💰 *سعر المنتج*: ${orderData.productPrice} ج.م
-🚚 *سعر الشحن*: ${orderData.shippingPrice}
-━━━━━━━━━━━━━━━━
-📝 *ملاحظات*: 
-${orderData.notes || "لا توجد ملاحظات"}
-━━━━━━━━━━━━━━━━
-      `.trim();
-    }
-
-    function showOrderSummary(orderData, message) {
-      const summaryHTML = `
-        <h3>تفاصيل الطلب المرسل</h3>
-        <p><strong>رقم الأوردر:</strong> ${orderData.orderNumber}</p>
-        <p><strong>اسم العميل:</strong> ${orderData.customerName}</p>
-        <p><strong>رقم الهاتف:</strong> ${orderData.phone}</p>
-        <p><strong>العنوان:</strong> ${orderData.governorate} - ${orderData.city}</p>
-        <p><strong>تفاصيل العنوان:</strong> ${orderData.address}</p>
-        <p><strong>المنتج:</strong> ${orderData.productDetails}</p>
-        <p><strong>السعر:</strong> ${orderData.productPrice} ج.م</p>
-        <p><strong>سعر الشحن:</strong> ${orderData.shippingPrice}</p>
-        ${orderData.notes ? `<p><strong>ملاحظات:</strong> ${orderData.notes}</p>` : ''}
-      `;
+      // Validate name (at least two words)
+      customerNameInput.addEventListener('input', function() {
+        const isValid = this.value.trim().split(/\s+/).length >= 2;
+        this.classList.toggle('is-invalid', !isValid);
+        this.nextElementSibling.style.display = isValid ? 'none' : 'block';
+      });
       
-      document.getElementById("orderSummary").innerHTML = summaryHTML;
-      document.getElementById("orderSummary").classList.remove("hidden");
-      document.getElementById("copyBtn").classList.remove("hidden");
+      // Validate phone number
+      customerPhoneInput.addEventListener('input', function() {
+        const isValid = /^01[0-9]{9}$/.test(this.value);
+        this.classList.toggle('is-invalid', !isValid);
+        this.nextElementSibling.style.display = isValid ? 'none' : 'block';
+      });
       
-      // إضافة وظيفة نسخ الرسالة
-      document.getElementById("copyBtn").onclick = function() {
-        navigator.clipboard.writeText(message).then(function() {
-          alert("تم نسخ تفاصيل الطلب بنجاح!");
-        });
-      };
-    }
-
-    function simulateAutoSend(message) {
-      // في الواقع الفعلي، هذا يتطلب سيرفر و API خاص بواتساب
-      // هنا سنجعلها تبدو وكأنها أرسلت مع محاكاة التأخير
-      
-      document.getElementById("successMessage").classList.remove("hidden");
-      
-      // محاكاة إرسال فعلي (في الخلفية)
-      setTimeout(function() {
-        // في بيئة إنتاج حقيقية، هنا نستخدم API لإرسال الرسالة
-        // window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
+      // Form submission
+      orderForm.addEventListener('submit', function(e) {
+        e.preventDefault();
         
-        // توليد رقم طلب جديد للطلب التالي
-        generateOrderNumber();
+        // Validate all fields
+        const isNameValid = customerNameInput.value.trim().split(/\s+/).length >= 2;
+        const isPhoneValid = /^01[0-9]{9}$/.test(customerPhoneInput.value);
+        const isGovernorateValid = governorateSelect.value !== '';
+        const isCityValid = cityInput.value.trim() !== '';
+        const isAddressValid = addressInput.value.trim() !== '';
+        const isProductDetailsValid = productDetailsInput.value.trim() !== '';
+        const isProductPriceValid = productPriceInput.value !== '';
         
-        // إخفاء رسالة النجاح بعد 5 ثواني
-        setTimeout(function() {
-          document.getElementById("successMessage").classList.add("hidden");
-        }, 5000);
-      }, 2000);
-    }
-  </script>
-</body>
-</html>
+        // Show validation messages
+        customerNameInput.classList.toggle('is-invalid', !isNameValid);
+        customerNameInput.nextElementSibling.style.display = isNameValid ? 'none' : 'block';
+        
+        customerPhoneInput.classList.toggle('is-invalid', !isPhoneValid);
+        customerPhoneInput.nextElementSibling.style.display = isPhoneValid ? 'none' : 'block';
+        
+        governorateSelect.classList.toggle('is-invalid', !isGovernorateValid);
+        governorateSelect.nextElementSibling.style.display = isGovernorateValid ? 'none' : 'block';
+        
+        cityInput.classList.toggle('is-invalid', !isCityValid);
+        cityInput.nextElementSibling.style.display = isCityValid ? 'none' : 'block';
+        
+        addressInput.classList.toggle('is-invalid', !isAddre
