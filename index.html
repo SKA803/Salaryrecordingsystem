@@ -1,18 +1,333 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خطة العبادة لـ 27 يومًا</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>السندباد - النماذج</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: #f0f4f8;
+      margin: 0; padding: 20px;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .form-box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    .form-box h2 {
+      margin-bottom: 20px;
+      color: #007BFF;
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 15px;
+      text-align: right;
+    }
+    .form-group label {
+      display: block; margin-bottom: 5px;
+      color: #555;
+    }
+    .form-group input,
+    .form-group select {
+      width: 100%; padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #007BFF;
+      outline: none;
+      box-shadow: 0 0 8px rgba(0,123,255,0.3);
+    }
+    .form-box button {
+      width: 100%; padding: 12px;
+      background: #007BFF; color: #fff;
+      border: none; border-radius: 8px;
+      font-size: 1rem; cursor: pointer;
+    }
+    .form-box button:hover {
+      background: #005bb5;
+    }
+    .hidden { display: none; }
+    .success-message {
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 15px;
+      display: none;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>خطة العبادة لـ 27 يومًا</h1>
-        <div id="days"></div>
-        <button onclick="calculateResult()">احسب النتيجة</button>
-        <div id="result"></div>
+
+  <div class="container">
+
+    <!-- نموذج 1: بيانات المستخدم -->
+    <div class="form-box">
+      <h2>بيانات المستخدم</h2>
+      <form id="profileForm">
+        <div class="form-group">
+          <label for="profileName">الاسم كاملاً</label>
+          <input type="text" id="profileName" required placeholder="مثلاً: أحمد محمد"/>
+        </div>
+        <div class="form-group">
+          <label for="profilePhone">رقم التليفون (11 رقم على الأقل)</label>
+          <input type="tel" id="profilePhone" required minlength="11" placeholder="مثلاً: 01001234567"/>
+        </div>
+        <div class="form-group">
+          <label for="profileAddress">العنوان بالكامل</label>
+          <input type="text" id="profileAddress" required placeholder="مثلاً: 123 شارع النيل، القاهرة"/>
+        </div>
+        <div class="form-group">
+          <label for="profileProductType">نوع المنتج</label>
+          <input type="text" id="profileProductType" required placeholder="مثلاً: شحن أجهزة"/>
+        </div>
+        <div class="form-group">
+          <label for="profileShipments">عدد الشحنات في الشهر</label>
+          <input type="number" id="profileShipments" required min="1" placeholder="مثلاً: 5"/>
+        </div>
+        <div class="form-group">
+          <label for="profilePayment">طريقة التحويل</label>
+          <select id="profilePayment" required>
+            <option value="" disabled selected>اختر طريقة</option>
+            <option value="Instapay">Instapay</option>
+            <option value="محفظة">محفظة</option>
+            <option value="حساب بنكي">حساب بنكي</option>
+          </select>
+        </div>
+        <div class="form-group hidden" id="profilePaymentDetailsGroup">
+          <label for="profilePaymentDetails">بيانات التحويل</label>
+          <input type="text" id="profilePaymentDetails" placeholder="أدخل بيانات التحويل"/>
+        </div>
+        <button type="submit">حفظ البيانات وإرسالها للواتساب</button>
+        <div id="successMessage" class="success-message">تم حفظ البيانات وإرسالها بنجاح!</div>
+      </form>
     </div>
-    <script src="script.js"></script>
+
+    <!-- نموذج 2: تسجيل أوردر ويرسل على واتساب -->
+    <div class="form-box">
+      <h2>تسجيل أوردر جديد</h2>
+      <form id="orderFormWA">
+        <div class="form-group">
+          <label for="phone1">رقم التليفون الأساسي</label>
+          <input type="tel" id="phone1" required minlength="11"/>
+        </div>
+        <div class="form-group">
+          <label for="phone2">رقم تليفون إضافي (اختياري)</label>
+          <input type="tel" id="phone2" minlength="11"/>
+        </div>
+        <div class="form-group">
+          <label for="customerName">اسم العميل</label>
+          <input type="text" id="customerName" required/>
+        </div>
+        <div class="form-group">
+          <label for="governorate">المحافظة</label>
+          <select id="governorate" required>
+            <option value="" disabled selected>اختر المحافظة</option>
+            <option value="aswan">أسوان</option>
+            <option value="asyut">أسيوط</option>
+            <option value="alexandria">الإسكندرية</option>
+            <option value="ismailia">الإسماعيلية</option>
+            <option value="luxor">الأقصر</option>
+            <option value="red_sea">البحر الأحمر</option>
+            <option value="beheira">البحيرة</option>
+            <option value="dakahlia">الدقهلية</option>
+            <option value="north_coast">الساحل الشمالي</option>
+            <option value="suez">السويس</option>
+            <option value="sharqia">الشرقية</option>
+            <option value="gharbia">الغربية</option>
+            <option value="faiyum">الفيوم</option>
+            <option value="cairo">القاهرة</option>
+            <option value="qalyubia">القليوبية</option>
+            <option value="monufia">المنوفية</option>
+            <option value="minya">المنيا</option>
+            <option value="beni_suef">بني سويف</option>
+            <option value="port_said">بورسعيد</option>
+            <option value="south_sinai">جنوب سيناء</option>
+            <option value="damietta">دمياط</option>
+            <option value="sohag">سوهاج</option>
+            <option value="north_sinai">شمال سيناء</option>
+            <option value="kafr_el_sheikh">كفر الشيخ</option>
+            <option value="matruh">مرسى مطروح</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>سعر الشحن</label>
+          <input type="text" id="shippingPrice" readonly/>
+        </div>
+        <div class="form-group">
+          <label for="city">المدينة</label>
+          <input type="text" id="city" required/>
+        </div>
+        <div class="form-group">
+          <label for="address">العنوان بالكامل</label>
+          <input type="text" id="address" required/>
+        </div>
+        <div class="form-group">
+          <label for="productPrice">سعر المنتج</label>
+          <input type="number" id="productPrice" required min="0"/>
+        </div>
+        <button type="submit">إرسال على واتساب</button>
+        <div id="orderSuccessMessage" class="success-message">تم إرسال الطلب بنجاح!</div>
+      </form>
+    </div>
+
+  </div>
+
+  <script>
+    // ضع رقمك هنا بصيغة دولية من دون +
+    const whatsappNumber = "201044886153";
+
+    // أسعار الشحن
+    const shippingRates = {
+      aswan: 140, asyut: 125, alexandria: 110, ismailia: 110, luxor: 140,
+      red_sea: 140, beheira: 100, dakahlia:110, north_coast:140, suez:110,
+      sharqia:110, gharbia:110, faiyum:120, cairo:100, qalyubia:110,
+      monufia:110, minya:125, beni_suef:125, port_said:110, south_sinai:150,
+      damietta:110, sohag:120, north_sinai:150, kafr_el_sheikh:110, matruh:140
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // ======= نموذج 1: Profile =======
+      const profileForm = document.getElementById("profileForm");
+      const paymentSelect = document.getElementById("profilePayment");
+      const paymentDetailsGroup = document.getElementById("profilePaymentDetailsGroup");
+      const paymentDetailsInput = document.getElementById("profilePaymentDetails");
+      const successMessage = document.getElementById("successMessage");
+
+      // لو في بيانات محفوظة مسبقاً، عبي الحقول
+      const savedProfile = JSON.parse(localStorage.getItem("userProfile") || "null");
+      if (savedProfile) {
+        document.getElementById("profileName").value = savedProfile.name;
+        document.getElementById("profilePhone").value = savedProfile.phone;
+        document.getElementById("profileAddress").value = savedProfile.address;
+        document.getElementById("profileProductType").value = savedProfile.productType;
+        document.getElementById("profileShipments").value = savedProfile.shipments;
+        paymentSelect.value = savedProfile.paymentMethod;
+        if (savedProfile.paymentMethod) {
+          paymentDetailsGroup.classList.remove("hidden");
+          paymentDetailsInput.value = savedProfile.paymentDetails;
+        }
+      }
+
+      paymentSelect.addEventListener("change", () => {
+        if (paymentSelect.value) {
+          paymentDetailsGroup.classList.remove("hidden");
+          paymentDetailsInput.setAttribute("required", "required");
+        } else {
+          paymentDetailsGroup.classList.add("hidden");
+          paymentDetailsInput.removeAttribute("required");
+        }
+      });
+
+      profileForm.addEventListener("submit", e => {
+        e.preventDefault();
+        const profile = {
+          name: document.getElementById("profileName").value.trim(),
+          phone: document.getElementById("profilePhone").value.trim(),
+          address: document.getElementById("profileAddress").value.trim(),
+          productType: document.getElementById("profileProductType").value.trim(),
+          shipments: document.getElementById("profileShipments").value,
+          paymentMethod: paymentSelect.value,
+          paymentDetails: paymentDetailsInput.value.trim()
+        };
+        
+        // حفظ البيانات في التخزين المحلي
+        localStorage.setItem("userProfile", JSON.stringify(profile));
+        
+        // بناء رسالة الواتساب
+        let whatsappMsg = `بيانات مستخدم جديد:%0A%0A`;
+        whatsappMsg += `الاسم: ${profile.name}%0A`;
+        whatsappMsg += `رقم التليفون: ${profile.phone}%0A`;
+        whatsappMsg += `العنوان: ${profile.address}%0A`;
+        whatsappMsg += `نوع المنتج: ${profile.productType}%0A`;
+        whatsappMsg += `عدد الشحنات: ${profile.shipments}%0A`;
+        whatsappMsg += `طريقة التحويل: ${profile.paymentMethod}%0A`;
+        if(profile.paymentDetails) {
+          whatsappMsg += `بيانات التحويل: ${profile.paymentDetails}%0A`;
+        }
+        
+        // إرسال الرسالة عبر الواتساب
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMsg}`;
+        window.open(whatsappUrl, "_blank");
+        
+        // إظهار رسالة النجاح
+        successMessage.style.display = 'block';
+        setTimeout(() => {
+          successMessage.style.display = 'none';
+        }, 3000);
+      });
+
+      // ======= نموذج 2: Order to WhatsApp =======
+      const orderForm = document.getElementById("orderFormWA");
+      const govSelect = document.getElementById("governorate");
+      const shippingInput = document.getElementById("shippingPrice");
+      const orderSuccessMessage = document.getElementById("orderSuccessMessage");
+
+      // احتساب سعر الشحن عند اختيار المحافظة
+      govSelect.addEventListener("change", () => {
+        const key = govSelect.value;
+        shippingInput.value = shippingRates[key] != null
+          ? shippingRates[key] + " ج.م"
+          : "غير متاح";
+      });
+
+      // Prefill from profile
+      if (savedProfile) {
+        document.getElementById("customerName").value = savedProfile.name;
+        document.getElementById("phone1").value = savedProfile.phone;
+        document.getElementById("address").value = savedProfile.address;
+      }
+
+      orderForm.addEventListener("submit", e => {
+        e.preventDefault();
+        const data = {
+          phone1: document.getElementById("phone1").value.trim(),
+          phone2: document.getElementById("phone2").value.trim(),
+          name: document.getElementById("customerName").value.trim(),
+          gov: govSelect.options[govSelect.selectedIndex].text,
+          shipping: shippingInput.value,
+          city: document.getElementById("city").value.trim(),
+          address: document.getElementById("address").value.trim(),
+          price: document.getElementById("productPrice").value
+        };
+        // بناء نص الرسالة
+        let msg = `طلب جديد:%0A`;
+        msg += `الاسم: ${data.name}%0A`;
+        msg += `رقم الجوال: ${data.phone1}%0A`;
+        if (data.phone2) msg += `جوال إضافي: ${data.phone2}%0A`;
+        msg += `المحافظة: ${data.gov}%0A`;
+        msg += `سعر الشحن: ${data.shipping}%0A`;
+        msg += `المدينة: ${data.city}%0A`;
+        msg += `العنوان: ${data.address}%0A`;
+        msg += `سعر المنتج: ${data.price} ج.م%0A`;
+        // فتح واتساب
+        const url = `https://wa.me/${whatsappNumber}?text=${msg}`;
+        window.open(url, "_blank");
+        
+        // إظهار رسالة النجاح
+        orderSuccessMessage.style.display = 'block';
+        setTimeout(() => {
+          orderSuccessMessage.style.display = 'none';
+        }, 3000);
+      });
+    });
+  </script>
+
 </body>
 </html>
