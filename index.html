@@ -8,11 +8,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary-color: #2c3e50;
-      --secondary-color: #3498db;
-      --accent-color: #e74c3c;
+      --primary-color: #1A2A41; /* Navy Blue */
+      --secondary-color: #E76F00; /* Orange */
+      --accent-color: #E74C3C;
       --light-color: #ecf0f1;
-      --dark-color: #2c3e50;
+      --dark-color: #1A2A41;
       --success-color: #27ae60;
     }
     
@@ -40,7 +40,8 @@
     .header h1 {
       color: var(--primary-color);
       font-size: 2.5rem;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
+      font-weight: 700;
     }
     
     .header p {
@@ -48,17 +49,44 @@
       font-size: 1.1rem;
     }
     
-    .logo {
-      height: 80px;
+    .logo-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       margin-bottom: 15px;
-      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+    }
+    
+    .logo-img {
+      height: 80px;
+      margin-bottom: 10px;
+      object-fit: contain;
+    }
+    
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .logo-main-text {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      line-height: 1;
+    }
+    
+    .logo-sub-text {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--primary-color);
+      margin-top: 3px;
     }
     
     .container {
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: calc(100vh - 160px);
+      min-height: calc(100vh - 180px);
     }
     
     .form-box {
@@ -86,7 +114,7 @@
       right: 0;
       width: 5px;
       height: 100%;
-      background: var(--accent-color);
+      background: var(--secondary-color);
       transition: all 0.3s ease;
     }
     
@@ -144,7 +172,7 @@
     .form-group select:focus {
       border-color: var(--secondary-color);
       outline: none;
-      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+      box-shadow: 0 0 0 3px rgba(231, 111, 0, 0.2);
       background-color: #fff;
     }
     
@@ -165,14 +193,14 @@
       cursor: pointer;
       transition: all 0.3s ease;
       margin-top: 10px;
-      box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+      box-shadow: 0 4px 15px rgba(231, 111, 0, 0.3);
       position: relative;
       overflow: hidden;
     }
     
     .form-box button:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+      box-shadow: 0 8px 20px rgba(231, 111, 0, 0.4);
     }
     
     .form-box button:active {
@@ -272,13 +300,31 @@
       .header h1 {
         font-size: 2rem;
       }
+      
+      .logo-img {
+        height: 70px;
+      }
+      
+      .logo-main-text {
+        font-size: 1.8rem;
+      }
+      
+      .logo-sub-text {
+        font-size: 1.1rem;
+      }
     }
   </style>
 </head>
 <body>
   <div class="header">
-    <img src="https://via.placeholder.com/150x60?text=Calon&font-size=20" alt="شركة كالون للشحن" class="logo">
-    <h1>شركة كالون للشحن</h1>
+    <div class="logo-container">
+
+      <div class="logo-text">
+        <span class="logo-main-text">الرحال</span>
+        <span class="logo-sub-text">للشحن</span>
+      </div>
+    </div>
+    <h1>شركة الرحال للشحن</h1>
     <p>نظام تسجيل الطلبات الإلكترونية</p>
   </div>
 
@@ -430,7 +476,7 @@
         };
         
         // بناء نص الرسالة
-        let msg = `*طلب جديد من شركة كالون للشحن*%0A%0A`;
+        let msg = `*طلب جديد من شركة الرحال للشحن*%0A%0A`;
         msg += `*الاسم:* ${data.name}%0A`;
         msg += `*رقم الجوال:* ${data.phone1}%0A`;
         if (data.phone2) msg += `*جوال إضافي:* ${data.phone2}%0A`;
@@ -440,7 +486,7 @@
         msg += `سعر الشحن: ${data.shipping}%0A`;
         msg += `سعر المنتج: ${data.price} ج.م%0A`;
         msg += `*الإجمالي:* ${parseInt(data.price) + parseInt(data.shipping)} ج.م%0A%0A`;
-        msg += `_تم إرسال هذا الطلب عبر نظام كالون الإلكتروني_`;
+        msg += `_تم إرسال هذا الطلب عبر نظام الرحال الإلكتروني_`;
         
         // فتح واتساب
         const url = `https://wa.me/${whatsappNumber}?text=${msg}`;
