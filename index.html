@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>الرحال - تسجيل طلب جديد</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نظام إدارة الموظفين</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --primary-color: #1A2A41; /* Navy Blue */
-      --secondary-color: #E76F00; /* Orange */
-      --accent-color: #E74C3C;
-      --light-color: #ecf0f1;
-      --dark-color: #1A2A41;
-      --success-color: #27ae60;
+      --primary-color: #4361ee;
+      --secondary-color: #3f37c9;
+      --accent-color: #4895ef;
+      --light-color: #f8f9fa;
+      --dark-color: #212529;
+      --success-color: #4cc9f0;
+      --danger-color: #f72585;
+      --border-radius: 12px;
+      --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+      --vacation-color: #4CAF50;
+      --unpaid-color: #f44336;
+      --debt-color: #ff4444;
     }
     
     * {
@@ -23,492 +29,1815 @@
     }
     
     body {
-      font-family: 'Tajawal', sans-serif;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      font-family: 'Tajawal', Arial, sans-serif;
       margin: 0;
-      min-height: 100vh;
-      padding: 20px;
+      padding: 0;
+      background-color: #f5f7ff;
       color: var(--dark-color);
-    }
-    
-    .header {
-      text-align: center;
-      margin-bottom: 30px;
-      animation: fadeInDown 0.8s ease;
-    }
-    
-    .header h1 {
-      color: var(--primary-color);
-      font-size: 2.5rem;
-      margin-bottom: 5px;
-      font-weight: 700;
-    }
-    
-    .header p {
-      color: #7f8c8d;
-      font-size: 1.1rem;
-    }
-    
-    .logo-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-    
-    .logo-img {
-      height: 80px;
-      margin-bottom: 10px;
-      object-fit: contain;
-    }
-    
-    .logo-text {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    
-    .logo-main-text {
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--primary-color);
-      line-height: 1;
-    }
-    
-    .logo-sub-text {
-      font-size: 1.2rem;
-      font-weight: 500;
-      color: var(--primary-color);
-      margin-top: 3px;
+      line-height: 1.6;
     }
     
     .container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: calc(100vh - 180px);
-    }
-    
-    .form-box {
-      background: #fff;
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-      width: 100%;
-      max-width: 500px;
-      transition: all 0.3s ease;
-      animation: fadeInUp 0.8s ease;
+      max-width: 1200px;
+      margin: 20px auto;
+      background: white;
+      padding: 30px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
       position: relative;
       overflow: hidden;
     }
     
-    .form-box:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-    }
-    
-    .form-box::before {
+    .container::before {
       content: '';
       position: absolute;
       top: 0;
       right: 0;
-      width: 5px;
-      height: 100%;
-      background: var(--secondary-color);
-      transition: all 0.3s ease;
+      width: 100%;
+      height: 8px;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
     }
     
-    .form-box:hover::before {
-      width: 8px;
-    }
-    
-    .form-box h2 {
-      margin-bottom: 25px;
+    h1 {
       color: var(--primary-color);
       text-align: center;
-      font-size: 1.8rem;
+      margin-bottom: 30px;
+      font-size: 2.2rem;
       position: relative;
-      padding-bottom: 10px;
+      padding-bottom: 15px;
     }
     
-    .form-box h2::after {
+    h1::after {
       content: '';
       position: absolute;
       bottom: 0;
       right: 50%;
       transform: translateX(50%);
-      width: 80px;
-      height: 3px;
-      background: var(--secondary-color);
-      border-radius: 3px;
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+      border-radius: 2px;
     }
     
+    /* صفحة القائمة الرئيسية */
+    .employee-list {
+      margin-top: 30px;
+    }
+    
+    .employee-card {
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: var(--border-radius);
+      padding: 20px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+    }
+    
+    .employee-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      border-color: var(--accent-color);
+    }
+    
+    .employee-name {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: var(--dark-color);
+    }
+    
+    .employee-name i {
+      margin-left: 10px;
+      color: var(--primary-color);
+    }
+    
+    .employee-actions {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .btn {
+      padding: 8px 15px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .btn i {
+      margin-right: 5px;
+    }
+    
+    .view-btn {
+      background-color: var(--light-color);
+      color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+    }
+    
+    .view-btn:hover {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    .edit-btn {
+      background-color: var(--light-color);
+      color: #ff9800;
+      border: 1px solid #ff9800;
+    }
+    
+    .edit-btn:hover {
+      background-color: #ff9800;
+      color: white;
+    }
+    
+    .delete-btn {
+      background-color: var(--light-color);
+      color: var(--danger-color);
+      border: 1px solid var(--danger-color);
+    }
+    
+    .delete-btn:hover {
+      background-color: var(--danger-color);
+      color: white;
+    }
+    
+    .add-btn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin-top: 30px;
+      text-align: center;
+      text-decoration: none;
+      transition: var(--transition);
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+    }
+    
+    .add-btn:hover {
+      background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(67, 97, 238, 0.4);
+    }
+    
+    .add-btn i {
+      margin-left: 8px;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #666;
+    }
+    
+    .empty-state i {
+      font-size: 3rem;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+    
+    .empty-state p {
+      font-size: 1.1rem;
+    }
+    
+    /* صفحة إضافة/تعديل موظف */
     .form-group {
       margin-bottom: 20px;
-      text-align: right;
       position: relative;
     }
     
-    .form-group label {
+    label {
       display: block;
       margin-bottom: 8px;
-      color: #555;
-      font-weight: 500;
-      transition: all 0.3s ease;
+      font-weight: 600;
+      color: var(--dark-color);
     }
     
-    .form-group input,
-    .form-group select {
+    input, select {
       width: 100%;
       padding: 12px 15px;
-      border: 2px solid #ddd;
-      border-radius: 10px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: var(--border-radius);
+      font-family: 'Tajawal', Arial, sans-serif;
       font-size: 1rem;
-      transition: all 0.3s ease;
-      background-color: #f9f9f9;
+      transition: var(--transition);
+      background-color: var(--light-color);
     }
     
-    .form-group input:focus,
-    .form-group select:focus {
-      border-color: var(--secondary-color);
+    input:focus, select:focus {
       outline: none;
-      box-shadow: 0 0 0 3px rgba(231, 111, 0, 0.2);
-      background-color: #fff;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px rgba(72, 149, 239, 0.2);
     }
     
-    .form-group input:focus + label,
-    .form-group select:focus + label {
-      color: var(--secondary-color);
-    }
-    
-    .form-box button {
+    .form-btn {
       width: 100%;
       padding: 15px;
-      background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      font-size: 1.1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin-top: 10px;
-      box-shadow: 0 4px 15px rgba(231, 111, 0, 0.3);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .form-box button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(231, 111, 0, 0.4);
-    }
-    
-    .form-box button:active {
-      transform: translateY(1px);
-    }
-    
-    .form-box button::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      right: 50%;
-      width: 5px;
-      height: 5px;
-      background: rgba(255, 255, 255, 0.5);
-      opacity: 0;
-      border-radius: 100%;
-      transform: scale(1, 1) translate(-50%);
-      transform-origin: 50% 50%;
-    }
-    
-    .form-box button:focus:not(:active)::after {
-      animation: ripple 1s ease-out;
-    }
-    
-    .success-message {
-      background-color: var(--success-color);
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       color: white;
-      text-align: center;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 20px;
-      display: none;
-      animation: fadeIn 0.5s ease;
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin-top: 25px;
+      font-weight: bold;
+      transition: var(--transition);
+      box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
     }
     
-    .input-icon-container {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      margin-bottom: 5px;
+    .form-btn:hover {
+      background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(67, 97, 238, 0.4);
+    }
+    
+    .form-btn i {
+      margin-left: 8px;
+    }
+    
+    .back-btn {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+      padding: 10px;
+      border-radius: var(--border-radius);
+    }
+    
+    .back-btn:hover {
+      background-color: rgba(67, 97, 238, 0.1);
+    }
+    
+    .back-btn i {
+      margin-right: 5px;
     }
     
     .input-icon {
-      color: var(--secondary-color);
-      margin-left: 5px;
+      position: absolute;
+      left: 15px;
+      top: 40px;
+      color: #aaa;
     }
     
-    /* Animations */
+    /* صفحة تفاصيل الموظف */
+    .employee-details-box {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: var(--box-shadow);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    .employee-name {
+      font-size: 1.8em;
+      font-weight: bold;
+      margin: 0 0 10px 0;
+      color: #2c3e50;
+    }
+    
+    .employee-position {
+      color: #555;
+      margin: 8px 0;
+      font-size: 1.2em;
+      font-weight: 500;
+    }
+    
+    .employee-salary, .employee-hours {
+      margin: 8px 0;
+      font-size: 1.1em;
+      color: #444;
+      display: flex;
+      justify-content: space-between;
+      max-width: 300px;
+    }
+    
+    .employee-label {
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .add-workday-box {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: var(--box-shadow);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      animation: slideUp 0.5s ease-out;
+    }
+    
+    .summary-box {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: var(--box-shadow);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      animation: fadeIn 0.7s ease-out;
+    }
+    
+    .balance-box {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: var(--box-shadow);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      animation: slideUp 0.7s ease-out;
+    }
+    
+    .summary-boxes {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+    
+    .summary-item {
+      background: white;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    
+    .summary-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .summary-item h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: var(--primary-color);
+      font-size: 1.1em;
+      font-weight: 600;
+    }
+    
+    .summary-value {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: var(--dark-color);
+    }
+    
+    .balance-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      padding: 8px 0;
+      border-bottom: 1px dashed #ddd;
+    }
+    
+    .balance-row:last-child {
+      border-bottom: none;
+    }
+    
+    .withdrawals-list {
+      margin-top: 15px;
+      max-height: 150px;
+      overflow-y: auto;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 10px;
+      border-radius: 8px;
+      background: white;
+    }
+    
+    .withdrawal-item {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition);
+    }
+    
+    .withdrawal-item:hover {
+      background-color: #f5f5f5;
+    }
+    
+    .withdrawal-item:last-child {
+      border-bottom: none;
+    }
+    
+    .delete-withdrawal {
+      color: var(--danger-color);
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    
+    .debt-amount {
+      color: var(--debt-color);
+      font-weight: bold;
+    }
+    
+    .section-title {
+      color: #2c3e50;
+      margin-top: 0;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--primary-color);
+    }
+    
+    .action-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 15px;
+      margin-top: 25px;
+      margin-bottom: 25px;
+    }
+    
+    .time-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    
+    .transport-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 0.95em;
+      box-shadow: var(--box-shadow);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    th, td {
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 12px;
+      text-align: center;
+    }
+    
+    th {
+      background-color: #2c3e50;
+      color: white;
+      font-weight: 600;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+    
+    tr:hover {
+      background-color: #e9f7ef;
+    }
+    
+    .vacation-day {
+      background-color: rgba(76, 175, 80, 0.15);
+    }
+    
+    .vacation-day:hover {
+      background-color: rgba(76, 175, 80, 0.25);
+    }
+    
+    .unpaid-day {
+      background-color: rgba(244, 67, 54, 0.15);
+    }
+    
+    .unpaid-day:hover {
+      background-color: rgba(244, 67, 54, 0.25);
+    }
+    
+    .no-records {
+      text-align: center;
+      padding: 20px;
+      color: #7f8c8d;
+      font-style: italic;
+    }
+    
+    .table-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      margin-bottom: 30px;
+      gap: 15px;
+    }
+    
+    .table-actions button {
+      flex: 1;
+      max-width: 300px;
+    }
+    
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--secondary-color);
+    }
+    
+    .btn-vacation {
+      background-color: var(--vacation-color);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .btn-vacation:hover {
+      background-color: #3d8b40;
+    }
+    
+    .btn-unpaid {
+      background-color: var(--unpaid-color);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .btn-unpaid:hover {
+      background-color: #d32f2f;
+    }
+    
+    .btn-secondary {
+      background-color: #6c757d;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .btn-secondary:hover {
+      background-color: #5a6268;
+    }
+    
+    .btn-danger {
+      background-color: var(--danger-color);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .btn-danger:hover {
+      background-color: #e91e63;
+    }
+    
+    .export-table-btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    
+    .export-table-btn:hover {
+      background-color: #3d8b40;
+    }
+    
+    /* صفحة الأرشيف */
+    .archive-item {
+      background: white;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: var(--box-shadow);
+      transition: all 0.3s ease;
+    }
+    
+    .archive-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .archive-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+    }
+    
+    .archive-month {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+    
+    .archive-date {
+      color: #777;
+      font-size: 0.9em;
+    }
+    
+    /* عناصر مشتركة */
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      color: #666;
+      font-size: 0.9rem;
+    }
+    
+    .footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .loading {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: white;
+      font-size: 1.5em;
+    }
+    
+    .loading.active {
+      display: flex;
+    }
+    
+    .spinner {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid var(--primary-color);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+    
+    /* الأنيميشن */
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
     
-    @keyframes fadeInUp {
-      from {
+    @keyframes slideUp {
+      from { 
         opacity: 0;
         transform: translateY(20px);
       }
-      to {
+      to { 
         opacity: 1;
         transform: translateY(0);
       }
     }
     
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    @keyframes ripple {
-      0% {
-        transform: scale(0, 0);
-        opacity: 1;
-      }
-      20% {
-        transform: scale(25, 25);
-        opacity: 1;
-      }
-      100% {
-        opacity: 0;
-        transform: scale(40, 40);
-      }
-    }
-    
-    /* Responsive */
+    /* التكيف مع الشاشات الصغيرة */
     @media (max-width: 768px) {
-      .form-box {
-        padding: 30px 20px;
+      .container {
+        margin: 10px;
+        padding: 20px;
       }
       
-      .header h1 {
-        font-size: 2rem;
-      }
-      
-      .logo-img {
-        height: 70px;
-      }
-      
-      .logo-main-text {
+      h1 {
         font-size: 1.8rem;
       }
       
-      .logo-sub-text {
-        font-size: 1.1rem;
+      .employee-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .employee-actions {
+        margin-top: 10px;
+        align-self: flex-end;
+      }
+      
+      .summary-boxes {
+        grid-template-columns: 1fr 1fr;
+      }
+      
+      .action-buttons {
+        grid-template-columns: 1fr;
+      }
+      
+      .time-inputs,
+      .transport-inputs {
+        grid-template-columns: 1fr;
+      }
+      
+      table {
+        font-size: 0.85em;
+      }
+      
+      th, td {
+        padding: 8px 5px;
+      }
+      
+      .table-actions {
+        flex-direction: column;
+      }
+      
+      .table-actions button {
+        max-width: 100%;
+      }
+      
+      .archive-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .archive-date {
+        margin-top: 5px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .container {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 1.5rem;
+      }
+      
+      .employee-name {
+        font-size: 1rem;
+      }
+      
+      .add-btn, .form-btn {
+        padding: 12px;
+        font-size: 1rem;
+      }
+      
+      .summary-boxes {
+        grid-template-columns: 1fr;
+      }
+      
+      table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
       }
     }
   </style>
 </head>
 <body>
-  <div class="header">
-    <div class="logo-container">
-
-      <div class="logo-text">
-        <span class="logo-main-text">الرحال</span>
-        <span class="logo-sub-text">للشحن</span>
-      </div>
-    </div>
-    <h1>شركة الرحال للشحن</h1>
-    <p>نظام تسجيل الطلبات الإلكترونية</p>
+  <div id="app">
+    <!-- سيتم تحميل المحتوى الديناميكي هنا -->
   </div>
 
-  <div class="container">
-    <!-- نموذج تسجيل أوردر -->
-    <div class="form-box">
-      <h2>تسجيل طلب جديد</h2>
-      <form id="orderFormWA">
-        <div class="form-group">
-          <div class="input-icon-container">
-            <i class="fas fa-phone input-icon"></i>
-            <label for="phone1">رقم التليفون الأساسي</label>
-          </div>
-          <input type="tel" id="phone1" required minlength="11" placeholder="مثال: 01001234567"/>
-        </div>
-        
-        <div class="form-group">
-          <div class="input-icon-container">
-            <i class="fas fa-phone-alt input-icon"></i>
-            <label for="phone2">رقم تليفون إضافي (اختياري)</label>
-          </div>
-          <input type="tel" id="phone2" minlength="11" placeholder="مثال: 01001234567"/>
-        </div>
-        
-        <div class="form-group">
-          <div class="input-icon-container">
-            <i class="fas fa-user input-icon"></i>
-            <label for="customerName">اسم العميل</label>
-          </div>
-          <input type="text" id="customerName" required placeholder="اسم العميل كاملاً"/>
-        </div>
-        
-        <div class="form-group">
-          <div class="input-icon-container">
-            <i class="fas fa-map-marker-alt input-icon"></i>
-            <label for="governorate">المحافظة</label>
-          </div>
-          <select id="governorate" required>
-            <option value="" disabled selected>اختر المحافظة</option>
-            <option value="aswan">أسوان</option>
-            <option value="asyut">أسيوط</option>
-            <option value="alexandria">الإسكندرية</option>
-            <option value="ismailia">الإسماعيلية</option>
-            <option value="luxor">الأقصر</option>
-            <option value="red_sea">البحر الأحمر</option>
-            <option value="beheira">البحيرة</option>
-            <option value="dakahlia">الدقهلية</option>
-            <option value="north_coast">الساحل الشمالي</option>
-            <option value="suez">السويس</option>
-            <option value="sharqia">الشرقية</option>
-            <option value="gharbia">الغربية</option>
-            <option value="faiyum">الفيوم</option>
-            <option value="cairo">القاهرة</option>
-            <option value="qalyubia">القليوبية</option>
-            <option value="monufia">المنوفية</option>
-            <option value="minya">المنيا</option>
-            <option value="beni_suef">بني سويف</option>
-            <option value="port_said">بورسعيد</option>
-            <option value="south_sinai">جنوب سيناء</option>
-            <option value="damietta">دمياط</option>
-            <option value="sohag">سوهاج</option>
-            <option value="north_sinai">شمال سيناء</option>
-            <option value="kafr_el_sheikh">كفر الشيخ</option>
-            <option value="matruh">مرسى مطروح</option>
-          </select>
-        </div>
-        
-        <div class="form-group">
-          <div class="input-icon-container">
-            <i class="fas fa-truck input-icon"></i>
-            <label for="shippingPrice">سعر الشحن</label>
-          </div>
-          <input type="text" id="shippingPrice" readonly placeholder="سيتم حساب السعر بعد اختيار المحافظة"/>
-        </div>
-        
-        <div class="form-group">
-          <div class="input-icon-container">
-            <i class="fas fa-map-marked-alt input-icon"></i>
-            <label for="address">العنوان بالكامل</label>
-          </div>
-          <input type="text" id="address" required placeholder="العنوان التفصيلي مع أي معالم قريبة"/>
-        </div>
-        
-        <div class="form-group">
-          <div class="input-icon-container">
-            <i class="fas fa-tag input-icon"></i>
-            <label for="productPrice">سعر المنتج (جنيه مصري)</label>
-          </div>
-          <input type="number" id="productPrice" required min="0" placeholder="مبلغ المنتج بدون شحن"/>
-        </div>
-        
-        <button type="submit" id="submitBtn">
-          <i class="fas fa-paper-plane"></i> إرسال الطلب
-        </button>
-        
-        <div id="orderSuccessMessage" class="success-message">
-          <i class="fas fa-check-circle"></i> تم إرسال الطلب بنجاح!
-        </div>
-      </form>
-    </div>
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <span id="loadingText">جاري التحميل...</span>
   </div>
 
   <script>
-    // ضع رقم الواتساب هنا بصيغة دولية من دون +
-    const whatsappNumber = "201044886153";
-
-    // أسعار الشحن
-    const shippingRates = {
-      aswan: 140, asyut: 125, alexandria: 110, ismailia: 110, luxor: 140,
-      red_sea: 140, beheira: 100, dakahlia:110, north_coast:140, suez:110,
-      sharqia:110, gharbia:110, faiyum:120, cairo:100, qalyubia:110,
-      monufia:110, minya:125, beni_suef:125, port_said:110, south_sinai:150,
-      damietta:110, sohag:120, north_sinai:150, kafr_el_sheikh:110, matruh:140
+    // متغيرات التطبيق
+    const appState = {
+      currentPage: 'home',
+      currentEmployeeId: null,
+      employees: JSON.parse(localStorage.getItem('employees')) || [],
+      monthlyRecords: JSON.parse(localStorage.getItem('employeeMonthlyRecords')) || {},
+      fileData: null // لتخزين بيانات الملف المحمل
     };
-
-    document.addEventListener("DOMContentLoaded", () => {
-      const orderForm = document.getElementById("orderFormWA");
-      const govSelect = document.getElementById("governorate");
-      const shippingInput = document.getElementById("shippingPrice");
-      const orderSuccessMessage = document.getElementById("orderSuccessMessage");
-      const submitBtn = document.getElementById("submitBtn");
-
-      // احتساب سعر الشحن عند اختيار المحافظة
-      govSelect.addEventListener("change", () => {
-        const key = govSelect.value;
-        shippingInput.value = shippingRates[key] != null
-          ? shippingRates[key] + " ج.م"
-          : "غير متاح";
-      });
-
-      orderForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        
-        // عرض تأثير التحميل
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
-        submitBtn.disabled = true;
-        
-        // محاكاة تأخير للإرسال
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        
-        const data = {
-          phone1: document.getElementById("phone1").value.trim(),
-          phone2: document.getElementById("phone2").value.trim(),
-          name: document.getElementById("customerName").value.trim(),
-          gov: govSelect.options[govSelect.selectedIndex].text,
-          shipping: shippingInput.value,
-          address: document.getElementById("address").value.trim(),
-          price: document.getElementById("productPrice").value
-        };
-        
-        // بناء نص الرسالة
-        let msg = `*طلب جديد من شركة الرحال للشحن*%0A%0A`;
-        msg += `*الاسم:* ${data.name}%0A`;
-        msg += `*رقم الجوال:* ${data.phone1}%0A`;
-        if (data.phone2) msg += `*جوال إضافي:* ${data.phone2}%0A`;
-        msg += `*المحافظة:* ${data.gov}%0A`;
-        msg += `*العنوان:* ${data.address}%0A%0A`;
-        msg += `*تفاصيل الشحن*%0A`;
-        msg += `سعر الشحن: ${data.shipping}%0A`;
-        msg += `سعر المنتج: ${data.price} ج.م%0A`;
-        msg += `*الإجمالي:* ${parseInt(data.price) + parseInt(data.shipping)} ج.م%0A%0A`;
-        msg += `_تم إرسال هذا الطلب عبر نظام الرحال الإلكتروني_`;
-        
-        // فتح واتساب
-        const url = `https://wa.me/${whatsappNumber}?text=${msg}`;
-        window.open(url, "_blank");
-        
-        // إظهار رسالة النجاح
-        orderSuccessMessage.style.display = 'block';
-        
-        // إعادة تعيين الزر
-        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الطلب';
-        submitBtn.disabled = false;
-        
-        // إخفاء رسالة النجاح بعد 5 ثواني
-        setTimeout(() => {
-          orderSuccessMessage.style.display = 'none';
-        }, 5000);
-        
-        // إعادة تعيين النموذج
-        orderForm.reset();
-        shippingInput.value = '';
+    
+    // تهيئة التطبيق عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', function() {
+      // تحميل الصفحة الرئيسية
+      loadPage('home');
+      
+      // إضافة السنة الحالية في التذييل
+      document.querySelectorAll('.current-year').forEach(el => {
+        el.textContent = new Date().getFullYear();
       });
     });
+    
+    // وظيفة تحميل الصفحات
+    function loadPage(page, id = null) {
+      const app = document.getElementById('app');
+      appState.currentPage = page;
+      appState.currentEmployeeId = id;
+      
+      switch(page) {
+        case 'home':
+          loadHomePage();
+          break;
+        case 'add':
+          loadAddEditPage();
+          break;
+        case 'edit':
+          loadAddEditPage(id);
+          break;
+        case 'employee':
+          loadEmployeePage(id);
+          break;
+        case 'archive':
+          loadArchivePage(id);
+          break;
+        default:
+          loadHomePage();
+      }
+      
+      // إضافة السنة الحالية في التذييل
+      document.querySelectorAll('.current-year').forEach(el => {
+        el.textContent = new Date().getFullYear();
+      });
+    }
+    
+    // وظيفة تحميل الصفحة الرئيسية
+    function loadHomePage() {
+      const app = document.getElementById('app');
+      app.innerHTML = `
+        <div class="container">
+          <h1><i class="fas fa-users-cog"></i> نظام إدارة الموظفين</h1>
+          
+          <div class="employee-list" id="employeeList">
+            ${renderEmployeeList()}
+          </div>
+          
+          <button onclick="loadPage('add')" class="add-btn">
+            <i class="fas fa-user-plus"></i> إضافة موظف جديد
+          </button>
+          
+          <div class="footer">
+            <p>جميع الحقوق محفوظة &copy; <span class="current-year"></span> | تم تطوير هذا الموقع بواسطة المطور <a href="#">عبد الله ندا</a></p>
+          </div>
+        </div>
+      `;
+    }
+    
+    // وظيفة عرض قائمة الموظفين
+    function renderEmployeeList() {
+      if (appState.employees.length === 0) {
+        return `
+          <div class="empty-state">
+            <i class="far fa-folder-open"></i>
+            <p>لا يوجد موظفين مسجلين بعد</p>
+          </div>
+        `;
+      }
+      
+      return appState.employees.map(employee => `
+        <div class="employee-card">
+          <div class="employee-name">
+            <i class="fas fa-user-tie"></i> ${employee.name}
+          </div>
+          <div class="employee-actions">
+            <button onclick="loadPage('employee', '${employee.id}')" class="btn view-btn">
+              <i class="fas fa-eye"></i> عرض
+            </button>
+            <button onclick="loadPage('edit', '${employee.id}')" class="btn edit-btn">
+              <i class="fas fa-edit"></i> تعديل
+            </button>
+            <button onclick="deleteEmployee('${employee.id}')" class="btn delete-btn">
+              <i class="fas fa-trash"></i> حذف
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    // وظيفة حذف موظف
+    function deleteEmployee(id) {
+      if (!confirm('هل أنت متأكد من حذف هذا الموظف؟ سيتم حذف جميع بياناته أيضاً.')) {
+        return;
+      }
+      
+      appState.employees = appState.employees.filter(emp => emp.id !== id);
+      localStorage.setItem('employees', JSON.stringify(appState.employees));
+      
+      // تحديث العرض
+      if (appState.currentPage === 'home') {
+        const employeeList = document.getElementById('employeeList');
+        employeeList.innerHTML = renderEmployeeList();
+      } else {
+        loadPage('home');
+      }
+      
+      showSuccessMessage('تم حذف الموظف بنجاح');
+    }
+    
+    // وظيفة تحميل صفحة إضافة/تعديل موظف
+    function loadAddEditPage(id = null) {
+      const isEdit = id !== null;
+      const employee = isEdit ? appState.employees.find(emp => emp.id === id) : null;
+      
+      const app = document.getElementById('app');
+      app.innerHTML = `
+        <div class="container">
+          <h1><i class="fas fa-user-${isEdit ? 'edit' : 'plus'}"></i> ${isEdit ? 'تعديل بيانات الموظف' : 'إضافة موظف جديد'}</h1>
+          
+          <form id="employeeForm">
+            <div class="form-group">
+              <label for="name">اسم الموظف</label>
+              <i class="fas fa-user input-icon"></i>
+              <input type="text" id="name" required placeholder="أدخل اسم الموظف بالكامل" value="${employee?.name || ''}">
+            </div>
+            
+            <div class="form-group">
+              <label for="position">الوظيفة</label>
+              <i class="fas fa-briefcase input-icon"></i>
+              <input type="text" id="position" placeholder="أدخل المسمى الوظيفي" value="${employee?.position || ''}">
+            </div>
+            
+            <div class="form-group">
+              <label for="salary">الراتب الشهري</label>
+              <i class="fas fa-money-bill-wave input-icon"></i>
+              <input type="number" id="salary" min="0" placeholder="أدخل الراتب الأساسي" value="${employee?.salary || '6000'}">
+            </div>
+            
+            <div class="form-group">
+              <label for="dailyHours">عدد ساعات العمل اليومية</label>
+              <i class="fas fa-clock input-icon"></i>
+              <input type="number" id="dailyHours" min="1" placeholder="أدخل عدد ساعات العمل اليومية" value="${employee?.dailyHours || '8'}">
+            </div>
+            
+            <div class="form-group">
+              <label for="overtimeRate">معدل الساعة الإضافية</label>
+              <i class="fas fa-clock input-icon"></i>
+              <input type="number" id="overtimeRate" min="0" placeholder="أدخل قيمة الساعة الإضافية" value="${employee?.overtimeRate || '50'}">
+            </div>
+            
+            <button type="submit" class="form-btn">
+              <i class="fas fa-save"></i> ${isEdit ? 'تحديث البيانات' : 'حفظ الموظف'}
+            </button>
+            <button type="button" onclick="loadPage('home')" class="back-btn">
+              <i class="fas fa-arrow-right"></i> العودة للقائمة
+            </button>
+          </form>
+          
+          <div class="footer">
+            <p>جميع الحقوق محفوظة &copy; <span class="current-year"></span> | تم تطوير هذا الموقع بواسطة المطور <a href="#">عبد الله ندا</a></p>
+          </div>
+        </div>
+      `;
+      
+      // إعداد حدث حفظ النموذج
+      document.getElementById('employeeForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value;
+        const position = document.getElementById('position').value;
+        const salary = parseFloat(document.getElementById('salary').value);
+        const dailyHours = parseInt(document.getElementById('dailyHours').value);
+        const overtimeRate = parseFloat(document.getElementById('overtimeRate').value);
+        
+        if (!name) {
+          alert('الرجاء إدخال اسم الموظف');
+          return;
+        }
+        
+        if (isEdit) {
+          // تحديث بيانات الموظف
+          const index = appState.employees.findIndex(emp => emp.id === id);
+          if (index !== -1) {
+            appState.employees[index] = {
+              ...appState.employees[index],
+              name,
+              position,
+              salary,
+              dailyHours,
+              overtimeRate
+            };
+          }
+        } else {
+          // إضافة موظف جديد
+          const newEmployee = {
+            id: Date.now().toString(),
+            name,
+            position,
+            salary,
+            dailyHours,
+            overtimeRate,
+            workRecords: [],
+            withdrawals: [],
+            balance: 0
+          };
+          
+          appState.employees.push(newEmployee);
+        }
+        
+        // حفظ البيانات
+        localStorage.setItem('employees', JSON.stringify(appState.employees));
+        
+        // عرض رسالة نجاح
+        showSuccessMessage(isEdit ? 'تم تحديث بيانات الموظف بنجاح' : 'تم إضافة الموظف بنجاح');
+        
+        // العودة إلى الصفحة الرئيسية
+        setTimeout(() => loadPage('home'), 1500);
+      });
+    }
+    
+    // وظيفة تحميل صفحة الموظف
+    function loadEmployeePage(id) {
+      const employee = appState.employees.find(emp => emp.id === id);
+      
+      if (!employee) {
+        loadPage('home');
+        return;
+      }
+      
+      // تهيئة بيانات الموظف إذا لم تكن موجودة
+      if (!employee.workRecords) employee.workRecords = [];
+      if (!employee.balance) employee.balance = 0;
+      if (!employee.withdrawals) employee.withdrawals = [];
+      
+      // حساب الإحصائيات
+      const stats = calculateEmployeeStats(employee);
+      
+      const app = document.getElementById('app');
+      app.innerHTML = `
+        <div class="container">
+          <!-- بوكس 1: تفاصيل الموظف -->
+          <div class="employee-details-box">
+            <h1 class="employee-name">${employee.name}</h1>
+            <div class="employee-position">${employee.position || 'لا يوجد'}</div>
+            <div class="employee-salary">
+              <span class="employee-label">الراتب:</span>
+              <span>${employee.salary} ج.م</span>
+            </div>
+            <div class="employee-hours">
+              <span class="employee-label">ساعات العمل اليومية:</span>
+              <span>${employee.dailyHours || 8} ساعات</span>
+            </div>
+          </div>
+          
+          <!-- بوكس 2: إضافة يوم عمل جديد -->
+          <div class="add-workday-box">
+            <h2 class="section-title">إضافة يوم عمل جديد</h2>
+            <div class="form-group">
+              <label for="date">التاريخ</label>
+              <input type="date" id="date" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="siteName">اسم الموقع</label>
+              <input type="text" id="siteName" placeholder="أدخل اسم الموقع">
+            </div>
+            
+            <div class="form-group">
+              <label>ساعات العمل</label>
+              <div class="time-inputs">
+                <input type="time" id="startTime" placeholder="وقت الدخول" required value="08:00">
+                <input type="time" id="endTime" placeholder="وقت الخروج" required value="16:00">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label>مصاريف المواصلات</label>
+              <div class="transport-inputs">
+                <input type="number" id="morningTransport" min="0" placeholder="مواصلات ذهاب" value="">
+                <input type="number" id="eveningTransport" min="0" placeholder="مواصلات عودة" value="">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="allowance">البدل</label>
+              <input type="number" id="allowance" min="0" placeholder="أدخل قيمة البدل" value="">
+            </div>
+            
+            <div class="table-actions">
+              <button type="button" class="btn-primary" onclick="addWorkDay('${employee.id}')">
+                <i class="fas fa-plus"></i> إضافة يوم عمل
+              </button>
+              <button type="button" class="btn-vacation" onclick="addVacationDay('${employee.id}')">
+                <i class="fas fa-umbrella-beach"></i> إضافة إجازة
+              </button>
+              <button type="button" class="btn-unpaid" onclick="addUnpaidDay('${employee.id}')">
+                <i class="fas fa-calendar-times"></i> إضافة يوم غير مدفوع
+              </button>
+            </div>
+          </div>
+          
+          <!-- بوكس 3: ملخص العمل -->
+          <div class="summary-box">
+            <h2 class="section-title">ملخص العمل</h2>
+            <div class="summary-boxes">
+              <div class="summary-item">
+                <h3>أيام العمل</h3>
+                <div class="summary-value">${stats.workDays} يوم</div>
+                <div class="summary-value">${stats.workDaysSalary.toFixed(2)} ج.م</div>
+              </div>
+              <div class="summary-item">
+                <h3>الساعات الإضافية</h3>
+                <div class="summary-value">${stats.overtimeHours.toFixed(1)} ساعة</div>
+                <div class="summary-value">${stats.overtimeSalary.toFixed(2)} ج.م</div>
+              </div>
+              <div class="summary-item">
+                <h3>البدل</h3>
+                <div class="summary-value">${stats.totalAllowance.toFixed(2)} ج.م</div>
+              </div>
+              <div class="summary-item">
+                <h3>الإجمالي</h3>
+                <div class="summary-value">${stats.totalSalary.toFixed(2)} ج.م</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- بوكس 4: الرصيد والمسحوبات -->
+          <div class="balance-box">
+            <h2 class="section-title">الرصيد والمسحوبات</h2>
+            <div class="balance-row">
+              <span>إجمالي المستحقات:</span>
+              <span>${stats.totalSalary.toFixed(2)} ج.م</span>
+            </div>
+            <div class="balance-row">
+              <span>إجمالي المسحوبات:</span>
+              <span>${stats.totalWithdrawals.toFixed(2)} ج.م</span>
+            </div>
+            <div class="balance-row">
+              <span>الرصيد الحالي:</span>
+              <span class="${stats.balance < 0 ? 'debt-amount' : ''}">${stats.balance.toFixed(2)} ج.م</span>
+            </div>
+            
+            <div class="form-group">
+              <label for="withdrawalAmount">سحب مبلغ</label>
+              <input type="number" id="withdrawalAmount" min="0" placeholder="أدخل المبلغ المراد سحبه">
+              <button type="button" class="btn-danger" onclick="addWithdrawal('${employee.id}')" style="margin-top: 10px; width: 100%;">
+                <i class="fas fa-hand-holding-usd"></i> سحب مبلغ
+              </button>
+            </div>
+            
+            <div class="withdrawals-list">
+              ${renderWithdrawals(employee.withdrawals)}
+            </div>
+          </div>
+          
+          <!-- بوكس 5: سجل الأيام -->
+          <div class="summary-box">
+            <h2 class="section-title">سجل الأيام</h2>
+            <div class="table-actions">
+              <button type="button" class="btn-primary" onclick="loadPage('archive', '${employee.id}')">
+                <i class="fas fa-archive"></i> الأرشيف الشهري
+              </button>
+              <button type="button" class="btn-secondary" onclick="loadPage('home')">
+                <i class="fas fa-arrow-right"></i> العودة للقائمة
+              </button>
+            </div>
+            
+            <table id="workRecordsTable">
+              <thead>
+                <tr>
+                  <th>التاريخ</th>
+                  <th>اليوم</th>
+                  <th>الموقع</th>
+                  <th>وقت الدخول</th>
+                  <th>وقت الخروج</th>
+                  <th>مواصلات ذهاب</th>
+                  <th>مواصلات عودة</th>
+                  <th>البدل</th>
+                  <th>الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${renderWorkRecords(employee.workRecords)}
+              </tbody>
+            </table>
+            
+            <button class="export-table-btn" onclick="exportTable('${employee.id}')">
+              <i class="fas fa-file-export"></i> استخراج الجدول
+            </button>
+          </div>
+          
+          <div class="footer">
+            <p>جميع الحقوق محفوظة &copy; <span class="current-year"></span> | تم تطوير هذا الموقع بواسطة المطور <a href="#">عبد الله ندا</a></p>
+          </div>
+        </div>
+      `;
+      
+      // تعيين التاريخ الافتراضي ليوم العمل
+      document.getElementById('date').valueAsDate = new Date();
+    }
+    
+    // وظيفة إضافة يوم عمل
+    function addWorkDay(employeeId) {
+      const employee = appState.employees.find(emp => emp.id === employeeId);
+      if (!employee) return;
+      
+      const date = document.getElementById('date').value;
+      const siteName = document.getElementById('siteName').value;
+      const startTime = document.getElementById('startTime').value;
+      const endTime = document.getElementById('endTime').value;
+      const morningTransport = parseFloat(document.getElementById('morningTransport').value) || 0;
+      const eveningTransport = parseFloat(document.getElementById('eveningTransport').value) || 0;
+      const allowance = parseFloat(document.getElementById('allowance').value) || 0;
+      
+      if (!date || !startTime || !endTime) {
+        alert('الرجاء إدخال التاريخ ووقتي الدخول والخروج');
+        return;
+      }
+      
+      // التحقق من وجود يوم بنفس التاريخ
+      const existingRecordIndex = employee.workRecords.findIndex(record => record.date === date);
+      
+      if (existingRecordIndex !== -1) {
+        if (!confirm('هذا التاريخ مسجل بالفعل. هل تريد تحديث البيانات؟')) {
+          return;
+        }
+        
+        // تحديث السجل الموجود
+        employee.workRecords[existingRecordIndex] = {
+          ...employee.workRecords[existingRecordIndex],
+          siteName,
+          startTime,
+          endTime,
+          morningTransport,
+          eveningTransport,
+          allowance,
+          type: 'work'
+        };
+      } else {
+        // إضافة سجل جديد
+        const workRecord = {
+          id: Date.now().toString(),
+          date,
+          siteName,
+          startTime,
+          endTime,
+          morningTransport,
+          eveningTransport,
+          allowance,
+          type: 'work'
+        };
+        
+        employee.workRecords.push(workRecord);
+      }
+      
+      localStorage.setItem('employees', JSON.stringify(appState.employees));
+      
+      // إعادة تحميل صفحة الموظف
+      loadPage('employee', employeeId);
+      showSuccessMessage('تم إضافة يوم العمل بنجاح');
+    }
+    
+    // وظيفة إضافة يوم إجازة
+    function addVacationDay(employeeId) {
+      const employee = appState.employees.find(emp => emp.id === employeeId);
+      if (!employee) return;
+      
+      const date = document.getElementById('date').value;
+      
+      if (!date) {
+        alert('الرجاء إدخال التاريخ');
+        return;
+      }
+      
+      // التحقق من وجود يوم بنفس التاريخ
+      const existingRecordIndex = employee.workRecords.findIndex(record => record.date === date);
+      
+      if (existingRecordIndex !== -1) {
+        if (!confirm('هذا التاريخ مسجل بالفعل. هل تريد تحديث البيانات؟')) {
+          return;
+        }
+        
+        // تحديث السجل الموجود
+        employee.workRecords[existingRecordIndex] = {
+          ...employee.workRecords[existingRecordIndex],
+          type: 'vacation'
+        };
+      } else {
+        // إضافة سجل جديد
+        const workRecord = {
+          id: Date.now().toString(),
+          date,
+          type: 'vacation'
+        };
+        
+        employee.workRecords.push(workRecord);
+      }
+      
+      localStorage.setItem('employees', JSON.stringify(appState.employees));
+      
+      // إعادة تحميل صفحة الموظف
+      loadPage('employee', employeeId);
+      showSuccessMessage('تم إضافة يوم الإجازة بنجاح');
+    }
+    
+    // وظيفة إضافة يوم غير مدفوع
+    function addUnpaidDay(employeeId) {
+      const employee = appState.employees.find(emp => emp.id === employeeId);
+      if (!employee) return;
+      
+      const date = document.getElementById('date').value;
+      
+      if (!date) {
+        alert('الرجاء إدخال التاريخ');
+        return;
+      }
+      
+      // التحقق من وجود يوم بنفس التاريخ
+      const existingRecordIndex = employee.workRecords.findIndex(record => record.date === date);
+      
+      if (existingRecordIndex !== -1) {
+        if (!confirm('هذا التاريخ مسجل بالفعل. هل تريد تحديث البيانات؟')) {
+          return;
+        }
+        
+        // تحديث السجل الموجود
+        employee.workRecords[existingRecordIndex] = {
+          ...employee.workRecords[existingRecordIndex],
+          type: 'unpaid'
+        };
+      } else {
+        // إضافة سجل جديد
+        const workRecord = {
+          id: Date.now().toString(),
+          date,
+          type: 'unpaid'
+        };
+        
+        employee.workRecords.push(workRecord);
+      }
+      
+      localStorage.setItem('employees', JSON.stringify(appState.employees));
+      
+      // إعادة تحميل صفحة الموظف
+      loadPage('employee', employeeId);
+      showSuccessMessage('تم إضافة اليوم غير المدفوع بنجاح');
+    }
+    
+    // وظيفة إضافة سحب
+    function addWithdrawal(employeeId) {
+      const employee = appState.employees.find(emp => emp.id === employeeId);
+      if (!employee) return;
+      
+      const amount = parseFloat(document.getElementById('withdrawalAmount').value);
+      
+      if (!amount || amount <= 0) {
+        alert('الرجاء إدخال مبلغ صحيح للسحب');
+        return;
+      }
+      
+      const withdrawal = {
+        id: Date.now().toString(),
+        date: new Date().toISOString().split('T')[0],
+        amount
+      };
+      
+      employee.withdrawals.push(withdrawal);
+      localStorage.setItem('employees', JSON.stringify(appState.employees));
+      
+      // إعادة تحميل صفحة الموظف
+      loadPage('employee', employeeId);
+      showSuccessMessage('تم سحب المبلغ بنجاح');
+    }
+    
+    // وظيفة حذف سجل يوم عمل
+    function deleteWorkRecord(employeeId, recordId) {
+      if (!confirm('هل أنت متأكد من حذف هذا اليوم؟')) {
+        return;
+      }
+      
+      const employee = appState.employees.find(emp => emp.id === employeeId);
+      if (!employee) return;
+      
+      employee.workRecords = employee.workRecords.filter(record => record.id !== recordId);
+      localStorage.setItem('employees', JSON.stringify(appState.employees));
+      
+      // إعادة تحميل صفحة الموظف
+      loadPage('employee', employeeId);
+      showSuccessMessage('تم حذف اليوم بنجاح');
+    }
+    
+    // وظيفة حذف سحب
+    function deleteWithdrawal(employeeId, withdrawalId) {
+      if (!confirm('هل أنت متأكد من حذف هذا السحب؟')) {
+        return;
+      }
+      
+      const employee = appState.employees.find(emp => emp.id === employeeId);
+      if (!employee) return;
+      
+      employee.withdrawals = employee.withdrawals.filter(withdrawal => withdrawal.id !== withdrawalId);
+      localStorage.setItem('employees', JSON.stringify(appState.employees));
+      
+      // إعادة تحميل صفحة الموظف
+      loadPage('employee', employeeId);
+      showSuccessMessage('تم حذف السحب بنجاح');
+    }
+    
+    // وظيفة تحميل صفحة الأرشيف
+    function loadArchivePage(employeeId) {
+      const employee = appState.employees.find(emp => emp.id === employeeId);
+      
+      if (!employee) {
+        loadPage('home');
+        return;
+      }
+      
+      // تجميع السجلات حسب الشهر
+      const monthlyRecords = {};
+      
+      employee.workRecords.forEach(record => {
+        const date = new Date(record.date);
+        const monthKey = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
+        
+        if (!monthlyRecords[monthKey]) {
+          monthlyRecords[monthKey] = [];
+        }
+        
+        monthlyRecords[monthKey].push(record);
+      });
+      
+      const app = document.getElementById('app');
+      app.innerHTML = `
+        <div class="container">
+          <h1><i class="fas fa-archive"></i> الأرشيف الشهري - ${employee.name}</h1>
+          
+          <div class="table-actions">
+            <button type="button" class="btn-primary" onclick="loadPage('employee', '${employee.id}')">
+              <i class="fas fa-arrow-right"></i> العودة لصفحة الموظف
+            </button>
+          </div>
+          
+          <div id="archiveList">
+            ${renderArchiveList(monthlyRecords, employee)}
+          </div>
+          
+          <div class="footer">
+            <p>جميع الحقوق محفوظة &copy; <span class="current-year"></span> | تم تطوير هذا الموقع بواسطة المطور <a href="#">عبد الله ندا</a></p>
+          </div>
+        </div>
+      `;
+    }
+    
+    // وظيفة عرض قائمة الأرشيف
+    function renderArchiveList(monthlyRecords, employee) {
+      if (Object.keys(monthlyRecords).length === 0) {
+        return `
+          <div class="empty-state">
+            <i class="far fa-folder-open"></i>
+            <p>لا توجد سجلات شهرية</p>
+          </div>
+        `;
+      }
+      
+      // تحويل المفاتيح إلى مصفوفة وفرزها تنازلياً
+      const sortedMonths = Object.keys(monthlyRecords).sort((a, b) => b.localeCompare(a));
+      
+      return sortedMonths.map(monthKey => {
+        const records = monthlyRecords[monthKey];
+        const [year, month] = monthKey.split('-');
+        const monthName = getMonthName(parseInt(month));
+        const stats = calculateEmployeeStats({...employee, workRecords: records});
+        
+        return `
+          <div class="archive-item">
+            <div class="archive-header">
+              <div class="archive-month">${monthName} ${year}</div>
+              <div class="archive-date">${records.length} يوم</div>
+            </div>
+            <div class="summary-boxes">
+              <div class="summary-item">
+                <h3>أيام العمل</h3>
+                <div class="summary-value">${stats.workDays} يوم</div>
+                <div class="summary-value">${stats.workDaysSalary.toFixed(2)} ج.م</div>
+              </div>
+              <div class="summary-item">
+                <h3>الساعات الإضافية</h3>
+                <div class="summary-value">${stats.overtimeHours.toFixed(1)} ساعة</div>
+                <div class="summary-value">${stats.overtimeSalary.toFixed(2)} ج.م</div>
+              </div>
+              <div class="summary-item">
+                <h3>البدل</h3>
+                <div class="summary-value">${stats.totalAllowance.toFixed(2)} ج.م</div>
+              </div>
+              <div class="summary-item">
+                <h3>الإجمالي</h3>
+                <div class="summary-value">${stats.totalSalary.toFixed(2)} ج.م</div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+    
+    // وظيفة عرض سجلات العمل
+    function renderWorkRecords(workRecords) {
+      if (workRecords.length === 0) {
+        return `
+          <tr>
+            <td colspan="9" class="no-records">لا توجد سجلات عمل</td>
+          </tr>
+        `;
+      }
+      
+      // فرز السجلات حسب التاريخ (من الأحدث إلى الأقدم)
+      const sortedRecords = [...workRecords].sort((a, b) => new Date(b.date) - new Date(a.date));
+      
+      return sortedRecords.map(record => {
+        const date = new Date(record.date);
+        const dayName = getDayName(date.getDay());
+        
+        let rowClass = '';
+        if (record.type === 'vacation') rowClass = 'vacation-day';
+        if (record.type === 'unpaid') rowClass = 'unpaid-day';
+        
+        return `
+          <tr class="${rowClass}">
+            <td>${record.date}</td>
+            <td>${dayName}</td>
+            <td>${record.siteName || '-'}</td>
+            <td>${record.startTime ? convertTo12HourFormat(record.startTime) : '-'}</td>
+            <td>${record.endTime ? convertTo12HourFormat(record.endTime) : '-'}</td>
+            <td>${record.morningTransport || '-'}</td>
+            <td>${record.eveningTransport || '-'}</td>
+            <td>${record.allowance || '-'}</td>
+            <td>
+              <button onclick="deleteWorkRecord('${appState.currentEmployeeId}', '${record.id}')" class="btn delete-btn" style="padding: 5px 10px; font-size: 0.8rem;">
+                <i class="fas fa-trash"></i> حذف
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+    
+    // وظيفة عرض المسحوبات
+    function renderWithdrawals(withdrawals) {
+      if (withdrawals.length === 0) {
+        return '<div class="no-records">لا توجد مسحوبات</div>';
+      }
+      
+      // فرز المسحوبات حسب التاريخ (من الأحدث إلى الأقدم)
+      const sortedWithdrawals = [...withdrawals].sort((a, b) => new Date(b.date) - new Date(a.date));
+      
+      return sortedWithdrawals.map(withdrawal => `
+        <div class="withdrawal-item">
+          <div>
+            <span>${withdrawal.date}</span>
+            <span>${withdrawal.amount} ج.م</span>
+          </div>
+          <div>
+            <span class="delete-withdrawal" onclick="deleteWithdrawal('${appState.currentEmployeeId}', '${withdrawal.id}')">
+              <i class="fas fa-trash"></i>
+            </span>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    // وظيفة استخراج الجدول
+    function exportTable(employeeId) {
+      const employee = appState.employees.find(emp => emp.id === employeeId);
+      if (!employee) return;
+      
+      const table = document.getElementById('workRecordsTable');
+      const stats = calculateEmployeeStats(employee);
+      
+      const printWindow = window.open('', '_blank');
+      
+      printWindow.document.write(`
+        <html dir="rtl">
+          <head>
+            <title>تصدير الجدول - ${employee.name}</title>
+            <style>
+              body { 
+                font-family: 'Tajawal', Arial, sans-serif; 
+                padding: 20px;
+                direction: rtl;
+              }
+              h2, h3 {
+                color: #2c3e50;
+              }
+              .summary-container {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                margin-bottom: 20px;
+              }
+              .summary-item {
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                padding: 15px;
+                text-align: center;
+              }
+              .summary-item h3 {
+                margin-top: 0;
+                margin-bottom: 10px;
+              }
+              .summary-value {
+                font-size: 1.2em;
+                font-weight: bold;
+              }
+              table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+              }
+              th, td {
+                border: 1px solid #ddd;
+                padding: 12px;
+                text-align: center;
+              }
+              th {
+                background-color: #2c3e50;
+                color: white;
+              }
+              tr:nth-child(even) {
+                background-color: #f8f9fa;
+              }
+              .vacation-day {
+                background-color: rgba(76, 175, 80, 0.15);
+              }
+              .unpaid-day {
+                background-color: rgba(244, 67, 54, 0.15);
+              }
+            </style>
+          </head>
+          <body>
+            <h2>سجل الأيام - ${employee.name}</h2>
+            
+            <div class="summary-container">
+              <div class="summary-item">
+                <h3>أيام العمل</h3>
+                <div class="summary-value">${stats.workDays} يوم</div>
+                <div class="summary-value">${stats.workDaysSalary.toFixed(2)} ج.م</div>
+              </div>
+              <div class="summary-item">
+                <h3>الساعات الإضافية</h3>
+                <div class="summary-value">${stats.overtimeHours.toFixed(1)} ساعة</div>
+                <div class="summary-value">${stats.overtimeSalary.toFixed(2)} ج.م</div>
+              </div>
+              <div class="summary-item">
+                <h3>البدل</h3>
+                <div class="summary-value">${stats.totalAllowance.toFixed(2)} ج.م</div>
+              </div>
+              <div class="summary-item">
+                <h3>الإجمالي</h3>
+                <div class="summary-value">${stats.totalSalary.toFixed(2)} ج.م</div>
+              </div>
+            </div>
+            
+            ${table.outerHTML}
+          </body>
+        </html>
+      `);
+      
+      printWindow.document.close();
+      printWindow.print();
+    }
+    
+    // وظيفة حساب إحصائيات الموظف
+    function calculateEmployeeStats(employee) {
+      const workDays = employee.workRecords.filter(record => record.type === 'work').length;
+      const dailyRate = employee.salary / 30; // نفترض أن الشهر 30 يوم
+      const workDaysSalary = workDays * dailyRate;
+      
+      let totalHours = 0;
+      let overtimeHours = 0;
+      let totalAllowance = 0;
+      let totalTransport = 0;
+      
+      employee.workRecords.forEach(record => {
+        if (record.type === 'work' && record.startTime && record.endTime) {
+          const start = new Date(`2000-01-01T${record.startTime}`);
+          const end = new Date(`2000-01-01T${record.endTime}`);
+          
+          // إذا كان وقت الخروج قبل وقت الدخول، نعتبر أن العمل استمر حتى اليوم التالي
+          let diffMs = end - start;
+          if (diffMs < 0) {
+            diffMs += 24 * 60 * 60 * 1000; // إضافة 24 ساعة
+          }
+          
+          const diffHours = diffMs / (1000 * 60 * 60);
+          totalHours += diffHours;
+          
+          // حساب الساعات الإضافية
+          if (diffHours > employee.dailyHours) {
+            overtimeHours += diffHours - employee.dailyHours;
+          }
+        }
+        
+        // حساب البدل والمواصلات
+        if (record.type === 'work') {
+          totalAllowance += (record.allowance || 0);
+          totalTransport += (record.morningTransport || 0) + (record.eveningTransport || 0);
+        }
+      });
+      
+      const overtimeSalary = overtimeHours * employee.overtimeRate;
+      const totalSalary = workDaysSalary + overtimeSalary + totalAllowance + totalTransport;
+      const totalWithdrawals = employee.withdrawals.reduce((total, withdrawal) => total + withdrawal.amount, 0);
+      const balance = totalSalary - totalWithdrawals;
+      
+      return {
+        workDays,
+        workDaysSalary,
+        overtimeHours,
+        overtimeSalary,
+        totalAllowance,
+        totalTransport,
+        totalSalary,
+        totalWithdrawals,
+        balance
+      };
+    }
+    
+    // وظائف مساعدة
+    function convertTo12HourFormat(time24) {
+      if (!time24) return '';
+      
+      const [hours, minutes] = time24.split(':');
+      let period = 'ص';
+      let hours12 = parseInt(hours);
+      
+      if (hours12 >= 12) {
+        period = 'م';
+        if (hours12 > 12) hours12 -= 12;
+      }
+      
+      if (hours12 === 0) hours12 = 12;
+      
+      return `${hours12}:${minutes} ${period}`;
+    }
+    
+    function getDayName(dayIndex) {
+      const days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+      return days[dayIndex];
+    }
+    
+    function getMonthName(monthIndex) {
+      const months = [
+        'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
+        'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
+      ];
+      return months[monthIndex - 1];
+    }
+    
+    function showSuccessMessage(message) {
+      // إنشاء عنصر الرسالة
+      const messageEl = document.createElement('div');
+      messageEl.textContent = message;
+      messageEl.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 50%;
+        transform: translateX(50%);
+        background-color: #4CAF50;
+        color: white;
+        padding: 15px 25px;
+        border-radius: 5px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10000;
+        font-weight: bold;
+        animation: fadeIn 0.3s, fadeOut 0.3s 2.7s;
+      `;
+      
+      document.body.appendChild(messageEl);
+      
+      // إزالة الرسالة بعد 3 ثوانٍ
+      setTimeout(() => {
+        if (document.body.contains(messageEl)) {
+          document.body.removeChild(messageEl);
+        }
+      }, 3000);
+    }
   </script>
 </body>
 </html>
