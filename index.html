@@ -1173,6 +1173,10 @@
                 <div class="summary-value">${stats.totalAllowance.toFixed(2)} ج.م</div>
               </div>
               <div class="summary-item">
+                <h3>إجمالي المواصلات</h3>
+                <div class="summary-value">${stats.totalTransport.toFixed(2)} ج.م</div>
+              </div>
+              <div class="summary-item">
                 <h3>الإجمالي</h3>
                 <div class="summary-value">${stats.totalSalary.toFixed(2)} ج.م</div>
               </div>
@@ -1548,6 +1552,10 @@
                 <div class="summary-value">${stats.totalAllowance.toFixed(2)} ج.م</div>
               </div>
               <div class="summary-item">
+                <h3>إجمالي المواصلات</h3>
+                <div class="summary-value">${stats.totalTransport.toFixed(2)} ج.م</div>
+              </div>
+              <div class="summary-item">
                 <h3>الإجمالي</h3>
                 <div class="summary-value">${stats.totalSalary.toFixed(2)} ج.م</div>
               </div>
@@ -1567,8 +1575,8 @@
         `;
       }
       
-      // فرز السجلات حسب التاريخ (من الأحدث إلى الأقدم)
-      const sortedRecords = [...workRecords].sort((a, b) => new Date(b.date) - new Date(a.date));
+      // فرز السجلات حسب التاريخ (من الأقدم إلى الأحدث)
+      const sortedRecords = [...workRecords].sort((a, b) => new Date(a.date) - new Date(b.date));
       
       return sortedRecords.map(record => {
         const date = new Date(record.date);
@@ -1707,6 +1715,10 @@
               <div class="summary-item">
                 <h3>البدل</h3>
                 <div class="summary-value">${stats.totalAllowance.toFixed(2)} ج.م</div>
+              </div>
+              <div class="summary-item">
+                <h3>إجمالي المواصلات</h3>
+                <div class="summary-value">${stats.totalTransport.toFixed(2)} ج.م</div>
               </div>
               <div class="summary-item">
                 <h3>الإجمالي</h3>
