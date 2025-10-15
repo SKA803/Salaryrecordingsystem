@@ -79,7 +79,6 @@
       border-radius: 2px;
     }
     
-    /* صفحة القائمة الرئيسية */
     .employee-list {
       margin-top: 30px;
     }
@@ -213,7 +212,6 @@
       font-size: 1.1rem;
     }
     
-    /* صفحة إضافة/تعديل موظف */
     .form-group {
       margin-bottom: 20px;
       position: relative;
@@ -295,7 +293,6 @@
       color: #aaa;
     }
     
-    /* صفحة تفاصيل الموظف */
     .employee-details-box {
       background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       border-radius: 10px;
@@ -632,7 +629,6 @@
       background-color: #3d8b40;
     }
     
-    /* صفحة الأرشيف */
     .archive-item {
       background: white;
       border: 1px solid rgba(0, 0, 0, 0.08);
@@ -668,7 +664,6 @@
       font-size: 0.9em;
     }
     
-    /* عناصر مشتركة */
     .footer {
       text-align: center;
       margin-top: 40px;
@@ -714,7 +709,6 @@
       margin-bottom: 20px;
     }
     
-    /* الأنيميشن */
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
@@ -736,7 +730,6 @@
       }
     }
     
-    /* التكيف مع الشاشات الصغيرة */
     @media (max-width: 768px) {
       .container {
         margin: 10px;
@@ -843,15 +836,13 @@
       currentEmployeeId: null,
       employees: JSON.parse(localStorage.getItem('employees')) || [],
       monthlyRecords: JSON.parse(localStorage.getItem('employeeMonthlyRecords')) || {},
-      fileData: null // لتخزين بيانات الملف المحمل
+      fileData: null
     };
     
     // تهيئة التطبيق عند تحميل الصفحة
     document.addEventListener('DOMContentLoaded', function() {
-      // تحميل الصفحة الرئيسية
       loadPage('home');
       
-      // إضافة السنة الحالية في التذييل
       document.querySelectorAll('.current-year').forEach(el => {
         el.textContent = new Date().getFullYear();
       });
@@ -883,7 +874,6 @@
           loadHomePage();
       }
       
-      // إضافة السنة الحالية في التذييل
       document.querySelectorAll('.current-year').forEach(el => {
         el.textContent = new Date().getFullYear();
       });
@@ -951,7 +941,6 @@
       appState.employees = appState.employees.filter(emp => emp.id !== id);
       localStorage.setItem('employees', JSON.stringify(appState.employees));
       
-      // تحديث العرض
       if (appState.currentPage === 'home') {
         const employeeList = document.getElementById('employeeList');
         employeeList.innerHTML = renderEmployeeList();
@@ -1017,7 +1006,6 @@
         </div>
       `;
       
-      // إعداد حدث حفظ النموذج
       document.getElementById('employeeForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -1033,7 +1021,6 @@
         }
         
         if (isEdit) {
-          // تحديث بيانات الموظف
           const index = appState.employees.findIndex(emp => emp.id === id);
           if (index !== -1) {
             appState.employees[index] = {
@@ -1046,7 +1033,6 @@
             };
           }
         } else {
-          // إضافة موظف جديد
           const newEmployee = {
             id: Date.now().toString(),
             name,
@@ -1062,13 +1048,10 @@
           appState.employees.push(newEmployee);
         }
         
-        // حفظ البيانات
         localStorage.setItem('employees', JSON.stringify(appState.employees));
         
-        // عرض رسالة نجاح
         showSuccessMessage(isEdit ? 'تم تحديث بيانات الموظف بنجاح' : 'تم إضافة الموظف بنجاح');
         
-        // العودة إلى الصفحة الرئيسية
         setTimeout(() => loadPage('home'), 1500);
       });
     }
@@ -1082,18 +1065,15 @@
         return;
       }
       
-      // تهيئة بيانات الموظف إذا لم تكن موجودة
       if (!employee.workRecords) employee.workRecords = [];
       if (!employee.balance) employee.balance = 0;
       if (!employee.withdrawals) employee.withdrawals = [];
       
-      // حساب الإحصائيات
       const stats = calculateEmployeeStats(employee);
       
       const app = document.getElementById('app');
       app.innerHTML = `
         <div class="container">
-          <!-- بوكس 1: تفاصيل الموظف -->
           <div class="employee-details-box">
             <h1 class="employee-name">${employee.name}</h1>
             <div class="employee-position">${employee.position || 'لا يوجد'}</div>
@@ -1107,7 +1087,6 @@
             </div>
           </div>
           
-          <!-- بوكس 2: إضافة يوم عمل جديد -->
           <div class="add-workday-box">
             <h2 class="section-title">إضافة يوم عمل جديد</h2>
             <div class="form-group">
@@ -1123,8 +1102,8 @@
             <div class="form-group">
               <label>ساعات العمل</label>
               <div class="time-inputs">
-                <input type="time" id="startTime" placeholder="وقت الدخول" required value="08:00">
-                <input type="time" id="endTime" placeholder="وقت الخروج" required value="16:00">
+                <input type="time" id="startTime" placeholder="وقت الدخول" required value="17:30">
+                <input type="time" id="endTime" placeholder="وقت الخروج" required value="01:30">
               </div>
             </div>
             
@@ -1154,7 +1133,6 @@
             </div>
           </div>
           
-          <!-- بوكس 3: ملخص العمل -->
           <div class="summary-box">
             <h2 class="section-title">ملخص العمل</h2>
             <div class="summary-boxes">
@@ -1183,7 +1161,6 @@
             </div>
           </div>
           
-          <!-- بوكس 4: الرصيد والمسحوبات -->
           <div class="balance-box">
             <h2 class="section-title">الرصيد والمسحوبات</h2>
             <div class="balance-row">
@@ -1212,7 +1189,6 @@
             </div>
           </div>
           
-          <!-- بوكس 5: سجل الأيام -->
           <div class="summary-box">
             <h2 class="section-title">سجل الأيام</h2>
             <div class="table-actions">
@@ -1254,7 +1230,6 @@
         </div>
       `;
       
-      // تعيين التاريخ الافتراضي ليوم العمل
       document.getElementById('date').valueAsDate = new Date();
     }
     
@@ -1276,7 +1251,6 @@
         return;
       }
       
-      // التحقق من وجود يوم بنفس التاريخ
       const existingRecordIndex = employee.workRecords.findIndex(record => record.date === date);
       
       if (existingRecordIndex !== -1) {
@@ -1284,7 +1258,6 @@
           return;
         }
         
-        // تحديث السجل الموجود
         employee.workRecords[existingRecordIndex] = {
           ...employee.workRecords[existingRecordIndex],
           siteName,
@@ -1296,7 +1269,6 @@
           type: 'work'
         };
       } else {
-        // إضافة سجل جديد
         const workRecord = {
           id: Date.now().toString(),
           date,
@@ -1314,7 +1286,6 @@
       
       localStorage.setItem('employees', JSON.stringify(appState.employees));
       
-      // إعادة تحميل صفحة الموظف
       loadPage('employee', employeeId);
       showSuccessMessage('تم إضافة يوم العمل بنجاح');
     }
@@ -1331,7 +1302,6 @@
         return;
       }
       
-      // التحقق من وجود يوم بنفس التاريخ
       const existingRecordIndex = employee.workRecords.findIndex(record => record.date === date);
       
       if (existingRecordIndex !== -1) {
@@ -1339,13 +1309,11 @@
           return;
         }
         
-        // تحديث السجل الموجود
         employee.workRecords[existingRecordIndex] = {
           ...employee.workRecords[existingRecordIndex],
           type: 'vacation'
         };
       } else {
-        // إضافة سجل جديد
         const workRecord = {
           id: Date.now().toString(),
           date,
@@ -1357,7 +1325,6 @@
       
       localStorage.setItem('employees', JSON.stringify(appState.employees));
       
-      // إعادة تحميل صفحة الموظف
       loadPage('employee', employeeId);
       showSuccessMessage('تم إضافة يوم الإجازة بنجاح');
     }
@@ -1374,7 +1341,6 @@
         return;
       }
       
-      // التحقق من وجود يوم بنفس التاريخ
       const existingRecordIndex = employee.workRecords.findIndex(record => record.date === date);
       
       if (existingRecordIndex !== -1) {
@@ -1382,13 +1348,11 @@
           return;
         }
         
-        // تحديث السجل الموجود
         employee.workRecords[existingRecordIndex] = {
           ...employee.workRecords[existingRecordIndex],
           type: 'unpaid'
         };
       } else {
-        // إضافة سجل جديد
         const workRecord = {
           id: Date.now().toString(),
           date,
@@ -1400,7 +1364,6 @@
       
       localStorage.setItem('employees', JSON.stringify(appState.employees));
       
-      // إعادة تحميل صفحة الموظف
       loadPage('employee', employeeId);
       showSuccessMessage('تم إضافة اليوم غير المدفوع بنجاح');
     }
@@ -1426,7 +1389,6 @@
       employee.withdrawals.push(withdrawal);
       localStorage.setItem('employees', JSON.stringify(appState.employees));
       
-      // إعادة تحميل صفحة الموظف
       loadPage('employee', employeeId);
       showSuccessMessage('تم سحب المبلغ بنجاح');
     }
@@ -1443,7 +1405,6 @@
       employee.workRecords = employee.workRecords.filter(record => record.id !== recordId);
       localStorage.setItem('employees', JSON.stringify(appState.employees));
       
-      // إعادة تحميل صفحة الموظف
       loadPage('employee', employeeId);
       showSuccessMessage('تم حذف اليوم بنجاح');
     }
@@ -1460,7 +1421,6 @@
       employee.withdrawals = employee.withdrawals.filter(withdrawal => withdrawal.id !== withdrawalId);
       localStorage.setItem('employees', JSON.stringify(appState.employees));
       
-      // إعادة تحميل صفحة الموظف
       loadPage('employee', employeeId);
       showSuccessMessage('تم حذف السحب بنجاح');
     }
@@ -1474,7 +1434,6 @@
         return;
       }
       
-      // تجميع السجلات حسب الشهر
       const monthlyRecords = {};
       
       employee.workRecords.forEach(record => {
@@ -1521,7 +1480,6 @@
         `;
       }
       
-      // تحويل المفاتيح إلى مصفوفة وفرزها تنازلياً
       const sortedMonths = Object.keys(monthlyRecords).sort((a, b) => b.localeCompare(a));
       
       return sortedMonths.map(monthKey => {
@@ -1575,7 +1533,6 @@
         `;
       }
       
-      // فرز السجلات حسب التاريخ (من الأقدم إلى الأحدث)
       const sortedRecords = [...workRecords].sort((a, b) => new Date(a.date) - new Date(b.date));
       
       return sortedRecords.map(record => {
@@ -1612,7 +1569,6 @@
         return '<div class="no-records">لا توجد مسحوبات</div>';
       }
       
-      // فرز المسحوبات حسب التاريخ (من الأحدث إلى الأقدم)
       const sortedWithdrawals = [...withdrawals].sort((a, b) => new Date(b.date) - new Date(a.date));
       
       return sortedWithdrawals.map(withdrawal => `
@@ -1737,8 +1693,9 @@
     
     // وظيفة حساب إحصائيات الموظف - الإصدار المحسن
     function calculateEmployeeStats(employee) {
+      // حساب عدد أيام العمل الفعلية
       const workDays = employee.workRecords.filter(record => record.type === 'work').length;
-      const dailyRate = employee.salary / 30; // نفترض أن الشهر 30 يوم
+      const dailyRate = employee.salary / 30;
       const workDaysSalary = workDays * dailyRate;
       
       let totalHours = 0;
@@ -1748,11 +1705,12 @@
       
       employee.workRecords.forEach(record => {
         if (record.type === 'work' && record.startTime && record.endTime) {
-          // حساب الفرق بين وقت الدخول والخروج مع مراعاة العمل المسائي
+          // حساب الوقت بشكل صحيح مع مراعاة العمل المسائي
           const start = new Date(`2000-01-01T${record.startTime}`);
           const end = new Date(`2000-01-01T${record.endTime}`);
           
-          // إذا كان وقت الخروج قبل وقت الدخول، نعتبر أن العمل استمر حتى اليوم التالي
+          // إذا كان وقت الخروج قبل وقت الدخول (مثل 5:30 م إلى 1:30 ص)
+          // نعتبر أن العمل استمر حتى اليوم التالي
           let diffMs = end - start;
           if (diffMs < 0) {
             diffMs += 24 * 60 * 60 * 1000; // إضافة 24 ساعة
@@ -1824,7 +1782,6 @@
     }
     
     function showSuccessMessage(message) {
-      // إنشاء عنصر الرسالة
       const messageEl = document.createElement('div');
       messageEl.textContent = message;
       messageEl.style.cssText = `
@@ -1844,7 +1801,6 @@
       
       document.body.appendChild(messageEl);
       
-      // إزالة الرسالة بعد 3 ثوانٍ
       setTimeout(() => {
         if (document.body.contains(messageEl)) {
           document.body.removeChild(messageEl);
