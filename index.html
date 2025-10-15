@@ -1735,7 +1735,7 @@
       printWindow.print();
     }
     
-    // وظيفة حساب إحصائيات الموظف
+    // وظيفة حساب إحصائيات الموظف - الإصدار المحسن
     function calculateEmployeeStats(employee) {
       const workDays = employee.workRecords.filter(record => record.type === 'work').length;
       const dailyRate = employee.salary / 30; // نفترض أن الشهر 30 يوم
@@ -1748,6 +1748,7 @@
       
       employee.workRecords.forEach(record => {
         if (record.type === 'work' && record.startTime && record.endTime) {
+          // حساب الفرق بين وقت الدخول والخروج مع مراعاة العمل المسائي
           const start = new Date(`2000-01-01T${record.startTime}`);
           const end = new Date(`2000-01-01T${record.endTime}`);
           
