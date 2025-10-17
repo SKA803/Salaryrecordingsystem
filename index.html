@@ -1102,16 +1102,28 @@
             <div class="form-group">
               <label>ساعات العمل</label>
               <div class="time-inputs">
-                <input type="time" id="startTime" placeholder="وقت الدخول" required value="17:30">
-                <input type="time" id="endTime" placeholder="وقت الخروج" required value="01:30">
+                <div>
+                  <label for="startTime" style="font-size: 0.9em; margin-bottom: 5px;">وقت الدخول (صباحي)</label>
+                  <input type="time" id="startTime" placeholder="وقت الدخول" required value="08:00">
+                </div>
+                <div>
+                  <label for="endTime" style="font-size: 0.9em; margin-bottom: 5px;">وقت الخروج (مسائي)</label>
+                  <input type="time" id="endTime" placeholder="وقت الخروج" required value="16:00">
+                </div>
               </div>
             </div>
             
             <div class="form-group">
               <label>مصاريف المواصلات</label>
               <div class="transport-inputs">
-                <input type="number" id="morningTransport" min="0" placeholder="مواصلات ذهاب" value="">
-                <input type="number" id="eveningTransport" min="0" placeholder="مواصلات عودة" value="">
+                <div>
+                  <label for="morningTransport" style="font-size: 0.9em; margin-bottom: 5px;">مواصلات ذهاب (صباحي)</label>
+                  <input type="number" id="morningTransport" min="0" placeholder="مواصلات ذهاب" value="">
+                </div>
+                <div>
+                  <label for="eveningTransport" style="font-size: 0.9em; margin-bottom: 5px;">مواصلات عودة (مسائي)</label>
+                  <input type="number" id="eveningTransport" min="0" placeholder="مواصلات عودة" value="">
+                </div>
               </div>
             </div>
             
@@ -1137,9 +1149,12 @@
             <h2 class="section-title">ملخص العمل</h2>
             <div class="summary-boxes">
               <div class="summary-item">
-                <h3>أيام العمل</h3>
-                <div class="summary-value">${stats.workDays} يوم</div>
-                <div class="summary-value">${stats.workDaysSalary.toFixed(2)} ج.م</div>
+                <h3>إجمالي الأيام</h3>
+                <div class="summary-value">${stats.totalDays} يوم</div>
+                <div class="summary-value">${stats.totalDaysSalary.toFixed(2)} ج.م</div>
+                <div style="font-size: 0.8em; color: #666; margin-top: 5px;">
+                  (${stats.workDays} عمل + ${stats.vacationDays} إجازة + ${stats.unpaidDays} غير مدفوع)
+                </div>
               </div>
               <div class="summary-item">
                 <h3>الساعات الإضافية</h3>
@@ -1155,7 +1170,7 @@
                 <div class="summary-value">${stats.totalTransport.toFixed(2)} ج.م</div>
               </div>
               <div class="summary-item">
-                <h3>الإجمالي</h3>
+                <h3>الإجمالي النهائي</h3>
                 <div class="summary-value">${stats.totalSalary.toFixed(2)} ج.م</div>
               </div>
             </div>
@@ -1496,9 +1511,12 @@
             </div>
             <div class="summary-boxes">
               <div class="summary-item">
-                <h3>أيام العمل</h3>
-                <div class="summary-value">${stats.workDays} يوم</div>
-                <div class="summary-value">${stats.workDaysSalary.toFixed(2)} ج.م</div>
+                <h3>إجمالي الأيام</h3>
+                <div class="summary-value">${stats.totalDays} يوم</div>
+                <div class="summary-value">${stats.totalDaysSalary.toFixed(2)} ج.م</div>
+                <div style="font-size: 0.8em; color: #666; margin-top: 5px;">
+                  (${stats.workDays} عمل + ${stats.vacationDays} إجازة + ${stats.unpaidDays} غير مدفوع)
+                </div>
               </div>
               <div class="summary-item">
                 <h3>الساعات الإضافية</h3>
@@ -1514,7 +1532,7 @@
                 <div class="summary-value">${stats.totalTransport.toFixed(2)} ج.م</div>
               </div>
               <div class="summary-item">
-                <h3>الإجمالي</h3>
+                <h3>الإجمالي النهائي</h3>
                 <div class="summary-value">${stats.totalSalary.toFixed(2)} ج.م</div>
               </div>
             </div>
@@ -1659,9 +1677,12 @@
             
             <div class="summary-container">
               <div class="summary-item">
-                <h3>أيام العمل</h3>
-                <div class="summary-value">${stats.workDays} يوم</div>
-                <div class="summary-value">${stats.workDaysSalary.toFixed(2)} ج.م</div>
+                <h3>إجمالي الأيام</h3>
+                <div class="summary-value">${stats.totalDays} يوم</div>
+                <div class="summary-value">${stats.totalDaysSalary.toFixed(2)} ج.م</div>
+                <div style="font-size: 0.8em; color: #666; margin-top: 5px;">
+                  (${stats.workDays} عمل + ${stats.vacationDays} إجازة + ${stats.unpaidDays} غير مدفوع)
+                </div>
               </div>
               <div class="summary-item">
                 <h3>الساعات الإضافية</h3>
@@ -1677,7 +1698,7 @@
                 <div class="summary-value">${stats.totalTransport.toFixed(2)} ج.م</div>
               </div>
               <div class="summary-item">
-                <h3>الإجمالي</h3>
+                <h3>الإجمالي النهائي</h3>
                 <div class="summary-value">${stats.totalSalary.toFixed(2)} ج.م</div>
               </div>
             </div>
@@ -1693,10 +1714,31 @@
     
     // وظيفة حساب إحصائيات الموظف - الإصدار المحسن
     function calculateEmployeeStats(employee) {
-      // حساب عدد أيام العمل الفعلية
+      // حساب عدد أيام العمل الفعلية (العمل العادي فقط)
       const workDays = employee.workRecords.filter(record => record.type === 'work').length;
+      
+      // حساب عدد أيام الإجازة
+      const vacationDays = employee.workRecords.filter(record => record.type === 'vacation').length;
+      
+      // حساب عدد الأيام غير المدفوعة
+      const unpaidDays = employee.workRecords.filter(record => record.type === 'unpaid').length;
+      
+      // إجمالي الأيام كلها مع بعض
+      const totalDays = workDays + vacationDays + unpaidDays;
+      
       const dailyRate = employee.salary / 30;
+      
+      // أيام العمل العادية مدفوعة بالكامل
       const workDaysSalary = workDays * dailyRate;
+      
+      // أيام الإجازة مدفوعة بالكامل أيضاً
+      const vacationSalary = vacationDays * dailyRate;
+      
+      // الأيام غير المدفوعة ليس لها راتب
+      const unpaidSalary = 0;
+      
+      // إجمالي راتب الأيام كلها
+      const totalDaysSalary = workDaysSalary + vacationSalary + unpaidSalary;
       
       let totalHours = 0;
       let overtimeHours = 0;
@@ -1704,28 +1746,25 @@
       let totalTransport = 0;
       
       employee.workRecords.forEach(record => {
+        // حساب الساعات الإضافية والبدل والمواصلات لأيام العمل العادية فقط
         if (record.type === 'work' && record.startTime && record.endTime) {
-          // حساب الوقت بشكل صحيح مع مراعاة العمل المسائي
           const start = new Date(`2000-01-01T${record.startTime}`);
           const end = new Date(`2000-01-01T${record.endTime}`);
           
-          // إذا كان وقت الخروج قبل وقت الدخول (مثل 5:30 م إلى 1:30 ص)
-          // نعتبر أن العمل استمر حتى اليوم التالي
           let diffMs = end - start;
           if (diffMs < 0) {
-            diffMs += 24 * 60 * 60 * 1000; // إضافة 24 ساعة
+            diffMs += 24 * 60 * 60 * 1000;
           }
           
           const diffHours = diffMs / (1000 * 60 * 60);
           totalHours += diffHours;
           
-          // حساب الساعات الإضافية
           if (diffHours > employee.dailyHours) {
             overtimeHours += diffHours - employee.dailyHours;
           }
         }
         
-        // حساب البدل والمواصلات
+        // حساب البدل والمواصلات لأيام العمل العادية فقط
         if (record.type === 'work') {
           totalAllowance += (record.allowance || 0);
           totalTransport += (record.morningTransport || 0) + (record.eveningTransport || 0);
@@ -1733,13 +1772,19 @@
       });
       
       const overtimeSalary = overtimeHours * employee.overtimeRate;
-      const totalSalary = workDaysSalary + overtimeSalary + totalAllowance + totalTransport;
+      const totalSalary = totalDaysSalary + overtimeSalary + totalAllowance + totalTransport;
       const totalWithdrawals = employee.withdrawals.reduce((total, withdrawal) => total + withdrawal.amount, 0);
       const balance = totalSalary - totalWithdrawals;
       
       return {
         workDays,
         workDaysSalary,
+        vacationDays,
+        vacationSalary,
+        unpaidDays,
+        unpaidSalary,
+        totalDays,
+        totalDaysSalary,
         overtimeHours,
         overtimeSalary,
         totalAllowance,
