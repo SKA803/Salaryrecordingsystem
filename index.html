@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نظام إدارة الموظفين</title>
+  <title>نظام إدارة الموظفين المتطور</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -14,6 +14,7 @@
       --dark-color: #212529;
       --success-color: #4cc9f0;
       --danger-color: #f72585;
+      --warning-color: #ff9800;
       --border-radius: 12px;
       --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       --transition: all 0.3s ease;
@@ -102,15 +103,26 @@
       border-color: var(--accent-color);
     }
     
+    .employee-info {
+      flex: 1;
+    }
+    
     .employee-name {
       font-weight: bold;
       font-size: 1.2rem;
       color: var(--dark-color);
+      margin-bottom: 5px;
     }
     
     .employee-name i {
       margin-left: 10px;
       color: var(--primary-color);
+    }
+    
+    .employee-position {
+      font-size: 0.9rem;
+      color: #666;
+      margin-right: 28px;
     }
     
     .employee-actions {
@@ -132,7 +144,7 @@
     }
     
     .btn i {
-      margin-right: 5px;
+      margin-left: 5px;
     }
     
     .view-btn {
@@ -180,7 +192,6 @@
       cursor: pointer;
       margin-top: 30px;
       text-align: center;
-      text-decoration: none;
       transition: var(--transition);
       font-weight: bold;
       box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
@@ -262,10 +273,6 @@
       box-shadow: 0 6px 15px rgba(67, 97, 238, 0.4);
     }
     
-    .form-btn i {
-      margin-left: 8px;
-    }
-    
     .back-btn {
       display: block;
       text-align: center;
@@ -276,21 +283,14 @@
       transition: var(--transition);
       padding: 10px;
       border-radius: var(--border-radius);
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 100%;
     }
     
     .back-btn:hover {
       background-color: rgba(67, 97, 238, 0.1);
-    }
-    
-    .back-btn i {
-      margin-right: 5px;
-    }
-    
-    .input-icon {
-      position: absolute;
-      left: 15px;
-      top: 40px;
-      color: #aaa;
     }
     
     .employee-details-box {
@@ -300,10 +300,9 @@
       margin-bottom: 25px;
       box-shadow: var(--box-shadow);
       border: 1px solid rgba(0, 0, 0, 0.08);
-      animation: fadeIn 0.5s ease-out;
     }
     
-    .employee-name {
+    .employee-name-large {
       font-size: 1.8em;
       font-weight: bold;
       margin: 0 0 10px 0;
@@ -331,34 +330,16 @@
       color: #333;
     }
     
-    .add-workday-box {
+    .add-workday-box,
+    .summary-box,
+    .balance-box,
+    .penalties-box {
       background: white;
       border-radius: 10px;
       padding: 20px;
       margin-bottom: 25px;
       box-shadow: var(--box-shadow);
       border: 1px solid rgba(0, 0, 0, 0.08);
-      animation: slideUp 0.5s ease-out;
-    }
-    
-    .summary-box {
-      background: white;
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 25px;
-      box-shadow: var(--box-shadow);
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      animation: fadeIn 0.7s ease-out;
-    }
-    
-    .balance-box {
-      background: white;
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 25px;
-      box-shadow: var(--box-shadow);
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      animation: slideUp 0.7s ease-out;
     }
     
     .summary-boxes {
@@ -400,51 +381,6 @@
       color: var(--dark-color);
     }
     
-    .balance-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-      padding: 8px 0;
-      border-bottom: 1px dashed #ddd;
-    }
-    
-    .balance-row:last-child {
-      border-bottom: none;
-    }
-    
-    .withdrawals-list {
-      margin-top: 15px;
-      max-height: 150px;
-      overflow-y: auto;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      padding: 10px;
-      border-radius: 8px;
-      background: white;
-    }
-    
-    .withdrawal-item {
-      padding: 10px;
-      border-bottom: 1px solid #eee;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: var(--transition);
-    }
-    
-    .withdrawal-item:hover {
-      background-color: #f5f5f5;
-    }
-    
-    .withdrawal-item:last-child {
-      border-bottom: none;
-    }
-    
-    .delete-withdrawal {
-      color: var(--danger-color);
-      cursor: pointer;
-      margin-right: 10px;
-    }
-    
     .debt-amount {
       color: var(--debt-color);
       font-weight: bold;
@@ -466,12 +402,7 @@
       margin-bottom: 25px;
     }
     
-    .time-inputs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-    }
-    
+    .time-inputs,
     .transport-inputs {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -512,16 +443,8 @@
       background-color: rgba(76, 175, 80, 0.15);
     }
     
-    .vacation-day:hover {
-      background-color: rgba(76, 175, 80, 0.25);
-    }
-    
     .unpaid-day {
       background-color: rgba(244, 67, 54, 0.15);
-    }
-    
-    .unpaid-day:hover {
-      background-color: rgba(244, 67, 54, 0.25);
     }
     
     .no-records {
@@ -537,18 +460,14 @@
       margin-top: 20px;
       margin-bottom: 30px;
       gap: 15px;
-    }
-    
-    .table-actions button {
-      flex: 1;
-      max-width: 300px;
+      flex-wrap: wrap;
     }
     
     .btn-primary {
       background-color: var(--primary-color);
       color: white;
       border: none;
-      padding: 10px 15px;
+      padding: 10px 20px;
       border-radius: 5px;
       cursor: pointer;
       transition: var(--transition);
@@ -556,13 +475,14 @@
     
     .btn-primary:hover {
       background-color: var(--secondary-color);
+      transform: translateY(-2px);
     }
     
     .btn-vacation {
       background-color: var(--vacation-color);
       color: white;
       border: none;
-      padding: 10px 15px;
+      padding: 10px 20px;
       border-radius: 5px;
       cursor: pointer;
       transition: var(--transition);
@@ -570,13 +490,14 @@
     
     .btn-vacation:hover {
       background-color: #3d8b40;
+      transform: translateY(-2px);
     }
     
     .btn-unpaid {
       background-color: var(--unpaid-color);
       color: white;
       border: none;
-      padding: 10px 15px;
+      padding: 10px 20px;
       border-radius: 5px;
       cursor: pointer;
       transition: var(--transition);
@@ -584,27 +505,29 @@
     
     .btn-unpaid:hover {
       background-color: #d32f2f;
+      transform: translateY(-2px);
     }
     
-    .btn-secondary {
-      background-color: #6c757d;
+    .btn-warning {
+      background-color: var(--warning-color);
       color: white;
       border: none;
-      padding: 10px 15px;
+      padding: 10px 20px;
       border-radius: 5px;
       cursor: pointer;
       transition: var(--transition);
     }
     
-    .btn-secondary:hover {
-      background-color: #5a6268;
+    .btn-warning:hover {
+      background-color: #e68900;
+      transform: translateY(-2px);
     }
     
     .btn-danger {
       background-color: var(--danger-color);
       color: white;
       border: none;
-      padding: 10px 15px;
+      padding: 10px 20px;
       border-radius: 5px;
       cursor: pointer;
       transition: var(--transition);
@@ -612,6 +535,7 @@
     
     .btn-danger:hover {
       background-color: #e91e63;
+      transform: translateY(-2px);
     }
     
     .export-table-btn {
@@ -623,10 +547,12 @@
       border-radius: 5px;
       margin-top: 15px;
       font-weight: bold;
+      transition: var(--transition);
     }
     
     .export-table-btn:hover {
       background-color: #3d8b40;
+      transform: translateY(-2px);
     }
     
     .archive-item {
@@ -659,11 +585,6 @@
       color: var(--primary-color);
     }
     
-    .archive-date {
-      color: #777;
-      font-size: 0.9em;
-    }
-    
     .footer {
       text-align: center;
       margin-top: 40px;
@@ -679,54 +600,33 @@
       font-weight: 500;
     }
     
-    .loading {
-      display: none;
+    .toast-message {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 9999;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
+      top: 20px;
+      right: 50%;
+      transform: translateX(50%);
+      background-color: #4CAF50;
       color: white;
-      font-size: 1.5em;
+      padding: 15px 25px;
+      border-radius: 5px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 10000;
+      font-weight: bold;
+      animation: slideIn 0.3s ease-out;
     }
     
-    .loading.active {
-      display: flex;
+    .toast-error {
+      background-color: #f44336;
     }
     
-    .spinner {
-      border: 5px solid #f3f3f3;
-      border-top: 5px solid var(--primary-color);
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-      margin-bottom: 20px;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    @keyframes slideUp {
-      from { 
+    @keyframes slideIn {
+      from {
+        transform: translateX(50%) translateY(-100px);
         opacity: 0;
-        transform: translateY(20px);
       }
-      to { 
+      to {
+        transform: translateX(50%) translateY(0);
         opacity: 1;
-        transform: translateY(0);
       }
     }
     
@@ -754,10 +654,6 @@
         grid-template-columns: 1fr 1fr;
       }
       
-      .action-buttons {
-        grid-template-columns: 1fr;
-      }
-      
       .time-inputs,
       .transport-inputs {
         grid-template-columns: 1fr;
@@ -765,10 +661,8 @@
       
       table {
         font-size: 0.85em;
-      }
-      
-      th, td {
-        padding: 8px 5px;
+        display: block;
+        overflow-x: auto;
       }
       
       .table-actions {
@@ -776,1082 +670,1298 @@
       }
       
       .table-actions button {
-        max-width: 100%;
-      }
-      
-      .archive-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      
-      .archive-date {
-        margin-top: 5px;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .container {
-        padding: 15px;
-      }
-      
-      h1 {
-        font-size: 1.5rem;
-      }
-      
-      .employee-name {
-        font-size: 1rem;
-      }
-      
-      .add-btn, .form-btn {
-        padding: 12px;
-        font-size: 1rem;
-      }
-      
-      .summary-boxes {
-        grid-template-columns: 1fr;
-      }
-      
-      table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
+        width: 100%;
       }
     }
   </style>
 </head>
 <body>
-  <div id="app">
-    <!-- سيتم تحميل المحتوى الديناميكي هنا -->
-  </div>
-
-  <div class="loading" id="loading">
-    <div class="spinner"></div>
-    <span id="loadingText">جاري التحميل...</span>
-  </div>
+  <div id="app"></div>
 
   <script>
-    // متغيرات التطبيق
-    const appState = {
-      currentPage: 'home',
-      currentEmployeeId: null,
-      employees: JSON.parse(localStorage.getItem('employees')) || [],
-      monthlyRecords: JSON.parse(localStorage.getItem('employeeMonthlyRecords')) || {},
-      fileData: null
-    };
-    
-    // تهيئة التطبيق عند تحميل الصفحة
-    document.addEventListener('DOMContentLoaded', function() {
-      loadPage('home');
-      
-      document.querySelectorAll('.current-year').forEach(el => {
-        el.textContent = new Date().getFullYear();
-      });
-    });
-    
-    // وظيفة تحميل الصفحات
-    function loadPage(page, id = null) {
-      const app = document.getElementById('app');
-      appState.currentPage = page;
-      appState.currentEmployeeId = id;
-      
-      switch(page) {
-        case 'home':
-          loadHomePage();
-          break;
-        case 'add':
-          loadAddEditPage();
-          break;
-        case 'edit':
-          loadAddEditPage(id);
-          break;
-        case 'employee':
-          loadEmployeePage(id);
-          break;
-        case 'archive':
-          loadArchivePage(id);
-          break;
-        default:
-          loadHomePage();
-      }
-      
-      document.querySelectorAll('.current-year').forEach(el => {
-        el.textContent = new Date().getFullYear();
-      });
-    }
-    
-    // وظيفة تحميل الصفحة الرئيسية
-    function loadHomePage() {
-      const app = document.getElementById('app');
-      app.innerHTML = `
-        <div class="container">
-          <h1><i class="fas fa-users-cog"></i> نظام إدارة الموظفين</h1>
-          
-          <div class="employee-list" id="employeeList">
-            ${renderEmployeeList()}
-          </div>
-          
-          <button onclick="loadPage('add')" class="add-btn">
-            <i class="fas fa-user-plus"></i> إضافة موظف جديد
-          </button>
-          
-          <div class="footer">
-            <p>جميع الحقوق محفوظة &copy; <span class="current-year"></span> | تم تطوير هذا الموقع بواسطة المطور <a href="#">عبد الله ندا</a></p>
-          </div>
-        </div>
-      `;
-    }
-    
-    // وظيفة عرض قائمة الموظفين
-    function renderEmployeeList() {
-      if (appState.employees.length === 0) {
-        return `
-          <div class="empty-state">
-            <i class="far fa-folder-open"></i>
-            <p>لا يوجد موظفين مسجلين بعد</p>
-          </div>
-        `;
-      }
-      
-      return appState.employees.map(employee => `
-        <div class="employee-card">
-          <div class="employee-name">
-            <i class="fas fa-user-tie"></i> ${employee.name}
-          </div>
-          <div class="employee-actions">
-            <button onclick="loadPage('employee', '${employee.id}')" class="btn view-btn">
-              <i class="fas fa-eye"></i> عرض
-            </button>
-            <button onclick="loadPage('edit', '${employee.id}')" class="btn edit-btn">
-              <i class="fas fa-edit"></i> تعديل
-            </button>
-            <button onclick="deleteEmployee('${employee.id}')" class="btn delete-btn">
-              <i class="fas fa-trash"></i> حذف
-            </button>
-          </div>
-        </div>
-      `).join('');
-    }
-    
-    // وظيفة حذف موظف
-    function deleteEmployee(id) {
-      if (!confirm('هل أنت متأكد من حذف هذا الموظف؟ سيتم حذف جميع بياناته أيضاً.')) {
-        return;
-      }
-      
-      appState.employees = appState.employees.filter(emp => emp.id !== id);
-      localStorage.setItem('employees', JSON.stringify(appState.employees));
-      
-      if (appState.currentPage === 'home') {
-        const employeeList = document.getElementById('employeeList');
-        employeeList.innerHTML = renderEmployeeList();
-      } else {
-        loadPage('home');
-      }
-      
-      showSuccessMessage('تم حذف الموظف بنجاح');
-    }
-    
-    // وظيفة تحميل صفحة إضافة/تعديل موظف
-    function loadAddEditPage(id = null) {
-      const isEdit = id !== null;
-      const employee = isEdit ? appState.employees.find(emp => emp.id === id) : null;
-      
-      const app = document.getElementById('app');
-      app.innerHTML = `
-        <div class="container">
-          <h1><i class="fas fa-user-${isEdit ? 'edit' : 'plus'}"></i> ${isEdit ? 'تعديل بيانات الموظف' : 'إضافة موظف جديد'}</h1>
-          
-          <form id="employeeForm">
-            <div class="form-group">
-              <label for="name">اسم الموظف</label>
-              <i class="fas fa-user input-icon"></i>
-              <input type="text" id="name" required placeholder="أدخل اسم الموظف بالكامل" value="${employee?.name || ''}">
-            </div>
-            
-            <div class="form-group">
-              <label for="position">الوظيفة</label>
-              <i class="fas fa-briefcase input-icon"></i>
-              <input type="text" id="position" placeholder="أدخل المسمى الوظيفي" value="${employee?.position || ''}">
-            </div>
-            
-            <div class="form-group">
-              <label for="salary">الراتب الشهري</label>
-              <i class="fas fa-money-bill-wave input-icon"></i>
-              <input type="number" id="salary" min="0" placeholder="أدخل الراتب الأساسي" value="${employee?.salary || '6000'}">
-            </div>
-            
-            <div class="form-group">
-              <label for="dailyHours">عدد ساعات العمل اليومية</label>
-              <i class="fas fa-clock input-icon"></i>
-              <input type="number" id="dailyHours" min="1" placeholder="أدخل عدد ساعات العمل اليومية" value="${employee?.dailyHours || '8'}">
-            </div>
-            
-            <div class="form-group">
-              <label for="overtimeRate">معدل الساعة الإضافية</label>
-              <i class="fas fa-clock input-icon"></i>
-              <input type="number" id="overtimeRate" min="0" placeholder="أدخل قيمة الساعة الإضافية" value="${employee?.overtimeRate || '50'}">
-            </div>
-            
-            <button type="submit" class="form-btn">
-              <i class="fas fa-save"></i> ${isEdit ? 'تحديث البيانات' : 'حفظ الموظف'}
-            </button>
-            <button type="button" onclick="loadPage('home')" class="back-btn">
-              <i class="fas fa-arrow-right"></i> العودة للقائمة
-            </button>
-          </form>
-          
-          <div class="footer">
-            <p>جميع الحقوق محفوظة &copy; <span class="current-year"></span> | تم تطوير هذا الموقع بواسطة المطور <a href="#">عبد الله ندا</a></p>
-          </div>
-        </div>
-      `;
-      
-      document.getElementById('employeeForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const name = document.getElementById('name').value;
-        const position = document.getElementById('position').value;
-        const salary = parseFloat(document.getElementById('salary').value);
-        const dailyHours = parseInt(document.getElementById('dailyHours').value);
-        const overtimeRate = parseFloat(document.getElementById('overtimeRate').value);
-        
-        if (!name) {
-          alert('الرجاء إدخال اسم الموظف');
-          return;
-        }
-        
-        if (isEdit) {
-          const index = appState.employees.findIndex(emp => emp.id === id);
-          if (index !== -1) {
-            appState.employees[index] = {
-              ...appState.employees[index],
-              name,
-              position,
-              salary,
-              dailyHours,
-              overtimeRate
-            };
-          }
-        } else {
-          const newEmployee = {
-            id: Date.now().toString(),
-            name,
-            position,
-            salary,
-            dailyHours,
-            overtimeRate,
-            workRecords: [],
-            withdrawals: [],
-            balance: 0
-          };
-          
-          appState.employees.push(newEmployee);
-        }
-        
-        localStorage.setItem('employees', JSON.stringify(appState.employees));
-        
-        showSuccessMessage(isEdit ? 'تم تحديث بيانات الموظف بنجاح' : 'تم إضافة الموظف بنجاح');
-        
-        setTimeout(() => loadPage('home'), 1500);
-      });
-    }
-    
-    // وظيفة تحميل صفحة الموظف
-    function loadEmployeePage(id) {
-      const employee = appState.employees.find(emp => emp.id === id);
-      
-      if (!employee) {
-        loadPage('home');
-        return;
-      }
-      
-      if (!employee.workRecords) employee.workRecords = [];
-      if (!employee.balance) employee.balance = 0;
-      if (!employee.withdrawals) employee.withdrawals = [];
-      
-      const stats = calculateEmployeeStats(employee);
-      
-      const app = document.getElementById('app');
-      app.innerHTML = `
-        <div class="container">
-          <div class="employee-details-box">
-            <h1 class="employee-name">${employee.name}</h1>
-            <div class="employee-position">${employee.position || 'لا يوجد'}</div>
-            <div class="employee-salary">
-              <span class="employee-label">الراتب:</span>
-              <span>${employee.salary} ج.م</span>
-            </div>
-            <div class="employee-hours">
-              <span class="employee-label">ساعات العمل اليومية:</span>
-              <span>${employee.dailyHours || 8} ساعات</span>
-            </div>
-          </div>
-          
-          <div class="add-workday-box">
-            <h2 class="section-title">إضافة يوم عمل جديد</h2>
-            <div class="form-group">
-              <label for="date">التاريخ</label>
-              <input type="date" id="date" required>
-            </div>
-            
-            <div class="form-group">
-              <label for="siteName">اسم الموقع</label>
-              <input type="text" id="siteName" placeholder="أدخل اسم الموقع">
-            </div>
-            
-            <div class="form-group">
-              <label>ساعات العمل</label>
-              <div class="time-inputs">
-                <div>
-                  <label for="startTime" style="font-size: 0.9em; margin-bottom: 5px;">وقت الدخول (صباحي)</label>
-                  <input type="time" id="startTime" placeholder="وقت الدخول" required value="08:00">
-                </div>
-                <div>
-                  <label for="endTime" style="font-size: 0.9em; margin-bottom: 5px;">وقت الخروج (مسائي)</label>
-                  <input type="time" id="endTime" placeholder="وقت الخروج" required value="16:00">
-                </div>
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label>مصاريف المواصلات</label>
-              <div class="transport-inputs">
-                <div>
-                  <label for="morningTransport" style="font-size: 0.9em; margin-bottom: 5px;">مواصلات ذهاب (صباحي)</label>
-                  <input type="number" id="morningTransport" min="0" placeholder="مواصلات ذهاب" value="">
-                </div>
-                <div>
-                  <label for="eveningTransport" style="font-size: 0.9em; margin-bottom: 5px;">مواصلات عودة (مسائي)</label>
-                  <input type="number" id="eveningTransport" min="0" placeholder="مواصلات عودة" value="">
-                </div>
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label for="allowance">البدل</label>
-              <input type="number" id="allowance" min="0" placeholder="أدخل قيمة البدل" value="">
-            </div>
-            
-            <div class="table-actions">
-              <button type="button" class="btn-primary" onclick="addWorkDay('${employee.id}')">
-                <i class="fas fa-plus"></i> إضافة يوم عمل
-              </button>
-              <button type="button" class="btn-vacation" onclick="addVacationDay('${employee.id}')">
-                <i class="fas fa-umbrella-beach"></i> إضافة إجازة
-              </button>
-              <button type="button" class="btn-unpaid" onclick="addUnpaidDay('${employee.id}')">
-                <i class="fas fa-calendar-times"></i> إضافة يوم غير مدفوع
-              </button>
-            </div>
-          </div>
-          
-          <div class="summary-box">
-            <h2 class="section-title">ملخص العمل</h2>
-            <div class="summary-boxes">
-              <div class="summary-item">
-                <h3>إجمالي الأيام</h3>
-                <div class="summary-value">${stats.totalDays} يوم</div>
-                <div class="summary-value">${stats.totalDaysSalary.toFixed(2)} ج.م</div>
-                <div style="font-size: 0.8em; color: #666; margin-top: 5px;">
-                  (${stats.workDays} عمل + ${stats.vacationDays} إجازة + ${stats.unpaidDays} غير مدفوع)
-                </div>
-              </div>
-              <div class="summary-item">
-                <h3>الساعات الإضافية</h3>
-                <div class="summary-value">${stats.overtimeHours.toFixed(1)} ساعة</div>
-                <div class="summary-value">${stats.overtimeSalary.toFixed(2)} ج.م</div>
-              </div>
-              <div class="summary-item">
-                <h3>البدل</h3>
-                <div class="summary-value">${stats.totalAllowance.toFixed(2)} ج.م</div>
-              </div>
-              <div class="summary-item">
-                <h3>إجمالي المواصلات</h3>
-                <div class="summary-value">${stats.totalTransport.toFixed(2)} ج.م</div>
-              </div>
-              <div class="summary-item">
-                <h3>الإجمالي النهائي</h3>
-                <div class="summary-value">${stats.totalSalary.toFixed(2)} ج.م</div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="balance-box">
-            <h2 class="section-title">الرصيد والمسحوبات</h2>
-            <div class="balance-row">
-              <span>إجمالي المستحقات:</span>
-              <span>${stats.totalSalary.toFixed(2)} ج.م</span>
-            </div>
-            <div class="balance-row">
-              <span>إجمالي المسحوبات:</span>
-              <span>${stats.totalWithdrawals.toFixed(2)} ج.م</span>
-            </div>
-            <div class="balance-row">
-              <span>الرصيد الحالي:</span>
-              <span class="${stats.balance < 0 ? 'debt-amount' : ''}">${stats.balance.toFixed(2)} ج.م</span>
-            </div>
-            
-            <div class="form-group">
-              <label for="withdrawalAmount">سحب مبلغ</label>
-              <input type="number" id="withdrawalAmount" min="0" placeholder="أدخل المبلغ المراد سحبه">
-              <button type="button" class="btn-danger" onclick="addWithdrawal('${employee.id}')" style="margin-top: 10px; width: 100%;">
-                <i class="fas fa-hand-holding-usd"></i> سحب مبلغ
-              </button>
-            </div>
-            
-            <div class="withdrawals-list">
-              ${renderWithdrawals(employee.withdrawals)}
-            </div>
-          </div>
-          
-          <div class="summary-box">
-            <h2 class="section-title">سجل الأيام</h2>
-            <div class="table-actions">
-              <button type="button" class="btn-primary" onclick="loadPage('archive', '${employee.id}')">
-                <i class="fas fa-archive"></i> الأرشيف الشهري
-              </button>
-              <button type="button" class="btn-secondary" onclick="loadPage('home')">
-                <i class="fas fa-arrow-right"></i> العودة للقائمة
-              </button>
-            </div>
-            
-            <table id="workRecordsTable">
-              <thead>
-                <tr>
-                  <th>التاريخ</th>
-                  <th>اليوم</th>
-                  <th>الموقع</th>
-                  <th>وقت الدخول</th>
-                  <th>وقت الخروج</th>
-                  <th>مواصلات ذهاب</th>
-                  <th>مواصلات عودة</th>
-                  <th>البدل</th>
-                  <th>الإجراءات</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${renderWorkRecords(employee.workRecords)}
-              </tbody>
-            </table>
-            
-            <button class="export-table-btn" onclick="exportTable('${employee.id}')">
-              <i class="fas fa-file-export"></i> استخراج الجدول
-            </button>
-          </div>
-          
-          <div class="footer">
-            <p>جميع الحقوق محفوظة &copy; <span class="current-year"></span> | تم تطوير هذا الموقع بواسطة المطور <a href="#">عبد الله ندا</a></p>
-          </div>
-        </div>
-      `;
-      
-      document.getElementById('date').valueAsDate = new Date();
-    }
-    
-    // وظيفة إضافة يوم عمل
-    function addWorkDay(employeeId) {
-      const employee = appState.employees.find(emp => emp.id === employeeId);
-      if (!employee) return;
-      
-      const date = document.getElementById('date').value;
-      const siteName = document.getElementById('siteName').value;
-      const startTime = document.getElementById('startTime').value;
-      const endTime = document.getElementById('endTime').value;
-      const morningTransport = parseFloat(document.getElementById('morningTransport').value) || 0;
-      const eveningTransport = parseFloat(document.getElementById('eveningTransport').value) || 0;
-      const allowance = parseFloat(document.getElementById('allowance').value) || 0;
-      
-      if (!date || !startTime || !endTime) {
-        alert('الرجاء إدخال التاريخ ووقتي الدخول والخروج');
-        return;
-      }
-      
-      const existingRecordIndex = employee.workRecords.findIndex(record => record.date === date);
-      
-      if (existingRecordIndex !== -1) {
-        if (!confirm('هذا التاريخ مسجل بالفعل. هل تريد تحديث البيانات؟')) {
-          return;
-        }
-        
-        employee.workRecords[existingRecordIndex] = {
-          ...employee.workRecords[existingRecordIndex],
-          siteName,
-          startTime,
-          endTime,
-          morningTransport,
-          eveningTransport,
-          allowance,
-          type: 'work'
-        };
-      } else {
-        const workRecord = {
-          id: Date.now().toString(),
-          date,
-          siteName,
-          startTime,
-          endTime,
-          morningTransport,
-          eveningTransport,
-          allowance,
-          type: 'work'
-        };
-        
-        employee.workRecords.push(workRecord);
-      }
-      
-      localStorage.setItem('employees', JSON.stringify(appState.employees));
-      
-      loadPage('employee', employeeId);
-      showSuccessMessage('تم إضافة يوم العمل بنجاح');
-    }
-    
-    // وظيفة إضافة يوم إجازة
-    function addVacationDay(employeeId) {
-      const employee = appState.employees.find(emp => emp.id === employeeId);
-      if (!employee) return;
-      
-      const date = document.getElementById('date').value;
-      
-      if (!date) {
-        alert('الرجاء إدخال التاريخ');
-        return;
-      }
-      
-      const existingRecordIndex = employee.workRecords.findIndex(record => record.date === date);
-      
-      if (existingRecordIndex !== -1) {
-        if (!confirm('هذا التاريخ مسجل بالفعل. هل تريد تحديث البيانات؟')) {
-          return;
-        }
-        
-        employee.workRecords[existingRecordIndex] = {
-          ...employee.workRecords[existingRecordIndex],
-          type: 'vacation'
-        };
-      } else {
-        const workRecord = {
-          id: Date.now().toString(),
-          date,
-          type: 'vacation'
-        };
-        
-        employee.workRecords.push(workRecord);
-      }
-      
-      localStorage.setItem('employees', JSON.stringify(appState.employees));
-      
-      loadPage('employee', employeeId);
-      showSuccessMessage('تم إضافة يوم الإجازة بنجاح');
-    }
-    
-    // وظيفة إضافة يوم غير مدفوع
-    function addUnpaidDay(employeeId) {
-      const employee = appState.employees.find(emp => emp.id === employeeId);
-      if (!employee) return;
-      
-      const date = document.getElementById('date').value;
-      
-      if (!date) {
-        alert('الرجاء إدخال التاريخ');
-        return;
-      }
-      
-      const existingRecordIndex = employee.workRecords.findIndex(record => record.date === date);
-      
-      if (existingRecordIndex !== -1) {
-        if (!confirm('هذا التاريخ مسجل بالفعل. هل تريد تحديث البيانات؟')) {
-          return;
-        }
-        
-        employee.workRecords[existingRecordIndex] = {
-          ...employee.workRecords[existingRecordIndex],
-          type: 'unpaid'
-        };
-      } else {
-        const workRecord = {
-          id: Date.now().toString(),
-          date,
-          type: 'unpaid'
-        };
-        
-        employee.workRecords.push(workRecord);
-      }
-      
-      localStorage.setItem('employees', JSON.stringify(appState.employees));
-      
-      loadPage('employee', employeeId);
-      showSuccessMessage('تم إضافة اليوم غير المدفوع بنجاح');
-    }
-    
-    // وظيفة إضافة سحب
-    function addWithdrawal(employeeId) {
-      const employee = appState.employees.find(emp => emp.id === employeeId);
-      if (!employee) return;
-      
-      const amount = parseFloat(document.getElementById('withdrawalAmount').value);
-      
-      if (!amount || amount <= 0) {
-        alert('الرجاء إدخال مبلغ صحيح للسحب');
-        return;
-      }
-      
-      const withdrawal = {
-        id: Date.now().toString(),
-        date: new Date().toISOString().split('T')[0],
-        amount
+    // تطبيق إدارة الموظفين - نسخة محسنة وآمنة
+    (function() {
+      // ==================== الثوابت والمتغيرات الخاصة ====================
+      const STORAGE_KEYS = {
+        EMPLOYEES: 'employees_v2',
+        MONTHLY_RECORDS: 'employeeMonthlyRecords_v2'
       };
       
-      employee.withdrawals.push(withdrawal);
-      localStorage.setItem('employees', JSON.stringify(appState.employees));
+      let appState = {
+        currentPage: 'home',
+        currentEmployeeId: null,
+        employees: []
+      };
       
-      loadPage('employee', employeeId);
-      showSuccessMessage('تم سحب المبلغ بنجاح');
-    }
-    
-    // وظيفة حذف سجل يوم عمل
-    function deleteWorkRecord(employeeId, recordId) {
-      if (!confirm('هل أنت متأكد من حذف هذا اليوم؟')) {
-        return;
+      // ==================== دوال مساعدة خاصة ====================
+      
+      // عرض رسالة نجاح
+      function showSuccessMessage(message) {
+        showToast(message, 'success');
       }
       
-      const employee = appState.employees.find(emp => emp.id === employeeId);
-      if (!employee) return;
-      
-      employee.workRecords = employee.workRecords.filter(record => record.id !== recordId);
-      localStorage.setItem('employees', JSON.stringify(appState.employees));
-      
-      loadPage('employee', employeeId);
-      showSuccessMessage('تم حذف اليوم بنجاح');
-    }
-    
-    // وظيفة حذف سحب
-    function deleteWithdrawal(employeeId, withdrawalId) {
-      if (!confirm('هل أنت متأكد من حذف هذا السحب؟')) {
-        return;
+      // عرض رسالة خطأ
+      function showErrorMessage(message) {
+        showToast(message, 'error');
       }
       
-      const employee = appState.employees.find(emp => emp.id === employeeId);
-      if (!employee) return;
-      
-      employee.withdrawals = employee.withdrawals.filter(withdrawal => withdrawal.id !== withdrawalId);
-      localStorage.setItem('employees', JSON.stringify(appState.employees));
-      
-      loadPage('employee', employeeId);
-      showSuccessMessage('تم حذف السحب بنجاح');
-    }
-    
-    // وظيفة تحميل صفحة الأرشيف
-    function loadArchivePage(employeeId) {
-      const employee = appState.employees.find(emp => emp.id === employeeId);
-      
-      if (!employee) {
-        loadPage('home');
-        return;
-      }
-      
-      const monthlyRecords = {};
-      
-      employee.workRecords.forEach(record => {
-        const date = new Date(record.date);
-        const monthKey = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
+      // عرض رسالة عامة
+      function showToast(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.textContent = message;
+        toast.className = `toast-message ${type === 'error' ? 'toast-error' : ''}`;
+        document.body.appendChild(toast);
         
-        if (!monthlyRecords[monthKey]) {
-          monthlyRecords[monthKey] = [];
+        setTimeout(() => {
+          if (document.body.contains(toast)) {
+            toast.style.animation = 'slideIn 0.3s ease-out reverse';
+            setTimeout(() => {
+              if (document.body.contains(toast)) {
+                document.body.removeChild(toast);
+              }
+            }, 300);
+          }
+        }, 3000);
+      }
+      
+      // التحقق من صحة بيانات يوم العمل
+      function validateWorkDayInputs(date, startTime, endTime, dailyHours) {
+        if (!date) {
+          return { isValid: false, message: 'التاريخ مطلوب' };
         }
         
-        monthlyRecords[monthKey].push(record);
-      });
-      
-      const app = document.getElementById('app');
-      app.innerHTML = `
-        <div class="container">
-          <h1><i class="fas fa-archive"></i> الأرشيف الشهري - ${employee.name}</h1>
-          
-          <div class="table-actions">
-            <button type="button" class="btn-primary" onclick="loadPage('employee', '${employee.id}')">
-              <i class="fas fa-arrow-right"></i> العودة لصفحة الموظف
-            </button>
-          </div>
-          
-          <div id="archiveList">
-            ${renderArchiveList(monthlyRecords, employee)}
-          </div>
-          
-          <div class="footer">
-            <p>جميع الحقوق محفوظة &copy; <span class="current-year"></span> | تم تطوير هذا الموقع بواسطة المطور <a href="#">عبد الله ندا</a></p>
-          </div>
-        </div>
-      `;
-    }
-    
-    // وظيفة عرض قائمة الأرشيف
-    function renderArchiveList(monthlyRecords, employee) {
-      if (Object.keys(monthlyRecords).length === 0) {
-        return `
-          <div class="empty-state">
-            <i class="far fa-folder-open"></i>
-            <p>لا توجد سجلات شهرية</p>
-          </div>
-        `;
+        if (!startTime || !endTime) {
+          return { isValid: false, message: 'وقت الدخول ووقت الخروج مطلوبان' };
+        }
+        
+        const start = new Date(`2000-01-01T${startTime}`);
+        const end = new Date(`2000-01-01T${endTime}`);
+        
+        if (end <= start) {
+          return { isValid: false, message: 'وقت الخروج يجب أن يكون بعد وقت الدخول' };
+        }
+        
+        const diffHours = (end - start) / (1000 * 60 * 60);
+        
+        if (diffHours < 1) {
+          return { isValid: false, message: 'عدد ساعات العمل لا يمكن أن يكون أقل من ساعة' };
+        }
+        
+        if (diffHours > 18) {
+          return { isValid: false, message: 'عدد ساعات العمل لا يمكن أن يتجاوز 18 ساعة' };
+        }
+        
+        return { isValid: true };
       }
       
-      const sortedMonths = Object.keys(monthlyRecords).sort((a, b) => b.localeCompare(a));
-      
-      return sortedMonths.map(monthKey => {
-        const records = monthlyRecords[monthKey];
-        const [year, month] = monthKey.split('-');
-        const monthName = getMonthName(parseInt(month));
-        const stats = calculateEmployeeStats({...employee, workRecords: records});
+      // التحقق من صحة بيانات الموظف
+      function validateEmployeeData(name, salary, dailyHours, overtimeRate) {
+        if (!name || name.trim() === '') {
+          return { isValid: false, message: 'اسم الموظف مطلوب' };
+        }
         
-        return `
-          <div class="archive-item">
-            <div class="archive-header">
-              <div class="archive-month">${monthName} ${year}</div>
-              <div class="archive-date">${records.length} يوم</div>
-            </div>
-            <div class="summary-boxes">
-              <div class="summary-item">
-                <h3>إجمالي الأيام</h3>
-                <div class="summary-value">${stats.totalDays} يوم</div>
-                <div class="summary-value">${stats.totalDaysSalary.toFixed(2)} ج.م</div>
-                <div style="font-size: 0.8em; color: #666; margin-top: 5px;">
-                  (${stats.workDays} عمل + ${stats.vacationDays} إجازة + ${stats.unpaidDays} غير مدفوع)
-                </div>
-              </div>
-              <div class="summary-item">
-                <h3>الساعات الإضافية</h3>
-                <div class="summary-value">${stats.overtimeHours.toFixed(1)} ساعة</div>
-                <div class="summary-value">${stats.overtimeSalary.toFixed(2)} ج.م</div>
-              </div>
-              <div class="summary-item">
-                <h3>البدل</h3>
-                <div class="summary-value">${stats.totalAllowance.toFixed(2)} ج.م</div>
-              </div>
-              <div class="summary-item">
-                <h3>إجمالي المواصلات</h3>
-                <div class="summary-value">${stats.totalTransport.toFixed(2)} ج.م</div>
-              </div>
-              <div class="summary-item">
-                <h3>الإجمالي النهائي</h3>
-                <div class="summary-value">${stats.totalSalary.toFixed(2)} ج.م</div>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-    
-    // وظيفة عرض سجلات العمل
-    function renderWorkRecords(workRecords) {
-      if (workRecords.length === 0) {
-        return `
-          <tr>
-            <td colspan="9" class="no-records">لا توجد سجلات عمل</td>
-          </tr>
-        `;
+        if (isNaN(salary) || salary <= 0) {
+          return { isValid: false, message: 'الراتب الشهري يجب أن يكون رقماً موجباً' };
+        }
+        
+        if (isNaN(dailyHours) || dailyHours <= 0 || dailyHours > 24) {
+          return { isValid: false, message: 'ساعات العمل اليومية يجب أن تكون بين 1 و 24 ساعة' };
+        }
+        
+        if (isNaN(overtimeRate) || overtimeRate < 0) {
+          return { isValid: false, message: 'معدل الساعة الإضافية يجب أن يكون رقماً موجباً' };
+        }
+        
+        return { isValid: true };
       }
       
-      const sortedRecords = [...workRecords].sort((a, b) => new Date(a.date) - new Date(b.date));
+      // حساب إحصائيات الموظف (نسخة محسنة ودقيقة)
+      function calculateEmployeeStats(employee) {
+        // التأكد من وجود المصفوفات
+        const workRecords = employee.workRecords || [];
+        
+        // تصنيف الأيام
+        const workDays = workRecords.filter(record => record.type === 'work');
+        const vacationDays = workRecords.filter(record => record.type === 'vacation');
+        const unpaidDays = workRecords.filter(record => record.type === 'unpaid');
+        
+        // حساب الراتب اليومي
+        const dailyRate = employee.salary / 30;
+        
+        // راتب أيام العمل (مدفوع بالكامل)
+        const workDaysSalary = workDays.length * dailyRate;
+        
+        // راتب أيام الإجازة (مدفوع بالكامل)
+        const vacationSalary = vacationDays.length * dailyRate;
+        
+        // إجمالي راتب الأيام
+        const totalDaysSalary = workDaysSalary + vacationSalary;
+        
+        // حساب الساعات الإضافية والبدل والمواصلات
+        let totalHours = 0;
+        let overtimeHours = 0;
+        let totalAllowance = 0;
+        let totalTransport = 0;
+        
+        workDays.forEach(record => {
+          if (record.startTime && record.endTime) {
+            const start = new Date(`2000-01-01T${record.startTime}`);
+            const end = new Date(`2000-01-01T${record.endTime}`);
+            
+            let diffMs = end - start;
+            if (diffMs < 0) {
+              diffMs += 24 * 60 * 60 * 1000;
+            }
+            
+            const diffHours = diffMs / (1000 * 60 * 60);
+            totalHours += diffHours;
+            
+            const standardHours = employee.dailyHours || 8;
+            if (diffHours > standardHours) {
+              overtimeHours += diffHours - standardHours;
+            }
+          }
+          
+          totalAllowance += record.allowance || 0;
+          totalTransport += (record.morningTransport || 0) + (record.eveningTransport || 0);
+        });
+        
+        const overtimeSalary = overtimeHours * (employee.overtimeRate || 0);
+        
+        // إجمالي المستحقات قبل الخصومات
+        const totalEarnings = totalDaysSalary + overtimeSalary + totalAllowance + totalTransport;
+        
+        // حساب الخصومات
+        const totalPenalties = (employee.penalties || []).reduce((sum, penalty) => sum + (penalty.amount || 0), 0);
+        const totalWithdrawals = (employee.withdrawals || []).reduce((sum, withdrawal) => sum + (withdrawal.amount || 0), 0);
+        
+        // الراتب النهائي (بعد جميع الخصومات)
+        const netBalance = totalEarnings - totalPenalties - totalWithdrawals;
+        
+        return {
+          totalDays: workRecords.length,
+          workDays: workDays.length,
+          vacationDays: vacationDays.length,
+          unpaidDays: unpaidDays.length,
+          totalDaysSalary: parseFloat(totalDaysSalary.toFixed(2)),
+          overtimeHours: parseFloat(overtimeHours.toFixed(1)),
+          overtimeSalary: parseFloat(overtimeSalary.toFixed(2)),
+          totalAllowance: parseFloat(totalAllowance.toFixed(2)),
+          totalTransport: parseFloat(totalTransport.toFixed(2)),
+          totalEarnings: parseFloat(totalEarnings.toFixed(2)),
+          totalPenalties: parseFloat(totalPenalties.toFixed(2)),
+          totalWithdrawals: parseFloat(totalWithdrawals.toFixed(2)),
+          netBalance: parseFloat(netBalance.toFixed(2))
+        };
+      }
       
-      return sortedRecords.map(record => {
-        const date = new Date(record.date);
-        const dayName = getDayName(date.getDay());
+      // حفظ البيانات
+      function saveData() {
+        try {
+          localStorage.setItem(STORAGE_KEYS.EMPLOYEES, JSON.stringify(appState.employees));
+          return true;
+        } catch (error) {
+          console.error('خطأ في حفظ البيانات:', error);
+          showErrorMessage('حدث خطأ في حفظ البيانات');
+          return false;
+        }
+      }
+      
+      // تحميل البيانات
+      function loadData() {
+        try {
+          const employeesData = localStorage.getItem(STORAGE_KEYS.EMPLOYEES);
+          appState.employees = employeesData ? JSON.parse(employeesData) : [];
+          
+          // تهيئة البيانات الناقصة للموظفين القدامى
+          appState.employees.forEach(employee => {
+            if (!employee.workRecords) employee.workRecords = [];
+            if (!employee.withdrawals) employee.withdrawals = [];
+            if (!employee.penalties) employee.penalties = [];
+            if (!employee.dailyHours) employee.dailyHours = 8;
+            if (!employee.overtimeRate) employee.overtimeRate = 50;
+          });
+          
+          return true;
+        } catch (error) {
+          console.error('خطأ في تحميل البيانات:', error);
+          showErrorMessage('حدث خطأ في تحميل البيانات');
+          return false;
+        }
+      }
+      
+      // تنسيق الوقت بصيغة 12 ساعة
+      function convertTo12HourFormat(time24) {
+        if (!time24) return '';
         
-        let rowClass = '';
-        if (record.type === 'vacation') rowClass = 'vacation-day';
-        if (record.type === 'unpaid') rowClass = 'unpaid-day';
+        const [hours, minutes] = time24.split(':');
+        let period = 'ص';
+        let hours12 = parseInt(hours);
         
-        return `
-          <tr class="${rowClass}">
-            <td>${record.date}</td>
-            <td>${dayName}</td>
-            <td>${record.siteName || '-'}</td>
-            <td>${record.startTime ? convertTo12HourFormat(record.startTime) : '-'}</td>
-            <td>${record.endTime ? convertTo12HourFormat(record.endTime) : '-'}</td>
-            <td>${record.morningTransport || '-'}</td>
-            <td>${record.eveningTransport || '-'}</td>
-            <td>${record.allowance || '-'}</td>
-            <td>
-              <button onclick="deleteWorkRecord('${appState.currentEmployeeId}', '${record.id}')" class="btn delete-btn" style="padding: 5px 10px; font-size: 0.8rem;">
+        if (hours12 >= 12) {
+          period = 'م';
+          if (hours12 > 12) hours12 -= 12;
+        }
+        
+        if (hours12 === 0) hours12 = 12;
+        
+        return `${hours12}:${minutes} ${period}`;
+      }
+      
+      // الحصول على اسم اليوم
+      function getDayName(dayIndex) {
+        const days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+        return days[dayIndex];
+      }
+      
+      // الحصول على اسم الشهر
+      function getMonthName(monthIndex) {
+        const months = [
+          'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
+          'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
+        ];
+        return months[monthIndex - 1];
+      }
+      
+      // ==================== وظائف عرض الواجهة ====================
+      
+      // عرض قائمة الموظفين
+      function renderEmployeeList() {
+        if (appState.employees.length === 0) {
+          return `
+            <div class="empty-state">
+              <i class="far fa-folder-open"></i>
+              <p>لا يوجد موظفين مسجلين بعد</p>
+            </div>
+          `;
+        }
+        
+        return appState.employees.map(employee => `
+          <div class="employee-card">
+            <div class="employee-info">
+              <div class="employee-name">
+                <i class="fas fa-user-tie"></i> ${escapeHtml(employee.name)}
+              </div>
+              <div class="employee-position">
+                <i class="fas fa-briefcase"></i> ${escapeHtml(employee.position || 'غير محدد')}
+              </div>
+            </div>
+            <div class="employee-actions">
+              <button class="btn view-btn" data-action="view" data-id="${employee.id}">
+                <i class="fas fa-eye"></i> عرض
+              </button>
+              <button class="btn edit-btn" data-action="edit" data-id="${employee.id}">
+                <i class="fas fa-edit"></i> تعديل
+              </button>
+              <button class="btn delete-btn" data-action="delete" data-id="${employee.id}">
                 <i class="fas fa-trash"></i> حذف
               </button>
-            </td>
-          </tr>
-        `;
-      }).join('');
-    }
-    
-    // وظيفة عرض المسحوبات
-    function renderWithdrawals(withdrawals) {
-      if (withdrawals.length === 0) {
-        return '<div class="no-records">لا توجد مسحوبات</div>';
+            </div>
+          </div>
+        `).join('');
       }
       
-      const sortedWithdrawals = [...withdrawals].sort((a, b) => new Date(b.date) - new Date(a.date));
+      // عرض سجلات العمل
+      function renderWorkRecords(workRecords, employeeId) {
+        if (!workRecords || workRecords.length === 0) {
+          return `
+            <tr>
+              <td colspan="9" class="no-records">لا توجد سجلات عمل</td>
+            </tr>
+          `;
+        }
+        
+        const sortedRecords = [...workRecords].sort((a, b) => new Date(a.date) - new Date(b.date));
+        
+        return sortedRecords.map(record => {
+          const date = new Date(record.date);
+          const dayName = getDayName(date.getDay());
+          
+          let rowClass = '';
+          if (record.type === 'vacation') rowClass = 'vacation-day';
+          if (record.type === 'unpaid') rowClass = 'unpaid-day';
+          
+          return `
+            <tr class="${rowClass}">
+              <td>${escapeHtml(record.date)}</td>
+              <td>${dayName}</td>
+              <td>${escapeHtml(record.siteName || '-')}</td>
+              <td>${record.startTime ? convertTo12HourFormat(record.startTime) : '-'}</td>
+              <td>${record.endTime ? convertTo12HourFormat(record.endTime) : '-'}</td>
+              <td>${record.morningTransport || '-'}</td>
+              <td>${record.eveningTransport || '-'}</td>
+              <td>${record.allowance || '-'}</td>
+              <td>
+                <button class="btn delete-btn" data-action="deleteRecord" data-id="${record.id}" style="padding: 5px 10px; font-size: 0.8rem;">
+                  <i class="fas fa-trash"></i> حذف
+                </button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      }
       
-      return sortedWithdrawals.map(withdrawal => `
-        <div class="withdrawal-item">
-          <div>
-            <span>${withdrawal.date}</span>
-            <span>${withdrawal.amount} ج.م</span>
+      // عرض المسحوبات
+      function renderWithdrawals(withdrawals, employeeId) {
+        if (!withdrawals || withdrawals.length === 0) {
+          return '<div class="no-records">لا توجد مسحوبات</div>';
+        }
+        
+        const sortedWithdrawals = [...withdrawals].sort((a, b) => new Date(b.date) - new Date(a.date));
+        
+        return sortedWithdrawals.map(withdrawal => `
+          <div class="withdrawal-item" style="padding: 10px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <span>${escapeHtml(withdrawal.date)}</span>
+              <span style="margin-right: 10px; font-weight: bold;">${withdrawal.amount} ج.م</span>
+            </div>
+            <div>
+              <span class="delete-withdrawal" data-action="deleteWithdrawal" data-id="${withdrawal.id}" style="color: var(--danger-color); cursor: pointer;">
+                <i class="fas fa-trash"></i>
+              </span>
+            </div>
           </div>
-          <div>
-            <span class="delete-withdrawal" onclick="deleteWithdrawal('${appState.currentEmployeeId}', '${withdrawal.id}')">
-              <i class="fas fa-trash"></i>
-            </span>
+        `).join('');
+      }
+      
+      // عرض الجزاءات
+      function renderPenalties(penalties, employeeId) {
+        if (!penalties || penalties.length === 0) {
+          return '<div class="no-records">لا توجد جزاءات</div>';
+        }
+        
+        const sortedPenalties = [...penalties].sort((a, b) => new Date(b.date) - new Date(a.date));
+        
+        return sortedPenalties.map(penalty => `
+          <div class="penalty-item" style="padding: 10px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div><strong>${escapeHtml(penalty.reason)}</strong></div>
+              <div style="font-size: 0.85em; color: #666;">${escapeHtml(penalty.date)}</div>
+            </div>
+            <div>
+              <span style="color: var(--danger-color); font-weight: bold;">${penalty.amount} ج.م</span>
+              <span class="delete-penalty" data-action="deletePenalty" data-id="${penalty.id}" style="color: var(--danger-color); cursor: pointer; margin-right: 10px;">
+                <i class="fas fa-trash"></i>
+              </span>
+            </div>
           </div>
-        </div>
-      `).join('');
-    }
-    
-    // وظيفة استخراج الجدول
-    function exportTable(employeeId) {
-      const employee = appState.employees.find(emp => emp.id === employeeId);
-      if (!employee) return;
+        `).join('');
+      }
       
-      const table = document.getElementById('workRecordsTable');
-      const stats = calculateEmployeeStats(employee);
-      
-      const printWindow = window.open('', '_blank');
-      
-      printWindow.document.write(`
-        <html dir="rtl">
-          <head>
-            <title>تصدير الجدول - ${employee.name}</title>
-            <style>
-              body { 
-                font-family: 'Tajawal', Arial, sans-serif; 
-                padding: 20px;
-                direction: rtl;
-              }
-              h2, h3 {
-                color: #2c3e50;
-              }
-              .summary-container {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-                margin-bottom: 20px;
-              }
-              .summary-item {
-                border: 1px solid #ddd;
-                border-radius: 8px;
-                padding: 15px;
-                text-align: center;
-              }
-              .summary-item h3 {
-                margin-top: 0;
-                margin-bottom: 10px;
-              }
-              .summary-value {
-                font-size: 1.2em;
-                font-weight: bold;
-              }
-              table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-top: 20px;
-              }
-              th, td {
-                border: 1px solid #ddd;
-                padding: 12px;
-                text-align: center;
-              }
-              th {
-                background-color: #2c3e50;
-                color: white;
-              }
-              tr:nth-child(even) {
-                background-color: #f8f9fa;
-              }
-              .vacation-day {
-                background-color: rgba(76, 175, 80, 0.15);
-              }
-              .unpaid-day {
-                background-color: rgba(244, 67, 54, 0.15);
-              }
-            </style>
-          </head>
-          <body>
-            <h2>سجل الأيام - ${employee.name}</h2>
-            
-            <div class="summary-container">
-              <div class="summary-item">
-                <h3>إجمالي الأيام</h3>
-                <div class="summary-value">${stats.totalDays} يوم</div>
-                <div class="summary-value">${stats.totalDaysSalary.toFixed(2)} ج.م</div>
-                <div style="font-size: 0.8em; color: #666; margin-top: 5px;">
-                  (${stats.workDays} عمل + ${stats.vacationDays} إجازة + ${stats.unpaidDays} غير مدفوع)
+      // عرض صفحة الأرشيف
+      function renderArchiveList(monthlyRecords, employee) {
+        if (Object.keys(monthlyRecords).length === 0) {
+          return `
+            <div class="empty-state">
+              <i class="far fa-folder-open"></i>
+              <p>لا توجد سجلات شهرية</p>
+            </div>
+          `;
+        }
+        
+        const sortedMonths = Object.keys(monthlyRecords).sort((a, b) => b.localeCompare(a));
+        
+        return sortedMonths.map(monthKey => {
+          const records = monthlyRecords[monthKey];
+          const [year, month] = monthKey.split('-');
+          const monthName = getMonthName(parseInt(month));
+          const tempEmployee = { ...employee, workRecords: records };
+          const stats = calculateEmployeeStats(tempEmployee);
+          
+          return `
+            <div class="archive-item">
+              <div class="archive-header">
+                <div class="archive-month">${monthName} ${year}</div>
+                <div class="archive-date">${records.length} يوم</div>
+              </div>
+              <div class="summary-boxes">
+                <div class="summary-item">
+                  <h3>إجمالي الأيام</h3>
+                  <div class="summary-value">${stats.totalDays} يوم</div>
+                  <div class="summary-value">${stats.totalDaysSalary} ج.م</div>
+                </div>
+                <div class="summary-item">
+                  <h3>الساعات الإضافية</h3>
+                  <div class="summary-value">${stats.overtimeHours} ساعة</div>
+                  <div class="summary-value">${stats.overtimeSalary} ج.م</div>
+                </div>
+                <div class="summary-item">
+                  <h3>صافي المستحق</h3>
+                  <div class="summary-value ${stats.netBalance < 0 ? 'debt-amount' : ''}">${stats.netBalance} ج.م</div>
                 </div>
               </div>
-              <div class="summary-item">
-                <h3>الساعات الإضافية</h3>
-                <div class="summary-value">${stats.overtimeHours.toFixed(1)} ساعة</div>
-                <div class="summary-value">${stats.overtimeSalary.toFixed(2)} ج.م</div>
+            </div>
+          `;
+        }).join('');
+      }
+      
+      // تنقية النص لمنع هجمات XSS
+      function escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+      
+      // ==================== وظائف تحميل الصفحات ====================
+      
+      // تحميل الصفحة الرئيسية
+      function loadHomePage() {
+        const app = document.getElementById('app');
+        app.innerHTML = `
+          <div class="container">
+            <h1><i class="fas fa-users-cog"></i> نظام إدارة الموظفين المتطور</h1>
+            
+            <div class="employee-list" id="employeeList">
+              ${renderEmployeeList()}
+            </div>
+            
+            <button id="addEmployeeBtn" class="add-btn">
+              <i class="fas fa-user-plus"></i> إضافة موظف جديد
+            </button>
+            
+            <div class="footer">
+              <p>جميع الحقوق محفوظة &copy; ${new Date().getFullYear()} | نظام إدارة الموظفين المتطور</p>
+            </div>
+          </div>
+        `;
+        
+        // إضافة مستمعي الأحداث
+        document.getElementById('addEmployeeBtn').addEventListener('click', () => loadPage('add'));
+        
+        document.querySelectorAll('[data-action="view"]').forEach(btn => {
+          btn.addEventListener('click', () => loadPage('employee', btn.dataset.id));
+        });
+        
+        document.querySelectorAll('[data-action="edit"]').forEach(btn => {
+          btn.addEventListener('click', () => loadPage('edit', btn.dataset.id));
+        });
+        
+        document.querySelectorAll('[data-action="delete"]').forEach(btn => {
+          btn.addEventListener('click', () => deleteEmployee(btn.dataset.id));
+        });
+      }
+      
+      // تحميل صفحة إضافة/تعديل موظف
+      function loadAddEditPage(id = null) {
+        const isEdit = id !== null;
+        const employee = isEdit ? appState.employees.find(emp => emp.id === id) : null;
+        
+        const app = document.getElementById('app');
+        app.innerHTML = `
+          <div class="container">
+            <h1><i class="fas fa-user-${isEdit ? 'edit' : 'plus'}"></i> ${isEdit ? 'تعديل بيانات الموظف' : 'إضافة موظف جديد'}</h1>
+            
+            <form id="employeeForm">
+              <div class="form-group">
+                <label for="name">اسم الموظف *</label>
+                <input type="text" id="name" required placeholder="أدخل اسم الموظف بالكامل" value="${escapeHtml(employee?.name || '')}">
               </div>
-              <div class="summary-item">
-                <h3>البدل</h3>
-                <div class="summary-value">${stats.totalAllowance.toFixed(2)} ج.م</div>
+              
+              <div class="form-group">
+                <label for="position">الوظيفة</label>
+                <input type="text" id="position" placeholder="أدخل المسمى الوظيفي" value="${escapeHtml(employee?.position || '')}">
               </div>
-              <div class="summary-item">
-                <h3>إجمالي المواصلات</h3>
-                <div class="summary-value">${stats.totalTransport.toFixed(2)} ج.م</div>
+              
+              <div class="form-group">
+                <label for="salary">الراتب الشهري (ج.م) *</label>
+                <input type="number" id="salary" min="0" step="0.01" placeholder="أدخل الراتب الأساسي" value="${employee?.salary || '6000'}">
               </div>
-              <div class="summary-item">
-                <h3>الإجمالي النهائي</h3>
-                <div class="summary-value">${stats.totalSalary.toFixed(2)} ج.م</div>
+              
+              <div class="form-group">
+                <label for="dailyHours">عدد ساعات العمل اليومية *</label>
+                <input type="number" id="dailyHours" min="1" max="24" placeholder="أدخل عدد ساعات العمل اليومية" value="${employee?.dailyHours || '8'}">
+              </div>
+              
+              <div class="form-group">
+                <label for="overtimeRate">معدل الساعة الإضافية (ج.م) *</label>
+                <input type="number" id="overtimeRate" min="0" step="0.01" placeholder="أدخل قيمة الساعة الإضافية" value="${employee?.overtimeRate || '50'}">
+              </div>
+              
+              <button type="submit" class="form-btn">
+                <i class="fas fa-save"></i> ${isEdit ? 'تحديث البيانات' : 'حفظ الموظف'}
+              </button>
+              <button type="button" id="backBtn" class="back-btn">
+                <i class="fas fa-arrow-right"></i> العودة للقائمة
+              </button>
+            </form>
+            
+            <div class="footer">
+              <p>جميع الحقوق محفوظة &copy; ${new Date().getFullYear()} | نظام إدارة الموظفين المتطور</p>
+            </div>
+          </div>
+        `;
+        
+        document.getElementById('employeeForm').addEventListener('submit', (e) => {
+          e.preventDefault();
+          
+          const name = document.getElementById('name').value;
+          const position = document.getElementById('position').value;
+          const salary = parseFloat(document.getElementById('salary').value);
+          const dailyHours = parseInt(document.getElementById('dailyHours').value);
+          const overtimeRate = parseFloat(document.getElementById('overtimeRate').value);
+          
+          const validation = validateEmployeeData(name, salary, dailyHours, overtimeRate);
+          if (!validation.isValid) {
+            showErrorMessage(validation.message);
+            return;
+          }
+          
+          if (isEdit) {
+            const index = appState.employees.findIndex(emp => emp.id === id);
+            if (index !== -1) {
+              appState.employees[index] = {
+                ...appState.employees[index],
+                name: name.trim(),
+                position: position.trim(),
+                salary,
+                dailyHours,
+                overtimeRate
+              };
+            }
+          } else {
+            const newEmployee = {
+              id: Date.now().toString(),
+              name: name.trim(),
+              position: position.trim(),
+              salary,
+              dailyHours,
+              overtimeRate,
+              workRecords: [],
+              withdrawals: [],
+              penalties: []
+            };
+            
+            appState.employees.push(newEmployee);
+          }
+          
+          if (saveData()) {
+            showSuccessMessage(isEdit ? 'تم تحديث بيانات الموظف بنجاح' : 'تم إضافة الموظف بنجاح');
+            setTimeout(() => loadPage('home'), 1500);
+          }
+        });
+        
+        document.getElementById('backBtn').addEventListener('click', () => loadPage('home'));
+      }
+      
+      // تحميل صفحة الموظف
+      function loadEmployeePage(id) {
+        const employee = appState.employees.find(emp => emp.id === id);
+        
+        if (!employee) {
+          loadPage('home');
+          return;
+        }
+        
+        // التأكد من وجود المصفوفات
+        employee.workRecords = employee.workRecords || [];
+        employee.withdrawals = employee.withdrawals || [];
+        employee.penalties = employee.penalties || [];
+        
+        const stats = calculateEmployeeStats(employee);
+        
+        const app = document.getElementById('app');
+        app.innerHTML = `
+          <div class="container">
+            <div class="employee-details-box">
+              <h1 class="employee-name-large">${escapeHtml(employee.name)}</h1>
+              <div class="employee-position">${escapeHtml(employee.position || 'لا يوجد')}</div>
+              <div class="employee-salary">
+                <span class="employee-label">الراتب:</span>
+                <span>${employee.salary} ج.م</span>
+              </div>
+              <div class="employee-hours">
+                <span class="employee-label">ساعات العمل اليومية:</span>
+                <span>${employee.dailyHours} ساعات</span>
+              </div>
+              <div class="employee-hours">
+                <span class="employee-label">معدل الساعة الإضافية:</span>
+                <span>${employee.overtimeRate} ج.م/ساعة</span>
               </div>
             </div>
             
-            ${table.outerHTML}
-          </body>
-        </html>
-      `);
-      
-      printWindow.document.close();
-      printWindow.print();
-    }
-    
-    // وظيفة حساب إحصائيات الموظف - الإصدار المحسن
-    function calculateEmployeeStats(employee) {
-      // حساب عدد أيام العمل الفعلية (العمل العادي فقط)
-      const workDays = employee.workRecords.filter(record => record.type === 'work').length;
-      
-      // حساب عدد أيام الإجازة
-      const vacationDays = employee.workRecords.filter(record => record.type === 'vacation').length;
-      
-      // حساب عدد الأيام غير المدفوعة
-      const unpaidDays = employee.workRecords.filter(record => record.type === 'unpaid').length;
-      
-      // إجمالي الأيام كلها مع بعض
-      const totalDays = workDays + vacationDays + unpaidDays;
-      
-      const dailyRate = employee.salary / 30;
-      
-      // أيام العمل العادية مدفوعة بالكامل
-      const workDaysSalary = workDays * dailyRate;
-      
-      // أيام الإجازة مدفوعة بالكامل أيضاً
-      const vacationSalary = vacationDays * dailyRate;
-      
-      // الأيام غير المدفوعة ليس لها راتب
-      const unpaidSalary = 0;
-      
-      // إجمالي راتب الأيام كلها
-      const totalDaysSalary = workDaysSalary + vacationSalary + unpaidSalary;
-      
-      let totalHours = 0;
-      let overtimeHours = 0;
-      let totalAllowance = 0;
-      let totalTransport = 0;
-      
-      employee.workRecords.forEach(record => {
-        // حساب الساعات الإضافية والبدل والمواصلات لأيام العمل العادية فقط
-        if (record.type === 'work' && record.startTime && record.endTime) {
-          const start = new Date(`2000-01-01T${record.startTime}`);
-          const end = new Date(`2000-01-01T${record.endTime}`);
-          
-          let diffMs = end - start;
-          if (diffMs < 0) {
-            diffMs += 24 * 60 * 60 * 1000;
-          }
-          
-          const diffHours = diffMs / (1000 * 60 * 60);
-          totalHours += diffHours;
-          
-          if (diffHours > employee.dailyHours) {
-            overtimeHours += diffHours - employee.dailyHours;
-          }
+            <div class="add-workday-box">
+              <h2 class="section-title">إضافة يوم عمل جديد</h2>
+              <div class="form-group">
+                <label for="date">التاريخ *</label>
+                <input type="date" id="date" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="siteName">اسم الموقع</label>
+                <input type="text" id="siteName" placeholder="أدخل اسم الموقع">
+              </div>
+              
+              <div class="form-group">
+                <label>ساعات العمل</label>
+                <div class="time-inputs">
+                  <div>
+                    <label style="font-size: 0.9em;">وقت الدخول *</label>
+                    <input type="time" id="startTime" required value="08:00">
+                  </div>
+                  <div>
+                    <label style="font-size: 0.9em;">وقت الخروج *</label>
+                    <input type="time" id="endTime" required value="16:00">
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label>مصاريف المواصلات</label>
+                <div class="transport-inputs">
+                  <div>
+                    <label style="font-size: 0.9em;">مواصلات ذهاب</label>
+                    <input type="number" id="morningTransport" min="0" step="0.01" placeholder="مواصلات ذهاب">
+                  </div>
+                  <div>
+                    <label style="font-size: 0.9em;">مواصلات عودة</label>
+                    <input type="number" id="eveningTransport" min="0" step="0.01" placeholder="مواصلات عودة">
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="allowance">البدل</label>
+                <input type="number" id="allowance" min="0" step="0.01" placeholder="أدخل قيمة البدل">
+              </div>
+              
+              <div class="table-actions">
+                <button type="button" id="addWorkDayBtn" class="btn-primary">
+                  <i class="fas fa-plus"></i> إضافة يوم عمل
+                </button>
+                <button type="button" id="addVacationBtn" class="btn-vacation">
+                  <i class="fas fa-umbrella-beach"></i> إضافة إجازة
+                </button>
+                <button type="button" id="addUnpaidBtn" class="btn-unpaid">
+                  <i class="fas fa-calendar-times"></i> إضافة يوم غير مدفوع
+                </button>
+              </div>
+            </div>
+            
+            <div class="summary-box">
+              <h2 class="section-title">ملخص العمل</h2>
+              <div class="summary-boxes">
+                <div class="summary-item">
+                  <h3>إجمالي الأيام</h3>
+                  <div class="summary-value">${stats.totalDays} يوم</div>
+                  <div class="summary-value">${stats.totalDaysSalary} ج.م</div>
+                  <div style="font-size: 0.8em; color: #666; margin-top: 5px;">
+                    (${stats.workDays} عمل + ${stats.vacationDays} إجازة + ${stats.unpaidDays} غير مدفوع)
+                  </div>
+                </div>
+                <div class="summary-item">
+                  <h3>الساعات الإضافية</h3>
+                  <div class="summary-value">${stats.overtimeHours} ساعة</div>
+                  <div class="summary-value">${stats.overtimeSalary} ج.م</div>
+                </div>
+                <div class="summary-item">
+                  <h3>البدل</h3>
+                  <div class="summary-value">${stats.totalAllowance} ج.م</div>
+                </div>
+                <div class="summary-item">
+                  <h3>المواصلات</h3>
+                  <div class="summary-value">${stats.totalTransport} ج.م</div>
+                </div>
+                <div class="summary-item">
+                  <h3>إجمالي الجزاءات</h3>
+                  <div class="summary-value" style="color: var(--danger-color);">${stats.totalPenalties} ج.م</div>
+                </div>
+                <div class="summary-item">
+                  <h3>إجمالي المسحوبات</h3>
+                  <div class="summary-value" style="color: var(--warning-color);">${stats.totalWithdrawals} ج.م</div>
+                </div>
+                <div class="summary-item">
+                  <h3>صافي المستحق</h3>
+                  <div class="summary-value ${stats.netBalance < 0 ? 'debt-amount' : ''}">${stats.netBalance} ج.م</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="penalties-box">
+              <h2 class="section-title">الجزاءات</h2>
+              <div class="form-group">
+                <label for="penaltyReason">سبب الجزاء</label>
+                <input type="text" id="penaltyReason" placeholder="أدخل سبب الجزاء">
+              </div>
+              <div class="form-group">
+                <label for="penaltyAmount">قيمة الجزاء (ج.م)</label>
+                <input type="number" id="penaltyAmount" min="0" step="0.01" placeholder="أدخل قيمة الجزاء">
+              </div>
+              <button type="button" id="addPenaltyBtn" class="btn-warning">
+                <i class="fas fa-gavel"></i> إضافة جزاء
+              </button>
+              
+              <div class="penalties-list" style="margin-top: 15px; max-height: 200px; overflow-y: auto;">
+                ${renderPenalties(employee.penalties, employee.id)}
+              </div>
+            </div>
+            
+            <div class="balance-box">
+              <h2 class="section-title">المسحوبات</h2>
+              <div class="form-group">
+                <label for="withdrawalAmount">سحب مبلغ (ج.م)</label>
+                <input type="number" id="withdrawalAmount" min="0" step="0.01" placeholder="أدخل المبلغ المراد سحبه">
+              </div>
+              <button type="button" id="addWithdrawalBtn" class="btn-danger">
+                <i class="fas fa-hand-holding-usd"></i> سحب مبلغ
+              </button>
+              
+              <div class="withdrawals-list" style="margin-top: 15px; max-height: 200px; overflow-y: auto;">
+                ${renderWithdrawals(employee.withdrawals, employee.id)}
+              </div>
+            </div>
+            
+            <div class="summary-box">
+              <h2 class="section-title">سجل الأيام</h2>
+              <div class="table-actions">
+                <button type="button" id="archiveBtn" class="btn-primary">
+                  <i class="fas fa-archive"></i> الأرشيف الشهري
+                </button>
+                <button type="button" id="backToHomeBtn" class="btn-secondary" style="background-color: #6c757d; color: white;">
+                  <i class="fas fa-arrow-right"></i> العودة للقائمة
+                </button>
+              </div>
+              
+              <table id="workRecordsTable">
+                <thead>
+                  <tr>
+                    <th>التاريخ</th>
+                    <th>اليوم</th>
+                    <th>الموقع</th>
+                    <th>وقت الدخول</th>
+                    <th>وقت الخروج</th>
+                    <th>مواصلات ذهاب</th>
+                    <th>مواصلات عودة</th>
+                    <th>البدل</th>
+                    <th>الإجراءات</th>
+                  </tr>
+                </thead>
+                <tbody id="workRecordsBody">
+                  ${renderWorkRecords(employee.workRecords, employee.id)}
+                </tbody>
+               </table>
+              
+              <button id="exportTableBtn" class="export-table-btn">
+                <i class="fas fa-file-export"></i> استخراج الجدول
+              </button>
+            </div>
+            
+            <div class="footer">
+              <p>جميع الحقوق محفوظة &copy; ${new Date().getFullYear()} | نظام إدارة الموظفين المتطور</p>
+            </div>
+          </div>
+        `;
+        
+        // تعيين التاريخ الحالي
+        const dateInput = document.getElementById('date');
+        if (dateInput) {
+          dateInput.valueAsDate = new Date();
         }
         
-        // حساب البدل والمواصلات لأيام العمل العادية فقط
-        if (record.type === 'work') {
-          totalAllowance += (record.allowance || 0);
-          totalTransport += (record.morningTransport || 0) + (record.eveningTransport || 0);
-        }
-      });
-      
-      const overtimeSalary = overtimeHours * employee.overtimeRate;
-      const totalSalary = totalDaysSalary + overtimeSalary + totalAllowance + totalTransport;
-      const totalWithdrawals = employee.withdrawals.reduce((total, withdrawal) => total + withdrawal.amount, 0);
-      const balance = totalSalary - totalWithdrawals;
-      
-      return {
-        workDays,
-        workDaysSalary,
-        vacationDays,
-        vacationSalary,
-        unpaidDays,
-        unpaidSalary,
-        totalDays,
-        totalDaysSalary,
-        overtimeHours,
-        overtimeSalary,
-        totalAllowance,
-        totalTransport,
-        totalSalary,
-        totalWithdrawals,
-        balance
-      };
-    }
-    
-    // وظائف مساعدة
-    function convertTo12HourFormat(time24) {
-      if (!time24) return '';
-      
-      const [hours, minutes] = time24.split(':');
-      let period = 'ص';
-      let hours12 = parseInt(hours);
-      
-      if (hours12 >= 12) {
-        period = 'م';
-        if (hours12 > 12) hours12 -= 12;
+        // إضافة مستمعي الأحداث
+        document.getElementById('addWorkDayBtn')?.addEventListener('click', () => addWorkDay(id));
+        document.getElementById('addVacationBtn')?.addEventListener('click', () => addVacationDay(id));
+        document.getElementById('addUnpaidBtn')?.addEventListener('click', () => addUnpaidDay(id));
+        document.getElementById('addPenaltyBtn')?.addEventListener('click', () => addPenalty(id));
+        document.getElementById('addWithdrawalBtn')?.addEventListener('click', () => addWithdrawal(id));
+        document.getElementById('archiveBtn')?.addEventListener('click', () => loadPage('archive', id));
+        document.getElementById('backToHomeBtn')?.addEventListener('click', () => loadPage('home'));
+        document.getElementById('exportTableBtn')?.addEventListener('click', () => exportTable(id));
+        
+        // مستمعي الأحداث للحذف
+        document.querySelectorAll('[data-action="deleteRecord"]').forEach(btn => {
+          btn.addEventListener('click', () => deleteWorkRecord(id, btn.dataset.id));
+        });
+        
+        document.querySelectorAll('[data-action="deleteWithdrawal"]').forEach(btn => {
+          btn.addEventListener('click', () => deleteWithdrawal(id, btn.dataset.id));
+        });
+        
+        document.querySelectorAll('[data-action="deletePenalty"]').forEach(btn => {
+          btn.addEventListener('click', () => deletePenalty(id, btn.dataset.id));
+        });
       }
       
-      if (hours12 === 0) hours12 = 12;
-      
-      return `${hours12}:${minutes} ${period}`;
-    }
-    
-    function getDayName(dayIndex) {
-      const days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
-      return days[dayIndex];
-    }
-    
-    function getMonthName(monthIndex) {
-      const months = [
-        'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
-        'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
-      ];
-      return months[monthIndex - 1];
-    }
-    
-    function showSuccessMessage(message) {
-      const messageEl = document.createElement('div');
-      messageEl.textContent = message;
-      messageEl.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 50%;
-        transform: translateX(50%);
-        background-color: #4CAF50;
-        color: white;
-        padding: 15px 25px;
-        border-radius: 5px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        z-index: 10000;
-        font-weight: bold;
-        animation: fadeIn 0.3s, fadeOut 0.3s 2.7s;
-      `;
-      
-      document.body.appendChild(messageEl);
-      
-      setTimeout(() => {
-        if (document.body.contains(messageEl)) {
-          document.body.removeChild(messageEl);
+      // تحميل صفحة الأرشيف
+      function loadArchivePage(employeeId) {
+        const employee = appState.employees.find(emp => emp.id === employeeId);
+        
+        if (!employee) {
+          loadPage('home');
+          return;
         }
-      }, 3000);
-    }
+        
+        // تجميع السجلات شهرياً
+        const monthlyRecords = {};
+        
+        (employee.workRecords || []).forEach(record => {
+          const date = new Date(record.date);
+          const monthKey = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
+          
+          if (!monthlyRecords[monthKey]) {
+            monthlyRecords[monthKey] = [];
+          }
+          
+          monthlyRecords[monthKey].push(record);
+        });
+        
+        const app = document.getElementById('app');
+        app.innerHTML = `
+          <div class="container">
+            <h1><i class="fas fa-archive"></i> الأرشيف الشهري - ${escapeHtml(employee.name)}</h1>
+            
+            <div class="table-actions">
+              <button type="button" id="backToEmployeeBtn" class="btn-primary">
+                <i class="fas fa-arrow-right"></i> العودة لصفحة الموظف
+              </button>
+            </div>
+            
+            <div id="archiveList">
+              ${renderArchiveList(monthlyRecords, employee)}
+            </div>
+            
+            <div class="footer">
+              <p>جميع الحقوق محفوظة &copy; ${new Date().getFullYear()} | نظام إدارة الموظفين المتطور</p>
+            </div>
+          </div>
+        `;
+        
+        document.getElementById('backToEmployeeBtn')?.addEventListener('click', () => loadPage('employee', employeeId));
+      }
+      
+      // ==================== وظائف معالجة البيانات ====================
+      
+      // حذف موظف
+      function deleteEmployee(id) {
+        if (!confirm('هل أنت متأكد من حذف هذا الموظف؟ سيتم حذف جميع بياناته أيضاً.')) {
+          return;
+        }
+        
+        appState.employees = appState.employees.filter(emp => emp.id !== id);
+        
+        if (saveData()) {
+          showSuccessMessage('تم حذف الموظف بنجاح');
+          if (appState.currentPage === 'home') {
+            loadPage('home');
+          } else {
+            loadPage('home');
+          }
+        }
+      }
+      
+      // إضافة يوم عمل
+      function addWorkDay(employeeId) {
+        const employee = appState.employees.find(emp => emp.id === employeeId);
+        if (!employee) return;
+        
+        const date = document.getElementById('date').value;
+        const siteName = document.getElementById('siteName').value;
+        const startTime = document.getElementById('startTime').value;
+        const endTime = document.getElementById('endTime').value;
+        const morningTransport = parseFloat(document.getElementById('morningTransport').value) || 0;
+        const eveningTransport = parseFloat(document.getElementById('eveningTransport').value) || 0;
+        const allowance = parseFloat(document.getElementById('allowance').value) || 0;
+        
+        const validation = validateWorkDayInputs(date, startTime, endTime, employee.dailyHours);
+        if (!validation.isValid) {
+          showErrorMessage(validation.message);
+          return;
+        }
+        
+        const existingRecordIndex = employee.workRecords.findIndex(record => record.date === date);
+        
+        if (existingRecordIndex !== -1) {
+          if (!confirm('هذا التاريخ مسجل بالفعل. هل تريد تحديث البيانات؟')) {
+            return;
+          }
+          
+          employee.workRecords[existingRecordIndex] = {
+            ...employee.workRecords[existingRecordIndex],
+            siteName: siteName.trim(),
+            startTime,
+            endTime,
+            morningTransport,
+            eveningTransport,
+            allowance,
+            type: 'work'
+          };
+        } else {
+          const workRecord = {
+            id: Date.now().toString(),
+            date,
+            siteName: siteName.trim(),
+            startTime,
+            endTime,
+            morningTransport,
+            eveningTransport,
+            allowance,
+            type: 'work'
+          };
+          
+          employee.workRecords.push(workRecord);
+        }
+        
+        if (saveData()) {
+          showSuccessMessage('تم إضافة يوم العمل بنجاح');
+          loadPage('employee', employeeId);
+        }
+      }
+      
+      // إضافة يوم إجازة
+      function addVacationDay(employeeId) {
+        const employee = appState.employees.find(emp => emp.id === employeeId);
+        if (!employee) return;
+        
+        const date = document.getElementById('date').value;
+        
+        if (!date) {
+          showErrorMessage('الرجاء إدخال التاريخ');
+          return;
+        }
+        
+        const existingRecordIndex = employee.workRecords.findIndex(record => record.date === date);
+        
+        if (existingRecordIndex !== -1) {
+          if (!confirm('هذا التاريخ مسجل بالفعل. هل تريد تحويله إلى إجازة؟')) {
+            return;
+          }
+          
+          employee.workRecords[existingRecordIndex] = {
+            ...employee.workRecords[existingRecordIndex],
+            type: 'vacation'
+          };
+        } else {
+          const workRecord = {
+            id: Date.now().toString(),
+            date,
+            type: 'vacation'
+          };
+          
+          employee.workRecords.push(workRecord);
+        }
+        
+        if (saveData()) {
+          showSuccessMessage('تم إضافة يوم الإجازة بنجاح');
+          loadPage('employee', employeeId);
+        }
+      }
+      
+      // إضافة يوم غير مدفوع
+      function addUnpaidDay(employeeId) {
+        const employee = appState.employees.find(emp => emp.id === employeeId);
+        if (!employee) return;
+        
+        const date = document.getElementById('date').value;
+        
+        if (!date) {
+          showErrorMessage('الرجاء إدخال التاريخ');
+          return;
+        }
+        
+        const existingRecordIndex = employee.workRecords.findIndex(record => record.date === date);
+        
+        if (existingRecordIndex !== -1) {
+          if (!confirm('هذا التاريخ مسجل بالفعل. هل تريد تحويله إلى يوم غير مدفوع؟')) {
+            return;
+          }
+          
+          employee.workRecords[existingRecordIndex] = {
+            ...employee.workRecords[existingRecordIndex],
+            type: 'unpaid'
+          };
+        } else {
+          const workRecord = {
+            id: Date.now().toString(),
+            date,
+            type: 'unpaid'
+          };
+          
+          employee.workRecords.push(workRecord);
+        }
+        
+        if (saveData()) {
+          showSuccessMessage('تم إضافة اليوم غير المدفوع بنجاح');
+          loadPage('employee', employeeId);
+        }
+      }
+      
+      // إضافة جزاء
+      function addPenalty(employeeId) {
+        const employee = appState.employees.find(emp => emp.id === employeeId);
+        if (!employee) return;
+        
+        const reason = document.getElementById('penaltyReason').value;
+        const amount = parseFloat(document.getElementById('penaltyAmount').value);
+        
+        if (!reason || reason.trim() === '') {
+          showErrorMessage('الرجاء إدخال سبب الجزاء');
+          return;
+        }
+        
+        if (isNaN(amount) || amount <= 0) {
+          showErrorMessage('الرجاء إدخال قيمة صحيحة للجزاء');
+          return;
+        }
+        
+        const penalty = {
+          id: Date.now().toString(),
+          date: new Date().toISOString().split('T')[0],
+          reason: reason.trim(),
+          amount
+        };
+        
+        employee.penalties.push(penalty);
+        
+        if (saveData()) {
+          showSuccessMessage('تم إضافة الجزاء بنجاح');
+          loadPage('employee', employeeId);
+        }
+      }
+      
+      // إضافة سحب
+      function addWithdrawal(employeeId) {
+        const employee = appState.employees.find(emp => emp.id === employeeId);
+        if (!employee) return;
+        
+        const amount = parseFloat(document.getElementById('withdrawalAmount').value);
+        
+        if (isNaN(amount) || amount <= 0) {
+          showErrorMessage('الرجاء إدخال مبلغ صحيح للسحب');
+          return;
+        }
+        
+        const withdrawal = {
+          id: Date.now().toString(),
+          date: new Date().toISOString().split('T')[0],
+          amount
+        };
+        
+        employee.withdrawals.push(withdrawal);
+        
+        if (saveData()) {
+          showSuccessMessage('تم سحب المبلغ بنجاح');
+          loadPage('employee', employeeId);
+        }
+      }
+      
+      // حذف سجل يوم عمل
+      function deleteWorkRecord(employeeId, recordId) {
+        if (!confirm('هل أنت متأكد من حذف هذا اليوم؟')) {
+          return;
+        }
+        
+        const employee = appState.employees.find(emp => emp.id === employeeId);
+        if (!employee) return;
+        
+        employee.workRecords = employee.workRecords.filter(record => record.id !== recordId);
+        
+        if (saveData()) {
+          showSuccessMessage('تم حذف اليوم بنجاح');
+          loadPage('employee', employeeId);
+        }
+      }
+      
+      // حذف سحب
+      function deleteWithdrawal(employeeId, withdrawalId) {
+        if (!confirm('هل أنت متأكد من حذف هذا السحب؟')) {
+          return;
+        }
+        
+        const employee = appState.employees.find(emp => emp.id === employeeId);
+        if (!employee) return;
+        
+        employee.withdrawals = employee.withdrawals.filter(withdrawal => withdrawal.id !== withdrawalId);
+        
+        if (saveData()) {
+          showSuccessMessage('تم حذف السحب بنجاح');
+          loadPage('employee', employeeId);
+        }
+      }
+      
+      // حذف جزاء
+      function deletePenalty(employeeId, penaltyId) {
+        if (!confirm('هل أنت متأكد من حذف هذا الجزاء؟')) {
+          return;
+        }
+        
+        const employee = appState.employees.find(emp => emp.id === employeeId);
+        if (!employee) return;
+        
+        employee.penalties = employee.penalties.filter(penalty => penalty.id !== penaltyId);
+        
+        if (saveData()) {
+          showSuccessMessage('تم حذف الجزاء بنجاح');
+          loadPage('employee', employeeId);
+        }
+      }
+      
+      // استخراج الجدول
+      function exportTable(employeeId) {
+        const employee = appState.employees.find(emp => emp.id === employeeId);
+        if (!employee) return;
+        
+        const table = document.getElementById('workRecordsTable');
+        const stats = calculateEmployeeStats(employee);
+        
+        const printWindow = window.open('', '_blank');
+        
+        printWindow.document.write(`
+          <html dir="rtl">
+            <head>
+              <title>تصدير الجدول - ${escapeHtml(employee.name)}</title>
+              <style>
+                body { 
+                  font-family: 'Tajawal', Arial, sans-serif; 
+                  padding: 20px;
+                  direction: rtl;
+                }
+                h2, h3 { color: #2c3e50; }
+                .summary-container {
+                  display: grid;
+                  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                  gap: 15px;
+                  margin-bottom: 20px;
+                }
+                .summary-item {
+                  border: 1px solid #ddd;
+                  border-radius: 8px;
+                  padding: 15px;
+                  text-align: center;
+                }
+                .summary-item h3 {
+                  margin-top: 0;
+                  margin-bottom: 10px;
+                }
+                .summary-value {
+                  font-size: 1.2em;
+                  font-weight: bold;
+                }
+                table {
+                  width: 100%;
+                  border-collapse: collapse;
+                  margin-top: 20px;
+                }
+                th, td {
+                  border: 1px solid #ddd;
+                  padding: 12px;
+                  text-align: center;
+                }
+                th {
+                  background-color: #2c3e50;
+                  color: white;
+                }
+                .total-final {
+                  background-color: #4CAF50;
+                  color: white;
+                  font-size: 1.3em;
+                  font-weight: bold;
+                  text-align: center;
+                  padding: 15px;
+                  margin-top: 20px;
+                  border-radius: 8px;
+                }
+                .debt {
+                  background-color: #f44336;
+                }
+              </style>
+            </head>
+            <body>
+              <h2>سجل أيام العمل - ${escapeHtml(employee.name)}</h2>
+              
+              <div class="summary-container">
+                <div class="summary-item">
+                  <h3>إجمالي الأيام</h3>
+                  <div class="summary-value">${stats.totalDays} يوم</div>
+                  <div class="summary-value">${stats.totalDaysSalary} ج.م</div>
+                </div>
+                <div class="summary-item">
+                  <h3>الساعات الإضافية</h3>
+                  <div class="summary-value">${stats.overtimeHours} ساعة</div>
+                  <div class="summary-value">${stats.overtimeSalary} ج.م</div>
+                </div>
+                <div class="summary-item">
+                  <h3>البدل والمواصلات</h3>
+                  <div class="summary-value">${stats.totalAllowance + stats.totalTransport} ج.م</div>
+                </div>
+                <div class="summary-item">
+                  <h3>إجمالي الجزاءات</h3>
+                  <div class="summary-value" style="color: #f44336;">${stats.totalPenalties} ج.م</div>
+                </div>
+                <div class="summary-item">
+                  <h3>إجمالي المسحوبات</h3>
+                  <div class="summary-value" style="color: #ff9800;">${stats.totalWithdrawals} ج.م</div>
+                </div>
+              </div>
+              
+              <h3>تفاصيل الجزاءات</h3>
+              <table>
+                <thead><tr><th>التاريخ</th><th>سبب الجزاء</th><th>القيمة (ج.م)</th></tr></thead>
+                <tbody>
+                  ${employee.penalties && employee.penalties.length > 0 ? 
+                    employee.penalties.map(p => `<tr><td>${escapeHtml(p.date)}</td><td>${escapeHtml(p.reason)}</td><td style="color: #f44336;">${p.amount}</td></tr>`).join('') : 
+                    '<tr><td colspan="3">لا توجد جزاءات</td></tr>'}
+                </tbody>
+              </table>
+              
+              <h3>تفاصيل المسحوبات</h3>
+              <table>
+                <thead><tr><th>التاريخ</th><th>المبلغ (ج.م)</th></tr></thead>
+                <tbody>
+                  ${employee.withdrawals && employee.withdrawals.length > 0 ? 
+                    employee.withdrawals.map(w => `<tr><td>${escapeHtml(w.date)}</td><td style="color: #ff9800;">${w.amount}</td></tr>`).join('') : 
+                    '<tr><td colspan="2">لا توجد مسحوبات</td></tr>'}
+                </tbody>
+              </table>
+              
+              <h3>سجل أيام العمل</h3>
+              ${table ? table.outerHTML : '<p>لا توجد سجلات</p>'}
+              
+              <div class="total-final ${stats.netBalance < 0 ? 'debt' : ''}">
+                ${stats.netBalance < 0 ? 'المبلغ المطلوب سداده: ' : 'صافي المستحق: '} ${Math.abs(stats.netBalance)} ج.م
+              </div>
+            </body>
+          </html>
+        `);
+        
+        printWindow.document.close();
+        printWindow.print();
+      }
+      
+      // وظيفة تحميل الصفحات الرئيسية
+      function loadPage(page, id = null) {
+        appState.currentPage = page;
+        appState.currentEmployeeId = id;
+        
+        switch(page) {
+          case 'home':
+            loadHomePage();
+            break;
+          case 'add':
+            loadAddEditPage();
+            break;
+          case 'edit':
+            loadAddEditPage(id);
+            break;
+          case 'employee':
+            loadEmployeePage(id);
+            break;
+          case 'archive':
+            loadArchivePage(id);
+            break;
+          default:
+            loadHomePage();
+        }
+      }
+      
+      // ==================== تهيئة التطبيق ====================
+      function init() {
+        loadData();
+        loadPage('home');
+      }
+      
+      // بدء التطبيق عند تحميل الصفحة
+      document.addEventListener('DOMContentLoaded', init);
+    })();
   </script>
 </body>
 </html>
